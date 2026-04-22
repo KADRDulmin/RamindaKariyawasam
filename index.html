@@ -1,0 +1,650 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Raminda Kariyawasam — Software Engineer</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Caveat+Brush&family=Shadows+Into+Light&family=Space+Mono:wght@400;700&family=Gloria+Hallelujah&display=swap" rel="stylesheet">
+
+<style>
+  /* ---------- THEME ---------- */
+  :root, .theme-light {
+    --paper: #f4e8cd;          /* cream parchment */
+    --paper-2: #ebdcb8;
+    --cork: #d9bc8a;
+    --ink: #2a241f;
+    --ink-soft: #6b5a49;
+    --line: #3a2f26;
+    --note-yellow: #ffe58a;
+    --note-pink:   #ffb7c5;
+    --note-mint:   #b7e3c2;
+    --note-sky:    #a9d2ef;
+    --note-lav:    #d7c2f2;
+    --note-peach:  #ffcfa1;
+    --note-ink: #2a241f;         /* text ON sticky notes */
+    --tape: rgba(255, 238, 170, 0.65);
+    --tape-edge: rgba(200, 170, 80, 0.35);
+    --shadow: rgba(42, 36, 31, 0.28);
+    --dot: rgba(60, 40, 20, 0.12);
+  }
+  .theme-dark {
+    --paper: #1e1812;            /* deep cork */
+    --paper-2: #2a211a;
+    --cork: #3a2c20;
+    --ink: #f6ecd2;              /* cream ink on dark paper */
+    --ink-soft: #c6b89a;
+    --line: #1a130d;             /* dark outline on notes */
+    /* Brighter, more readable sticky-note colors for dark mode */
+    --note-yellow: #f2cf5c;
+    --note-pink:   #f48aa3;
+    --note-mint:   #7fd19c;
+    --note-sky:    #8ec3ec;
+    --note-lav:    #c2a7ef;
+    --note-peach:  #f2b17a;
+    --note-ink: #1b140e;         /* DARK text on colored notes so it reads */
+    --tape: rgba(255, 230, 160, 0.55);
+    --tape-edge: rgba(255, 230, 160, 0.3);
+    --shadow: rgba(0, 0, 0, 0.65);
+    --dot: rgba(246, 236, 210, 0.10);
+  }
+
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Patrick Hand', 'Comic Sans MS', cursive;
+    font-size: 18px;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+  body {
+    background-image:
+      radial-gradient(var(--dot) 1px, transparent 1px),
+      radial-gradient(var(--dot) 1px, transparent 1px);
+    background-size: 28px 28px, 28px 28px;
+    background-position: 0 0, 14px 14px;
+    transition: background-color .4s ease, color .4s ease;
+  }
+
+  /* Hide native cursor on desktop, keep on touch/mobile */
+  @media (hover: hover) and (pointer: fine) {
+    html, body, a, button, input, textarea, select {
+      cursor: none !important;
+    }
+  }
+
+  h1, h2, h3 { font-family: 'Caveat Brush', cursive; font-weight: normal; letter-spacing: .5px; }
+  h1 { font-size: clamp(3rem, 8vw, 6rem); line-height: 1; margin: 0; }
+  h2 { font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1; margin: 0 0 0.6rem; }
+  h3 { font-size: 1.7rem; margin: 0 0 0.4rem; }
+  p  { line-height: 1.55; }
+  a  { color: inherit; }
+
+  .mono { font-family: 'Space Mono', monospace; }
+  .scribble { font-family: 'Shadows Into Light', cursive; }
+  .hand { font-family: 'Gloria Hallelujah', cursive; }
+
+  /* ---------- CURSOR ---------- */
+  .cursor-pencil {
+    position: fixed; top:0; left:0; width: 40px; height: 40px;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%, -50%) rotate(-30deg);
+    transition: transform .08s linear;
+  }
+  .cursor-pencil svg { width: 100%; height: 100%; display:block; filter: drop-shadow(2px 2px 0 var(--shadow)); }
+  .ink-dot {
+    position: fixed; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--ink); pointer-events: none; z-index: 9998;
+    transform: translate(-50%, -50%);
+    opacity: .8;
+  }
+  @media (hover: none), (pointer: coarse) {
+    .cursor-pencil, .ink-dot { display: none !important; }
+  }
+
+  /* ---------- STICKY NOTE ---------- */
+  .note {
+    background: var(--note-yellow);
+    color: var(--note-ink);
+    padding: 22px 24px 24px;
+    box-shadow: 6px 6px 0 var(--shadow);
+    border: 2px solid var(--line);
+    border-radius: 2px 18px 3px 14px / 14px 3px 16px 3px;
+    position: relative;
+    transform: rotate(var(--rot, -2deg));
+    transition: transform .3s cubic-bezier(.2,.8,.2,1.2), box-shadow .3s;
+  }
+  .note::before {
+    /* tape strip */
+    content: '';
+    position: absolute;
+    top: -14px; left: 50%;
+    transform: translateX(-50%) rotate(-4deg);
+    width: 78px; height: 22px;
+    background: var(--tape);
+    border-left: 1px dashed var(--tape-edge);
+    border-right: 1px dashed var(--tape-edge);
+    box-shadow: 0 2px 2px rgba(0,0,0,.08);
+  }
+  .note.no-tape::before { display: none; }
+  .note.pin::before {
+    content: '';
+    top: -8px; left: 50%;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #ff8a8a, #b52828 70%);
+    border: 2px solid var(--line);
+    box-shadow: 0 3px 2px rgba(0,0,0,.25);
+    transform: translateX(-50%);
+  }
+  .note:hover { transform: rotate(0deg) translateY(-4px); box-shadow: 10px 10px 0 var(--shadow); }
+
+  .note.pink  { background: var(--note-pink); }
+  .note.mint  { background: var(--note-mint); }
+  .note.sky   { background: var(--note-sky); }
+  .note.lav   { background: var(--note-lav); }
+  .note.peach { background: var(--note-peach); }
+
+  /* ---------- THEME TOGGLE ---------- */
+  .theme-toggle {
+    position: fixed; top: 22px; right: 22px; z-index: 200;
+    background: var(--note-yellow);
+    border: 2px solid var(--line);
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-family: 'Patrick Hand'; font-size: 18px;
+    box-shadow: 4px 4px 0 var(--shadow);
+    display: inline-flex; align-items: center; gap: 8px;
+    transform: rotate(-3deg);
+    transition: transform .2s;
+  }
+  .theme-toggle:hover { transform: rotate(0); }
+  .theme-toggle:active { transform: rotate(0) scale(.95); }
+
+  /* ---------- NAV TABS ---------- */
+  .nav-tabs {
+    position: fixed; top: 22px; left: 50%; transform: translateX(-50%);
+    z-index: 150; display: flex; gap: 10px;
+    padding: 8px 12px;
+    background: var(--paper-2);
+    border: 2px solid var(--line);
+    border-radius: 14px;
+    box-shadow: 5px 5px 0 var(--shadow);
+  }
+  .nav-tab {
+    font-family: 'Patrick Hand'; font-size: 20px;
+    padding: 6px 14px; border: 2px solid transparent; border-radius: 10px;
+    background: transparent; color: var(--ink);
+    position: relative;
+  }
+  .nav-tab.active {
+    background: var(--note-yellow);
+    border-color: var(--line);
+    transform: rotate(-2deg);
+    box-shadow: 3px 3px 0 var(--shadow);
+  }
+  .nav-tab:nth-child(2).active { background: var(--note-pink); }
+  .nav-tab:nth-child(3).active { background: var(--note-mint); }
+  .nav-tab:nth-child(4).active { background: var(--note-sky); }
+  .nav-tab:nth-child(5).active { background: var(--note-lav); }
+  .nav-tab:nth-child(6).active { background: var(--note-peach); }
+  .nav-tab.active { color: var(--note-ink); }
+
+  /* mobile nav */
+  @media (max-width: 720px) {
+    .nav-tabs { top: auto; bottom: 16px; left: 50%; transform: translateX(-50%); padding: 6px 8px; gap: 4px; font-size: 14px; flex-wrap: nowrap; overflow-x: auto; max-width: calc(100vw - 24px); }
+    .nav-tab { font-size: 15px; padding: 4px 8px; white-space: nowrap; }
+    .theme-toggle { top: 16px; right: 16px; padding: 6px 10px; font-size: 15px; }
+  }
+
+  /* ---------- BOARD TRANSITIONS ---------- */
+  .board { display: block; }
+  /* Smooth scroll between sections */
+  html { scroll-behavior: smooth; }
+
+  /* draggable notes */
+  .draggable { touch-action: none; }
+  .draggable.dragging { z-index: 500 !important; cursor: grabbing; box-shadow: 14px 14px 0 var(--shadow) !important; }
+  .draggable.placed { position: absolute !important; }
+
+  /* hero photo transitions */
+  .hero-photo-stack { position: relative; width: 100%; aspect-ratio: 3/4; overflow: hidden; border: 1px solid var(--line); background: repeating-linear-gradient(135deg, var(--cork) 0 14px, var(--paper-2) 14px 28px); }
+  .hero-photo-layer {
+    position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: center;
+    opacity: 0;
+  }
+  .hero-photo-layer img { max-width: 100%; max-height: 100%; object-fit: contain; filter: drop-shadow(0 6px 0 rgba(0,0,0,0.1)); }
+  .hero-photo-layer.active { opacity: 1; animation: photoIn 1000ms cubic-bezier(.2,.8,.2,1.05) forwards; }
+  .hero-photo-layer.leaving { opacity: 1; animation: photoOut 900ms cubic-bezier(.4,0,.6,1) forwards; }
+
+  /* rotating transitions — different per index */
+  @keyframes photoIn-0 { 0% { opacity:0; transform: translateX(60%) rotate(14deg) scale(.9); } 100% { opacity:1; transform: translateX(0) rotate(0) scale(1); } }
+  @keyframes photoOut-0 { 0% { opacity:1; transform: translateX(0) rotate(0) scale(1); } 100% { opacity:0; transform: translateX(-60%) rotate(-14deg) scale(.9); } }
+
+  @keyframes photoIn-1 { 0% { opacity:0; transform: scale(1.4) rotate(-8deg); filter: blur(12px); } 100% { opacity:1; transform: scale(1) rotate(0); filter: blur(0); } }
+  @keyframes photoOut-1 { 0% { opacity:1; transform: scale(1); filter: blur(0); } 100% { opacity:0; transform: scale(.6) rotate(10deg); filter: blur(10px); } }
+
+  @keyframes photoIn-2 { 0% { opacity:0; clip-path: circle(0% at 50% 50%); transform: rotate(-8deg); } 100% { opacity:1; clip-path: circle(80% at 50% 50%); transform: rotate(0); } }
+  @keyframes photoOut-2 { 0% { opacity:1; clip-path: circle(80% at 50% 50%); } 100% { opacity:0; clip-path: circle(0% at 50% 50%); } }
+
+  @keyframes photoIn-3 { 0% { opacity:0; transform: translateY(100%) rotate(6deg); } 60% { opacity:1; transform: translateY(-6%) rotate(-2deg); } 100% { opacity:1; transform: translateY(0) rotate(0); } }
+  @keyframes photoOut-3 { 0% { opacity:1; transform: translateY(0) rotate(0); } 100% { opacity:0; transform: translateY(-100%) rotate(-6deg); } }
+
+  .hero-photo-layer.active.anim-0 { animation-name: photoIn-0; }
+  .hero-photo-layer.leaving.anim-0 { animation-name: photoOut-0; }
+  .hero-photo-layer.active.anim-1 { animation-name: photoIn-1; }
+  .hero-photo-layer.leaving.anim-1 { animation-name: photoOut-1; }
+  .hero-photo-layer.active.anim-2 { animation-name: photoIn-2; }
+  .hero-photo-layer.leaving.anim-2 { animation-name: photoOut-2; }
+  .hero-photo-layer.active.anim-3 { animation-name: photoIn-3; }
+  .hero-photo-layer.leaving.anim-3 { animation-name: photoOut-3; }
+
+  .photo-dots { display:flex; gap:6px; justify-content:center; margin-top: 8px; }
+  .photo-dots span { width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--line); background: var(--paper); }
+  .photo-dots span.active { background: var(--note-pink); }
+
+  /* section separators */
+  .section-head { display:flex; align-items:baseline; gap: 16px; margin-bottom: 14px; }
+  .section-head .num { font-family:'Caveat Brush'; font-size: 2.2rem; color: var(--ink-soft); }
+
+  /* ---------- HERO MOBILE ---------- */
+  section.board { scroll-margin-top: 100px; }
+  @media (max-width: 900px) {
+    .hero-grid {
+      grid-template-columns: 1fr !important;
+    }
+    .hero-text-col { padding-left: 0 !important; max-width: 100% !important; }
+    .hero-text-col h1 { font-size: clamp(2.4rem, 10vw, 4rem) !important; }
+    .polaroid-wrap {
+      position: relative !important;
+      right: auto !important;
+      top: auto !important;
+      width: min(300px, 80vw) !important;
+      margin: 30px auto 0 !important;
+    }
+    .hero-float-notes { min-height: auto !important; height: auto !important; }
+    .hero-float-notes > .draggable {
+      position: relative !important;
+      left: auto !important;
+      top: auto !important;
+      margin: 14px auto !important;
+      width: 85% !important;
+      max-width: 320px !important;
+      display: block !important;
+    }
+    .board-wrap { padding: 90px 4vw 80px !important; }
+  }
+  @keyframes boardIn {
+    0%   { opacity: 0; transform: translateY(20px) rotate(1deg); }
+    100% { opacity: 1; transform: translateY(0)    rotate(0); }
+  }
+
+  /* ---------- BUTTONS / LINKS ---------- */
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Patrick Hand'; font-size: 20px;
+    background: var(--note-yellow); color: var(--ink);
+    border: 2px solid var(--line);
+    padding: 10px 20px;
+    border-radius: 4px 16px 6px 14px / 12px 4px 16px 4px;
+    box-shadow: 4px 4px 0 var(--shadow);
+    transform: rotate(-2deg);
+    transition: transform .18s, box-shadow .18s;
+    text-decoration: none;
+  }
+  .btn:hover { transform: rotate(0) translate(-2px,-2px); box-shadow: 6px 6px 0 var(--shadow); }
+  .btn:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--shadow); }
+  .btn.pink { background: var(--note-pink); }
+  .btn.mint { background: var(--note-mint); }
+  .btn.sky  { background: var(--note-sky); }
+
+  /* underline scribble */
+  .scribble-u { position: relative; display: inline-block; }
+  .scribble-u::after {
+    content: ''; position: absolute; left: -4%; right: -4%; bottom: -6px; height: 10px;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 10' preserveAspectRatio='none'><path d='M2 6 Q 20 1 40 5 T 80 5 T 120 6 T 160 4 T 198 6' stroke='%23e05c5c' stroke-width='3' fill='none' stroke-linecap='round'/></svg>") no-repeat center/100% 100%;
+  }
+
+  /* chips */
+  .chip {
+    display: inline-block;
+    padding: 4px 12px;
+    margin: 4px 3px;
+    background: var(--paper);
+    color: var(--ink);
+    border: 2px solid var(--line);
+    border-radius: 999px;
+    font-family: 'Patrick Hand'; font-size: 16px;
+    transform: rotate(var(--chip-rot, 0deg));
+    box-shadow: 2px 2px 0 var(--shadow);
+  }
+  .note .chip { background: rgba(255,255,255,.55); color: var(--note-ink); border-color: var(--line); }
+  .theme-dark .note .chip { background: rgba(0,0,0,.18); color: var(--note-ink); }
+  /* Make sure anchor-color text inside notes stays readable */
+  .note a, .note { color: var(--note-ink); }
+  .note .mono, .note .scribble { color: var(--note-ink); }
+  .note [style*="--ink-soft"] { /* no-op safety */ }
+
+  /* torn edge divider */
+  .torn {
+    height: 16px;
+    background: var(--paper);
+    --tornSize: 16px;
+    -webkit-mask: radial-gradient(circle at 8px 0, transparent 6px, #000 6.5px) repeat-x -8px 0 / 16px 100%;
+            mask: radial-gradient(circle at 8px 0, transparent 6px, #000 6.5px) repeat-x -8px 0 / 16px 100%;
+  }
+
+  /* ---------- BOARD LAYOUTS ---------- */
+  .board-wrap {
+    padding: 100px 4vw 120px;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* doodles */
+  .doodle {
+    position: absolute;
+    pointer-events: none;
+    opacity: .8;
+  }
+
+  /* loading scribble */
+  .loader-hide { animation: fadeOut .4s .3s forwards; }
+  @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
+
+  /* progress bar at top while switching */
+  .board-progress {
+    position: fixed; top: 0; left: 0; height: 4px;
+    background: var(--ink);
+    z-index: 300; width: 0;
+    transition: width .5s;
+  }
+
+  /* scroll styling */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: var(--paper-2); }
+  ::-webkit-scrollbar-thumb { background: var(--ink-soft); border-radius: 6px; }
+
+  /* utility */
+  .center { text-align: center; }
+  .grid { display: grid; gap: 24px; }
+  @media (min-width: 900px) {
+    .grid.cols-2 { grid-template-columns: 1fr 1fr; }
+    .grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  /* TWEAKS panel */
+  .tweaks-panel {
+    position: fixed; right: 18px; bottom: 70px; z-index: 400;
+    width: 280px;
+    background: var(--paper-2);
+    border: 2px solid var(--line);
+    border-radius: 8px;
+    box-shadow: 6px 6px 0 var(--shadow);
+    padding: 14px;
+    display: none;
+  }
+  .tweaks-panel.open { display: block; }
+  .tweaks-panel h4 { font-family: 'Caveat Brush'; font-size: 1.6rem; margin: 0 0 10px; }
+  .tweaks-row { display:flex; align-items:center; justify-content:space-between; margin: 8px 0; gap: 8px; }
+  .tweaks-row label { flex: 1; font-size: 16px; }
+  .tweaks-row select, .tweaks-row input[type=range] { font-family: inherit; }
+</style>
+</head>
+<body class="theme-light">
+
+<div class="board-progress" id="board-progress"></div>
+
+<!-- Custom cursor -->
+<div id="cursor" class="cursor-pencil" aria-hidden="true">
+  <svg viewBox="0 0 40 40">
+    <!-- pencil body -->
+    <g>
+      <path d="M6 30 L30 6 L36 12 L12 36 L6 36 Z" fill="#ffcf5a" stroke="#2a241f" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M26 10 L36 12 L32 16 Z" fill="#ff8a8a" stroke="#2a241f" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M6 30 L12 36 L6 36 Z" fill="#2a241f" stroke="#2a241f" stroke-width="2" stroke-linejoin="round"/>
+      <line x1="20" y1="14" x2="28" y2="22" stroke="#2a241f" stroke-width="1.5"/>
+    </g>
+  </svg>
+</div>
+
+<!-- Theme toggle -->
+<button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+  <span id="theme-icon">☀️</span><span id="theme-label">Lights off</span>
+</button>
+
+<!-- Nav tabs -->
+<nav class="nav-tabs" role="tablist" id="nav-tabs">
+  <button class="nav-tab active" data-target="home">Home</button>
+  <button class="nav-tab" data-target="about">About</button>
+  <button class="nav-tab" data-target="work">Work</button>
+  <button class="nav-tab" data-target="nsbm">NSBM</button>
+  <button class="nav-tab" data-target="toolkit">Toolkit</button>
+  <button class="nav-tab" data-target="contact">Contact</button>
+</nav>
+
+<!-- React mount -->
+<div id="root"></div>
+
+<!-- Tweaks panel -->
+<div class="tweaks-panel" id="tweaks-panel">
+  <h4>Tweaks</h4>
+  <div class="tweaks-row">
+    <label for="tw-hero">Hero photo</label>
+    <select id="tw-hero">
+      <option value="suit-pose">Suit pose</option>
+      <option value="suit">Suit</option>
+      <option value="grad">Graduation</option>
+      <option value="degree">Degree</option>
+    </select>
+  </div>
+  <div class="tweaks-row">
+    <label for="tw-wobble">Note wobble</label>
+    <input type="range" id="tw-wobble" min="0" max="1" step="0.05" />
+  </div>
+  <div class="tweaks-row">
+    <label for="tw-trail">Ink trail</label>
+    <select id="tw-trail">
+      <option value="dots">Dots</option>
+      <option value="stars">Stars</option>
+      <option value="hearts">Hearts</option>
+      <option value="off">Off</option>
+    </select>
+  </div>
+</div>
+
+<!-- React -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="./src/data.jsx"></script>
+<script type="text/babel" src="./src/doodles.jsx"></script>
+<script type="text/babel" src="./src/boards.jsx"></script>
+<script type="text/babel" src="./src/app.jsx"></script>
+
+<!-- Vanilla helpers: cursor, theme, tabs -->
+<script>
+/*EDITMODE-BEGIN*/
+const TWEAK_DEFAULTS = {
+  "heroPhoto": "suit-pose",
+  "wobble": 0.6,
+  "trail": "dots"
+};
+/*EDITMODE-END*/
+window.__TWEAKS = { ...TWEAK_DEFAULTS };
+
+// ==== CUSTOM CURSOR + INK TRAIL ====
+(function(){
+  const cursor = document.getElementById('cursor');
+  let lastTrail = 0;
+  const trailLife = 700;
+  const isFine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (!isFine) { cursor.style.display = 'none'; return; }
+
+  let tx=0, ty=0, cx=0, cy=0;
+  function onMove(e) {
+    tx = e.clientX; ty = e.clientY;
+    const now = performance.now();
+    if (now - lastTrail > 38 && window.__TWEAKS.trail !== 'off') {
+      lastTrail = now;
+      spawnTrail(tx, ty);
+    }
+    // broadcast for hero interaction
+    window.__cursor = { x: tx, y: ty };
+  }
+  function loop() {
+    cx += (tx - cx) * 0.35;
+    cy += (ty - cy) * 0.35;
+    cursor.style.left = cx + 'px';
+    cursor.style.top  = cy + 'px';
+    requestAnimationFrame(loop);
+  }
+  function spawnTrail(x,y){
+    const kind = window.__TWEAKS.trail || 'dots';
+    const el = document.createElement('div');
+    el.className = 'ink-dot';
+    const rot = (Math.random()*60 - 30);
+    if (kind === 'dots') {
+      el.style.width = (5 + Math.random()*6) + 'px';
+      el.style.height = el.style.width;
+      el.style.background = 'var(--ink)';
+    } else if (kind === 'stars') {
+      el.style.width = '16px'; el.style.height = '16px';
+      el.style.background = 'transparent';
+      el.innerHTML = `<svg viewBox="0 0 24 24" style="width:100%;height:100%"><path fill="var(--ink,#2a241f)" d="M12 2 L14 9 L21 10 L15 14 L17 21 L12 17 L7 21 L9 14 L3 10 L10 9 Z"/></svg>`;
+    } else if (kind === 'hearts') {
+      el.style.width = '14px'; el.style.height = '14px';
+      el.style.background = 'transparent';
+      el.innerHTML = `<svg viewBox="0 0 24 24" style="width:100%;height:100%"><path fill="#e05c5c" d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/></svg>`;
+    }
+    el.style.left = x + 'px';
+    el.style.top  = y + 'px';
+    el.style.transform = `translate(-50%,-50%) rotate(${rot}deg)`;
+    el.style.transition = `opacity ${trailLife}ms linear, transform ${trailLife}ms ease-out`;
+    document.body.appendChild(el);
+    requestAnimationFrame(() => {
+      el.style.opacity = '0';
+      el.style.transform = `translate(-50%,-50%) rotate(${rot}deg) translateY(${6+Math.random()*12}px) scale(${0.4+Math.random()*0.4})`;
+    });
+    setTimeout(() => el.remove(), trailLife + 80);
+  }
+  document.addEventListener('pointermove', onMove, { passive: true });
+  document.addEventListener('pointerdown', () => cursor.style.transform = 'translate(-50%,-50%) rotate(-10deg) scale(.85)');
+  document.addEventListener('pointerup', () => cursor.style.transform = 'translate(-50%,-50%) rotate(-30deg)');
+  requestAnimationFrame(loop);
+})();
+
+// ==== THEME TOGGLE ====
+(function(){
+  const btn = document.getElementById('theme-toggle');
+  const icon = document.getElementById('theme-icon');
+  const lbl = document.getElementById('theme-label');
+  const apply = (mode) => {
+    document.body.classList.toggle('theme-dark', mode === 'dark');
+    document.body.classList.toggle('theme-light', mode !== 'dark');
+    icon.textContent = mode === 'dark' ? '🌙' : '☀️';
+    lbl.textContent = mode === 'dark' ? 'Lights on' : 'Lights off';
+    localStorage.setItem('rk-theme', mode);
+  };
+  const saved = localStorage.getItem('rk-theme') || 'light';
+  apply(saved);
+  btn.addEventListener('click', () => {
+    const cur = document.body.classList.contains('theme-dark') ? 'dark' : 'light';
+    apply(cur === 'dark' ? 'light' : 'dark');
+  });
+})();
+
+// ==== NAV TABS (scroll-spy on single page) ====
+(function(){
+  const tabs = document.querySelectorAll('.nav-tab');
+  const progress = document.getElementById('board-progress');
+  let isClickScrolling = false;
+  let clickLockedTarget = null;
+
+  function setActive(target) {
+    tabs.forEach(t => t.classList.toggle('active', t.dataset.target === target));
+  }
+  function scrollTo(target) {
+    const el = document.getElementById('board-' + target);
+    if (!el) return;
+    isClickScrolling = true;
+    clickLockedTarget = target;
+    setActive(target);
+    const top = el.getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo({ top, behavior: 'smooth' });
+    progress.style.width = '100%';
+    setTimeout(() => progress.style.width = '0', 650);
+    clearTimeout(window.__navLock);
+    window.__navLock = setTimeout(() => { isClickScrolling = false; clickLockedTarget = null; }, 900);
+  }
+  tabs.forEach(t => t.addEventListener('click', () => scrollTo(t.dataset.target)));
+
+  function updateActiveByScroll() {
+    if (isClickScrolling && clickLockedTarget) return;
+    const probe = 140; // below the fixed nav
+    const sections = document.querySelectorAll('section.board');
+    let best = null, bestDelta = Infinity;
+    sections.forEach(s => {
+      const r = s.getBoundingClientRect();
+      // section that spans the probe line
+      if (r.top <= probe && r.bottom > probe) {
+        const d = Math.abs(r.top - probe);
+        if (d < bestDelta) { bestDelta = d; best = s; }
+      }
+    });
+    if (!best) {
+      // fallback: nearest top above probe
+      sections.forEach(s => {
+        const r = s.getBoundingClientRect();
+        if (r.top <= probe) {
+          const d = probe - r.top;
+          if (d < bestDelta) { bestDelta = d; best = s; }
+        }
+      });
+    }
+    if (best) {
+      const target = best.id.replace('board-','');
+      setActive(target);
+    }
+  }
+  window.addEventListener('scroll', () => requestAnimationFrame(updateActiveByScroll), { passive: true });
+  setTimeout(updateActiveByScroll, 500);
+  window.gotoBoard = scrollTo;
+})();
+
+// ==== TWEAKS ====
+(function(){
+  const panel = document.getElementById('tweaks-panel');
+  const tHero = document.getElementById('tw-hero');
+  const tWob  = document.getElementById('tw-wobble');
+  const tTrail= document.getElementById('tw-trail');
+
+  // hydrate
+  tHero.value = TWEAK_DEFAULTS.heroPhoto;
+  tWob.value  = TWEAK_DEFAULTS.wobble;
+  tTrail.value= TWEAK_DEFAULTS.trail;
+
+  function fire(key, value) {
+    window.__TWEAKS[key] = value;
+    window.dispatchEvent(new CustomEvent('tweaks:change', { detail: { key, value } }));
+    window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { [key]: value } }, '*');
+  }
+  tHero.addEventListener('change', e => fire('heroPhoto', e.target.value));
+  tWob.addEventListener('input', e => fire('wobble', parseFloat(e.target.value)));
+  tTrail.addEventListener('change', e => fire('trail', e.target.value));
+
+  window.addEventListener('message', (e) => {
+    if (!e.data || typeof e.data !== 'object') return;
+    if (e.data.type === '__activate_edit_mode') panel.classList.add('open');
+    if (e.data.type === '__deactivate_edit_mode') panel.classList.remove('open');
+  });
+  window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+})();
+</script>
+</body>
+</html>
