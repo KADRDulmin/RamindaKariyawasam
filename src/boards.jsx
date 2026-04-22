@@ -122,7 +122,7 @@ function HomeBoard() {
             <span className="scribble-u">Kariyawasam</span>.
           </h1>
           <p style={{fontSize: "1.35rem", marginTop: 18, maxWidth: 520}}>
-            I'm an <b>Associate Software Engineer</b> at NSBM Green University. I build <span style={{background:"var(--note-yellow)", color:"var(--note-ink)", padding:"0 6px", borderRadius:4}}>sticky, playful</span> full-stack products — web, mobile, a little 3D.
+            I'm an <b>Associate Software Engineer</b> at NSBM Green University. I build <span style={{background:"var(--note-yellow)", color:"var(--note-ink)", padding:"0 6px", borderRadius:4}}>Awsome</span> full-stack products — web, mobile, a little 3D.
           </p>
           <div style={{display:"flex", gap:14, flexWrap:"wrap", marginTop: 24}}>
             <button className="btn" onClick={() => window.gotoBoard('work')}>📎 see my work →</button>
@@ -162,8 +162,8 @@ function HomeBoard() {
         <div className="hero-float-notes" style={{position:"relative", marginTop: 60, minHeight: 240}}>
           <DraggableNote rot={-4} className="mint pin" style={{position:"absolute", left:"2%", top: 20, width: 220}}>
             <div className="scribble" style={{fontSize: "1.3rem"}}>currently</div>
-            <div style={{fontSize:18}}>shipping campus tools</div>
-            <div className="mono" style={{fontSize:13, marginTop:6, opacity:.75}}>// @nsbm-dev-team</div>
+            <div style={{fontSize:18}}>Developing Awsome full-stack products</div>
+            <div className="mono" style={{fontSize:13, marginTop:6, opacity:.75}}>// @NSBM_Green_University</div>
           </DraggableNote>
 
           <DraggableNote rot={3} className="pink" style={{position:"absolute", left:"28%", top: 40, width: 220}}>
@@ -173,7 +173,7 @@ function HomeBoard() {
 
           <DraggableNote rot={-2} className="sky pin" style={{position:"absolute", left:"54%", top: 15, width: 190}}>
             <div style={{textAlign:"center"}}>
-              <div className="scribble" style={{fontSize:"1.4rem"}}>BSc Hons</div>
+              <div className="scribble" style={{fontSize:"1.4rem"}}>BSc Hons Software Engineering</div>
               <div>Plymouth · 2025</div>
             </div>
           </DraggableNote>
