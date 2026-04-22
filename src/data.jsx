@@ -72,12 +72,6 @@ const RK = {
       body: "Bridges NSBM Green University students and nearby accommodation options around campus.",
       link: "https://github.com/KADRDulmin/EduStay", icon: "🏠"
     },
-    {
-      id: "vday", name: "2026 V-Day", tag: "Playful web micro-site",
-      color: "pink", stack: ["HTML", "CSS", "JS"],
-      body: '"Will you be my valentine?" — a playful Yes/No web experience with escape-the-button antics.',
-      link: "https://github.com/KADRDulmin/2026-vday", icon: "💌"
-    }
   ],
 
   // Projects built during tenure at NSBM Green University (from nsbm-dev-team org)
@@ -87,22 +81,12 @@ const RK = {
     { name: "NDB–NSBM", body: "Partner banking integration portal connecting NSBM services with NDB systems.", icon: "🏦", color: "sky" },
     { name: "Student Portal", body: "Central student dashboard — profile, courses, timetable, results, notices & quick actions.", icon: "🎓", color: "pink" },
     { name: "NSBM Registration App", body: "Enrollment & registration app for new intakes with document upload and payment flow.", icon: "🧾", color: "lav" },
-    { name: "Faculty Letter System", body: "Automates generation, approval and issuance of official faculty letters.", icon: "✉️", color: "peach" },
     { name: "NSBM Mobile App", body: "Public-facing mobile app for students — announcements, timetables, events & campus info.", icon: "📱", color: "yellow" },
     { name: "Research Portal", body: "Publication & research management hub for faculty — submissions, tracking, analytics.", icon: "🔬", color: "mint" },
-    { name: "Lunch Ordering System (Web)", body: "Canteen pre-order website — browse menus, place orders, pay from the portal.", icon: "🍱", color: "sky" },
-    { name: "Canteen Lunch App", body: "Mobile companion for canteen pre-ordering with collection slots & notifications.", icon: "🥡", color: "pink" },
-    { name: "Canteen Lunch Ordering Site", body: "Admin + student site for lunch pre-orders with real-time kitchen queue.", icon: "🍜", color: "lav" },
-    { name: "NSBM Job Portal", body: "Campus careers board connecting students and alumni with employer opportunities.", icon: "💼", color: "peach" },
-    { name: "Internal Exam Payments", body: "Secure portal for students to pay exam-related fees with reconciliation.", icon: "💳", color: "yellow" },
-    { name: "Predatory Journals Search", body: "Search engine helping researchers identify and avoid predatory academic journals.", icon: "🛡️", color: "mint" },
-    { name: "Enrollment Predictor", body: "ML tool forecasting enrollment numbers from historical intake patterns.", icon: "📈", color: "sky" },
     { name: "Enroll-Now Portal", body: "Self-service enrollment portal for incoming students with guided steps.", icon: "✅", color: "pink" },
     { name: "Library Management Portal", body: "Catalogue, borrowing, reservations & fines for the NSBM library.", icon: "📚", color: "lav" },
     { name: "NSBM Intranet Portal", body: "Single internal hub aggregating university apps, notices and staff tools.", icon: "🏛️", color: "peach" },
-    { name: "Degree Analysis", body: "Analytics dashboard visualizing student performance and degree outcomes.", icon: "📊", color: "yellow" },
     { name: "Student Identification App", body: "Digital student ID with QR verification for campus access and services.", icon: "🆔", color: "mint" },
-    { name: "Semester Timetable", body: "Timetable builder & viewer for students and lecturers with conflict checking.", icon: "🗓️", color: "sky" },
     { name: "IntraServe", body: "Internal service-request system for staff — IT, maintenance, admin requests.", icon: "🛠️", color: "pink" },
     { name: "Exam Management", body: "End-to-end exam ops — papers, halls, invigilators and results workflow.", icon: "🧮", color: "lav" },
     { name: "Survey Report Generator", body: "Generate polished PDF/CSV reports from survey data automatically.", icon: "📑", color: "peach" },
@@ -118,9 +102,9 @@ const RK = {
 
   quickFacts: [
     "Coffee ≫ Tea",
-    "Builds in React, Angular & Three.js",
-    "Shipped 20+ internal campus tools",
-    "Dockerizes everything twice"
+    "Builds in React, Angular & PHP",
+    "Shipped 15+ internal softwares and tools",
+    "Dockerizes everything"
   ]
 };
 
