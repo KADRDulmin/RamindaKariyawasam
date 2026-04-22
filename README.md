@@ -3,7 +3,7 @@
   <h1>Raminda Kariyawasam — Interactive Portfolio</h1>
   
   <p>
-    <strong>Associate Software Engineer</strong> building sticky, playful full-stack products — web, mobile, and a little 3D.
+    <strong>Associate Software Engineer</strong> @NSBM-Green_University.
   </p>
   
   <p>
@@ -21,18 +21,14 @@
 
 Here is a look at the portfolio in action, showcasing both the desktop and mobile experiences:
 
-<table>
-  <tr>
-    <td width="70%" align="center" valign="top">
-      <b>Desktop View</b><br/><br/>
-      <img src="uploads/desktop-screenshot-of-the-website.png" alt="Desktop Dashboard View" width="100%" style="border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);" />
-    </td>
-    <td width="30%" align="center" valign="top">
-      <b>Mobile View</b><br/><br/>
-      <img src="uploads/mobile-screenshot-of-the-website.png" alt="Mobile Dashboard View" width="100%" style="border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);" />
-    </td>
-  </tr>
-</table>
+<div align="center">
+  <img src="uploads/desktop-screenshot-of-the-website.png" alt="Desktop View" width="68%" style="border-radius: 12px; margin-right: 2%; box-shadow: 0 10px 30px rgba(0,0,0,0.2);" />
+  <img src="uploads/mobile-screenshot-of-the-website.png" alt="Mobile View" width="28%" style="border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);" />
+</div>
+
+<div align="center">
+  <i>Designed to be sticky, playful, and responsive across all devices.</i>
+</div>
 
 ## ✨ Features
 
