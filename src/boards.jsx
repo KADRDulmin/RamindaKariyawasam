@@ -4,6 +4,7 @@ const { useEffect, useState, useRef } = React;
 // Drag helper — makes any note draggable on a transient layer. Resets on reload.
 function useDraggable(ref, initialRot = 0) {
   useEffect(() => {
+    if (window.innerWidth <= 768) return;
     const el = ref.current;
     if (!el) return;
     let offX = 0, offY = 0;
