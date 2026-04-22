@@ -209,6 +209,9 @@
   /* draggable notes */
   .draggable { touch-action: none; }
   .draggable.dragging { z-index: 500 !important; cursor: grabbing; box-shadow: 14px 14px 0 var(--shadow) !important; }
+  @media (max-width: 768px) {
+    .draggable { touch-action: auto; }
+  }
   .draggable.placed { position: absolute !important; }
 
   /* hero photo transitions */
