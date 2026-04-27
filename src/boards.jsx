@@ -335,9 +335,7 @@ function NsbmBoard() {
         <p style={{fontSize:"1.1rem", maxWidth: 720}}>
           During my time on the NSBM dev team, I've contributed to <b>{RK.nsbmProjects.length}+</b> internal tools across portals, mobile, AI and operations. Here's the full lineup.
         </p>
-        <div style={{marginTop: 14}}>
-          <a className="btn sky" href={RK.orgGithub} target="_blank" rel="noopener">🔗 nsbm-dev-team on GitHub</a>
-        </div>
+
 
         <div style={{marginTop: 40, display:"grid", gap: 22, gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))"}}>
           {RK.nsbmProjects.map((p, i) => {
