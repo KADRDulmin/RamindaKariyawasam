@@ -95,7 +95,12 @@ function RotatingHeroPhoto() {
           else if (isLeaving) cls += " leaving";
           return (
             <div key={i} className={cls}>
-              <img src={src} alt={`Raminda ${i+1}`} />
+              <img src={src} alt={[
+                "Raminda Kariyawasam in a suit, posing — professional headshot",
+                "Raminda Kariyawasam at University of Plymouth graduation ceremony, 2025",
+                "Raminda Kariyawasam in a suit",
+                "Raminda Kariyawasam holding degree certificate"
+              ][i] || `Raminda Kariyawasam — photo ${i + 1}`} />
             </div>
           );
         })}
@@ -242,7 +247,7 @@ function AboutBoard() {
                   border: "1px solid var(--line)",
                   display:"flex", alignItems:"flex-end", justifyContent:"center"
                 }}>
-                  <img src="assets/photo-grad.png" alt="Graduation" style={{maxWidth:"100%", maxHeight:"100%", objectFit:"contain"}}/>
+                  <img src="assets/photo-grad.png" alt="Raminda Kariyawasam at University of Plymouth graduation ceremony, 2025" style={{maxWidth:"100%", maxHeight:"100%", objectFit:"contain"}}/>
                 </div>
                 <div className="scribble" style={{fontSize:"1.3rem", textAlign:"center", marginTop: 6, color:"var(--ink)"}}>
                   Plymouth, 2025 🎓

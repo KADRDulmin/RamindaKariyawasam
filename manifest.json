@@ -1,0 +1,41 @@
+{
+  "name": "Raminda Kariyawasam — Software Engineer",
+  "short_name": "Raminda.dev",
+  "description": "Portfolio of Raminda Kariyawasam, Associate Software Engineer at NSBM Green University. Full-stack developer — React, Three.js, Flutter, Node.js.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f4e8cd",
+  "theme_color": "#f4e8cd",
+  "lang": "en-US",
+  "orientation": "portrait-primary",
+  "categories": ["portfolio", "technology", "developer"],
+  "icons": [
+    {
+      "src": "assets/photo-suit.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/photo-suit.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "uploads/desktop-screenshot-of-the-website.png",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Portfolio desktop view"
+    },
+    {
+      "src": "uploads/mobile-screenshot-of-the-website.png",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Portfolio mobile view"
+    }
+  ]
+}

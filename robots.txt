@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Sitemap: https://www.ramindak.com/sitemap.xml
+
+Disallow: /node_modules/
+Disallow: /package.json
+Disallow: /package-lock.json
+Disallow: /.gitignore
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 5
