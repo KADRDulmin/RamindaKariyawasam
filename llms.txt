@@ -1,0 +1,40 @@
+# Raminda Kariyawasam — Software Engineer
+
+> Raminda Kariyawasam is an Associate Software Engineer at NSBM Green University, Sri Lanka. Full-stack developer with 4+ years of experience and 45+ shipped projects, specialising in React, Three.js, Flutter, Node.js, Firebase and Docker. University of Plymouth BSc (Hons) Software Engineering graduate, class of 2025. Portfolio: https://www.ramindak.com
+
+## About
+
+- [Portfolio](https://www.ramindak.com/) — Full personal portfolio with projects, skills and contact
+- [LinkedIn](https://linkedin.com/in/raminda-dulmin/) — Professional profile and career history
+- [GitHub](https://github.com/KADRDulmin) — Open-source projects and code
+
+## Featured Projects
+
+- [Roometry3D](https://github.com/Shaveen-Balasooriya/Roometry3D) — Real-time 3D web app for interior designers using React and Three.js, with photorealistic lighting and Firebase backend
+- [Doc-Assist Pro](https://github.com/KADRDulmin/Doc-Assist-Pro) — Full-stack healthcare platform with React Native mobile apps for patients and doctors, AI doctor-recommendations, and smart scheduling
+- [Bus Black Box](https://github.com/KADRDulmin/Bus-Black-Box-Mobile-App) — IoT safety and tracking system for public buses with a paired mobile app and Firebase backend
+- [EduStay](https://github.com/KADRDulmin/EduStay) — Student accommodation platform connecting NSBM Green University students with nearby housing options (PHP, MySQL)
+- First Mineral Title — Deed search and management system indexing 1.8M+ official land records for Leon County, Texas (Angular, Java, Docker)
+- LiteraNet — Full-stack MEAN-stack library management platform with Docker deployment
+
+## NSBM Green University Projects (Internal Systems)
+
+Built as Associate Software Engineer on the NSBM dev team:
+ExamTrack, NSBM RAG Bot (AI assistant), Student Portal, NSBM Registration App, NSBM Mobile App, Research Portal, Library Management Portal, NSBM Intranet Portal, Student Identification App, IntraServe, Exam Management, Survey Report Generator, NDB–NSBM banking integration, Enroll-Now Portal, ASE NSBM Website
+
+## Skills
+
+- Frontend: React, Angular, Three.js, Flutter, React Native, TypeScript, Tailwind CSS
+- Backend: Node.js, Express, Java, PHP, Python
+- Database & Cloud: MongoDB, MySQL, Firebase, AWS, GCP, Docker
+- Design: Figma, Adobe Suite, UX research, Prototyping
+- Tools: Git, GitHub Actions, Jira, Notion, VS Code, Android Studio
+
+## Contact
+
+- Email: raminda5575@gmail.com
+- Phone: +94 75-870 29 22
+- Location: Sri Lanka
+- Website: https://www.ramindak.com
+- LinkedIn: https://linkedin.com/in/raminda-dulmin/
+- GitHub: https://github.com/KADRDulmin
