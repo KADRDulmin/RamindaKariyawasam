@@ -19,6 +19,9 @@ function useDraggable(ref, initialRot = 0) {
       const startY = (e.clientY ?? e.touches?.[0]?.clientY);
       offX = startX - rect.left;
       offY = startY - rect.top;
+      // Lock dimensions before reparenting so grid/flex sizing is preserved
+      el.style.width = rect.width + 'px';
+      el.style.height = rect.height + 'px';
       // Use absolute positioning within document so it scrolls with the page
       const pageX = rect.left + window.scrollX;
       const pageY = rect.top + window.scrollY;

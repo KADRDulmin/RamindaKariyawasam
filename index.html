@@ -1068,6 +1068,10 @@
         }
       }
 
+      /* ---------- 3D SCENES ---------- */
+      /* hero canvas sits behind all content; mug wrap needs cursor:pointer */
+      #board-home canvas[style*="position: absolute"] { border-radius: 0; }
+
       /* TWEAKS panel */
       .tweaks-panel {
         position: fixed;
@@ -1252,6 +1256,9 @@
       </div>
     </div>
 
+    <!-- Three.js — interactive 3D scenes (paper plane + coffee mug) -->
+    <script src="https://unpkg.com/three@0.160.0/build/three.min.js" crossorigin="anonymous"></script>
+
     <!-- React -->
     <script
       src="https://unpkg.com/react@18.3.1/umd/react.development.js"
@@ -1273,6 +1280,8 @@
     <script type="text/babel" src="./src/doodles.jsx"></script>
     <script type="text/babel" src="./src/boards.jsx"></script>
     <script type="text/babel" src="./src/app.jsx"></script>
+    <!-- Interactive 3D scenes: paper plane hero + coffee mug -->
+    <!-- <script src="./src/three-scene.js"></script> -->
 
     <!-- Vanilla helpers: cursor, theme, tabs -->
     <script>
