@@ -230,11 +230,11 @@ function SocialsModal({ onClose }) {
         onClick={e => e.stopPropagation()}
       >
         {/* ── Mobile banner ── */}
-        {isMobile && (
+        {/* {isMobile && (
           <div style={{ background: 'var(--note-yellow)', color: 'var(--note-ink)', fontFamily: "'Patrick Hand', cursive", fontSize: 13.5, lineHeight: 1.55, padding: '10px 52px 10px 16px', borderBottom: '2px solid rgba(0,0,0,0.08)', flexShrink: 0, zIndex: 6, position: 'relative' }}>
             📱 <b>If you are on a mobile phone, hard luck</b> — you won't be able to find my socials from this, so scroll down to the bottom of the page by closing this pop-up.
           </div>
-        )}
+        )} */}
 
         {/* ── Scene area (loading overlay + spline viewer sit here) ── */}
         <div style={{ flex: 1, position: 'relative', overflow: 'hidden', background: 'var(--paper)' }}>
