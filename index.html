@@ -1226,6 +1226,20 @@
       <button class="nav-tab" data-target="contact">Contact</button>
     </nav>
 
+    <!-- Hide chrome on 404 pages -->
+    <script>
+      (function () {
+        var p = window.location.pathname;
+        if (p !== "/" && p !== "") {
+          var hide = ["nav-tabs", "theme-toggle", "board-progress", "tweaks-panel"];
+          hide.forEach(function (id) {
+            var el = document.getElementById(id);
+            if (el) el.style.display = "none";
+          });
+        }
+      })();
+    </script>
+
     <!-- React mount -->
     <div id="root"></div>
 
@@ -1256,6 +1270,9 @@
       </div>
     </div>
 
+    <!-- Spline viewer web component (used by 404 page) -->
+    <script type="module" src="https://unpkg.com/@splinetool/viewer/build/spline-viewer.js"></script>
+
     <!-- Three.js — interactive 3D scenes (paper plane + coffee mug) -->
     <script src="https://unpkg.com/three@0.160.0/build/three.min.js" crossorigin="anonymous"></script>
 
@@ -1282,6 +1299,7 @@
     <script type="text/babel" src="./src/data.jsx"></script>
     <script type="text/babel" src="./src/doodles.jsx"></script>
     <script type="text/babel" src="./src/boards.jsx"></script>
+    <script type="text/babel" src="./src/not-found.jsx"></script>
     <script type="text/babel" src="./src/app.jsx"></script>
     <script src="./src/animations.js"></script>
     <!-- Interactive 3D scenes: paper plane hero + coffee mug -->

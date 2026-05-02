@@ -115,8 +115,183 @@ function RotatingHeroPhoto() {
   );
 }
 
+// ---------- SOCIALS MODAL ----------
+function SocialsModal({ onClose }) {
+  const loadingRef  = useRef(null);
+  const ringRef     = useRef(null);
+  const centerRef   = useRef(null);
+  const viewerRef   = useRef(null);
+  const isMobile    = window.innerWidth <= 768;
+
+  useEffect(() => {
+    const loadingEl = loadingRef.current;
+    const viewer    = viewerRef.current;
+    const ring      = ringRef.current;
+    const center    = centerRef.current;
+    if (!loadingEl || !viewer) return;
+
+    // ── anime.js loading animation (loops until scene ready) ──
+    const dots = loadingEl.querySelectorAll('.ld');
+
+    const dotAnim = anime({
+      targets: dots,
+      scale:   [0.2, 1.6],
+      opacity: [0.08, 1],
+      delay:   anime.stagger(100, { start: 0 }),
+      duration: 520,
+      loop: true,
+      direction: 'alternate',
+      easing: 'easeInOutSine'
+    });
+
+    // outer dashed ring rotates continuously
+    const ringAnim = anime({
+      targets: ring,
+      rotate: '1turn',
+      duration: 3400,
+      loop: true,
+      easing: 'linear'
+    });
+
+    // center "RK" breathes
+    const centerAnim = anime({
+      targets: center,
+      scale: [0.86, 1.12],
+      duration: 1150,
+      loop: true,
+      direction: 'alternate',
+      easing: 'easeInOutSine'
+    });
+
+    // secondary orbit — 3 dots on a smaller ring, counter-rotating
+    const orbitDots = loadingEl.querySelectorAll('.od');
+    const orbitAnim = anime({
+      targets: orbitDots,
+      rotate: '-1turn',
+      translateX: [
+        { value:  28, duration: 0 },
+        { value:  28, duration: 1800 }
+      ],
+      duration: 1800,
+      loop: true,
+      delay: anime.stagger(600),
+      easing: 'linear'
+    });
+
+    // ── Spline scene ──
+    const loadStart = Date.now();
+
+    function revealViewer() {
+      const wait = Math.max(0, 1800 - (Date.now() - loadStart));
+      setTimeout(() => {
+        dotAnim.pause(); ringAnim.pause(); centerAnim.pause(); orbitAnim.pause();
+        anime({
+          targets: loadingEl,
+          opacity: [1, 0],
+          duration: 600,
+          easing: 'easeOutSine',
+          complete: () => { if (loadingEl) loadingEl.style.display = 'none'; }
+        });
+        anime({ targets: viewer, opacity: [0, 1], duration: 700, easing: 'easeInSine' });
+      }, wait);
+    }
+
+    viewer.setAttribute('url', 'https://prod.spline.design/3BUV9O7mq5NeiCvk/scene.splinecode');
+    viewer.addEventListener('load', revealViewer, { once: true });
+    // safety fallback: if the load event never fires, reveal after 14 s
+    const fallback = setTimeout(revealViewer, 14000);
+
+    return () => {
+      dotAnim.pause(); ringAnim.pause(); centerAnim.pause(); orbitAnim.pause();
+      if (viewer) viewer.removeEventListener('load', revealViewer);
+      clearTimeout(fallback);
+    };
+  }, []);
+
+  // 12 dots arranged around a 130 × 130 px circle (center 65 65, r = 46 px)
+  const clockDots = Array.from({ length: 12 }, (_, i) => {
+    const a = (i / 12) * 2 * Math.PI - Math.PI / 2;
+    return { left: 65 + Math.cos(a) * 46, top: 65 + Math.sin(a) * 46 };
+  });
+
+  // 3 smaller orbit dots (counter-rotation handled by anime.js)
+  const orbitDots = Array.from({ length: 3 }, (_, i) => {
+    const a = (i / 3) * 2 * Math.PI - Math.PI / 2;
+    return { left: 65 + Math.cos(a) * 22, top: 65 + Math.sin(a) * 22 };
+  });
+
+  return (
+    <div
+      style={{ position: 'fixed', inset: 0, zIndex: 500, background: 'rgba(0,0,0,0.78)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}
+      onClick={onClose}
+    >
+      <div
+        style={{ position: 'relative', display: 'flex', flexDirection: 'column', width: '100%', maxWidth: 880, height: 'min(82vh, 640px)', borderRadius: 12, overflow: 'hidden', boxShadow: '0 40px 100px rgba(0,0,0,0.6)' }}
+        onClick={e => e.stopPropagation()}
+      >
+        {/* ── Mobile banner ── */}
+        {isMobile && (
+          <div style={{ background: 'var(--note-yellow)', color: 'var(--note-ink)', fontFamily: "'Patrick Hand', cursive", fontSize: 13.5, lineHeight: 1.55, padding: '10px 52px 10px 16px', borderBottom: '2px solid rgba(0,0,0,0.08)', flexShrink: 0, zIndex: 6, position: 'relative' }}>
+            📱 <b>If you are on a mobile phone, hard luck</b> — you won't be able to find my socials from this, so scroll down to the bottom of the page by closing this pop-up.
+          </div>
+        )}
+
+        {/* ── Scene area (loading overlay + spline viewer sit here) ── */}
+        <div style={{ flex: 1, position: 'relative', overflow: 'hidden', background: 'var(--paper)' }}>
+
+          {/* Loading overlay */}
+          <div
+            ref={loadingRef}
+            style={{ position: 'absolute', inset: 0, zIndex: 3, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: 'var(--paper)', gap: 28, backgroundImage: 'radial-gradient(circle, var(--dot,rgba(60,40,20,0.1)) 1.5px, transparent 1.5px)', backgroundSize: '28px 28px' }}
+          >
+            {/* Dot clock + rings */}
+            <div style={{ position: 'relative', width: 130, height: 130 }}>
+
+              {/* Outer dashed rotating ring */}
+              <svg ref={ringRef} style={{ position: 'absolute', top: -14, left: -14, transformOrigin: '77px 77px' }} width={158} height={158} viewBox="0 0 158 158">
+                <circle cx="79" cy="79" r="70" fill="none" stroke="var(--ink)" strokeWidth="1.5" strokeDasharray="10 6" opacity="0.22" />
+              </svg>
+
+              {/* 12 clock-face dots */}
+              {clockDots.map((d, i) => (
+                <div key={i} className="ld" style={{ position: 'absolute', left: d.left, top: d.top, width: 9, height: 9, borderRadius: '50%', background: 'var(--ink)', transform: 'translate(-50%,-50%)', opacity: 0.08 }} />
+              ))}
+
+              {/* 3 inner orbit dots */}
+              {orbitDots.map((d, i) => (
+                <div key={i} className="od" style={{ position: 'absolute', left: d.left, top: d.top, width: 5, height: 5, borderRadius: '50%', background: 'var(--note-yellow, #ffe58a)', transform: 'translate(-50%,-50%)', border: '1.5px solid var(--ink)', opacity: 0.7 }} />
+              ))}
+
+              {/* Center "RK" label */}
+              <div ref={centerRef} style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: "'Caveat Brush', cursive", fontSize: 22, color: 'var(--ink)', transformOrigin: 'center' }}>RK</div>
+            </div>
+
+            <div style={{ fontFamily: "'Patrick Hand', cursive", fontSize: 15, color: 'var(--ink-soft)', letterSpacing: '0.06em' }}>
+              loading 3D scene...
+            </div>
+          </div>
+
+          {/* Spline viewer — hidden until scene loads */}
+          <spline-viewer
+            ref={viewerRef}
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: 0, zIndex: 1 }}
+          ></spline-viewer>
+        </div>
+
+        {/* ── Close button (always visible) ── */}
+        <button
+          onClick={onClose}
+          aria-label="Close"
+          style={{ position: 'absolute', top: 12, right: 12, zIndex: 10, width: 32, height: 32, borderRadius: '50%', border: 'none', cursor: 'pointer', background: 'rgba(0,0,0,0.4)', color: '#fff', fontSize: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', lineHeight: 1, backdropFilter: 'blur(4px)' }}
+        >✕</button>
+      </div>
+    </div>
+  );
+}
+
 // ---------- HOME ----------
 function HomeBoard() {
+  const [showSocials, setShowSocials] = useState(false);
   return (
     <section className="board board-wrap" data-screen-label="01 Home" id="board-home">
       <div style={{position:"relative", maxWidth: 1280, margin: "0 auto", minHeight: "70vh", padding: "0 12px"}}>
@@ -136,6 +311,7 @@ function HomeBoard() {
           <div style={{display:"flex", gap:14, flexWrap:"wrap", marginTop: 24}}>
             <button className="btn" onClick={() => window.gotoBoard('work')}>📎 see my work →</button>
             <button className="btn pink" onClick={() => window.gotoBoard('contact')}>✉️ say hi</button>
+            <button className="btn sky" onClick={() => setShowSocials(true)}>🔗 discover my socials</button>
           </div>
 
           <div style={{marginTop: 40, display: "flex", gap: 18, alignItems: "center", flexWrap:"wrap"}}>
@@ -204,6 +380,8 @@ function HomeBoard() {
           </DraggableNote>
         ))}
       </div>
+
+      {showSocials && <SocialsModal onClose={() => setShowSocials(false)} />}
     </section>
   );
 }

@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>404 — Page Not Found · Raminda Kariyawasam</title>
+  <meta name="robots" content="noindex" />
+  <link rel="canonical" href="https://www.ramindak.com/" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Caveat+Brush&display=swap" rel="stylesheet" />
+
+  <script type="module" src="https://unpkg.com/@splinetool/viewer/build/spline-viewer.js"></script>
+
+  <style>
+    :root {
+      --paper: #f4e8cd;
+      --ink: #2a241f;
+      --note-yellow: #ffe58a;
+      --note-ink: #2a241f;
+      --tape: rgba(255, 238, 170, 0.65);
+      --tape-edge: rgba(200, 170, 80, 0.35);
+      --shadow: rgba(42, 36, 31, 0.28);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --paper: #1e1812;
+        --ink: #f6ecd2;
+        --note-yellow: #f2cf5c;
+        --note-ink: #1b140e;
+        --tape: rgba(255, 230, 160, 0.55);
+        --tape-edge: rgba(255, 230, 160, 0.3);
+        --shadow: rgba(0, 0, 0, 0.5);
+      }
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--paper);
+      font-family: 'Patrick Hand', cursive;
+    }
+
+    spline-viewer {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      pointer-events: none;
+    }
+
+    .note-wrap {
+      position: relative;
+      max-width: 400px;
+      width: 100%;
+      transform: rotate(-2.5deg);
+      pointer-events: all;
+      will-change: opacity, transform;
+    }
+
+    .tape-strip {
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      transform: translateX(-50%) rotate(1deg);
+      width: 88px;
+      height: 30px;
+      background: var(--tape);
+      border: 1px solid var(--tape-edge);
+      border-radius: 4px;
+      z-index: 1;
+    }
+
+    .note-card {
+      background: var(--note-yellow);
+      padding: 40px 32px 28px;
+      border-radius: 4px;
+      box-shadow: 5px 8px 24px var(--shadow), 0 2px 6px var(--shadow);
+      position: relative;
+    }
+
+    .note-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 17px;
+      color: var(--note-ink);
+      opacity: 0.4;
+      line-height: 1;
+      padding: 4px 6px;
+      border-radius: 4px;
+      font-family: inherit;
+      transition: opacity 0.15s;
+    }
+    .note-close:hover { opacity: 0.85; }
+
+    .four-oh-four {
+      font-family: 'Caveat Brush', cursive;
+      font-size: clamp(72px, 18vw, 100px);
+      line-height: 0.9;
+      color: var(--note-ink);
+      margin-bottom: 10px;
+      letter-spacing: -2px;
+    }
+
+    .subtitle {
+      font-family: 'Caveat Brush', cursive;
+      font-size: clamp(17px, 4vw, 23px);
+      color: var(--note-ink);
+      margin-bottom: 14px;
+    }
+
+    .note-card p {
+      font-size: 15px;
+      color: var(--note-ink);
+      line-height: 1.65;
+      margin-bottom: 8px;
+    }
+
+    .home-btn {
+      display: inline-block;
+      background: var(--ink);
+      color: var(--paper);
+      font-family: 'Patrick Hand', cursive;
+      font-size: 15px;
+      padding: 10px 22px;
+      border-radius: 999px;
+      text-decoration: none;
+      box-shadow: 2px 3px 8px var(--shadow);
+      letter-spacing: 0.02em;
+      margin-top: 20px;
+      transition: opacity 0.15s;
+    }
+    .home-btn:hover { opacity: 0.82; }
+
+    /* countdown bar — drains left-to-right over 12 s */
+    .countdown-bar {
+      height: 3px;
+      background: rgba(42, 36, 31, 0.12);
+      border-radius: 2px;
+      margin-top: 18px;
+      overflow: hidden;
+    }
+    .countdown-bar::after {
+      content: '';
+      display: block;
+      height: 100%;
+      background: var(--ink);
+      opacity: 0.35;
+      border-radius: 2px;
+      transform-origin: left;
+      animation: bar-drain 12s linear forwards;
+    }
+    @keyframes bar-drain {
+      from { transform: scaleX(1); }
+      to   { transform: scaleX(0); }
+    }
+  </style>
+</head>
+<body>
+  <spline-viewer id="scene"></spline-viewer>
+
+  <div class="overlay">
+    <div class="note-wrap" id="note-wrap">
+      <div class="tape-strip"></div>
+      <div class="note-card">
+        <button class="note-close" onclick="dismissNote()" aria-label="Close note">✕</button>
+        <div class="four-oh-four">404</div>
+        <div class="subtitle">You've fallen off the cork board.</div>
+        <p>This page doesn't exist — not even as a crumpled draft. We checked under the keyboard, behind the monitor, and inside every sticky note.</p>
+        <p>Nothing. Nada. It's gone. Maybe it got stuck to someone's shoe. 🙃</p>
+        <a class="home-btn" href="/">← stick me back home</a>
+        <div class="countdown-bar" title="This note disappears in ~12 seconds"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Load Spline scene once the custom element is registered
+    customElements.whenDefined('spline-viewer').then(function () {
+      document.getElementById('scene').setAttribute(
+        'url',
+        'https://prod.spline.design/3BUV9O7mq5NeiCvk/scene.splinecode'
+      );
+    });
+
+    // Auto-dismiss note after 12 seconds; also wired to the ✕ button
+    var _dismissTimer;
+
+    function dismissNote() {
+      clearTimeout(_dismissTimer);
+      var wrap = document.getElementById('note-wrap');
+      if (!wrap) return;
+      wrap.style.transition = 'opacity 0.6s ease, transform 0.7s ease';
+      wrap.style.opacity = '0';
+      wrap.style.transform = 'rotate(-2.5deg) translateY(-28px) scale(0.9)';
+      setTimeout(function () { wrap.style.display = 'none'; }, 720);
+    }
+
+    _dismissTimer = setTimeout(dismissNote, 12000);
+  </script>
+</body>
+</html>

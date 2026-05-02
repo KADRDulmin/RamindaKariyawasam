@@ -2,6 +2,9 @@
 const { useEffect, useState } = React;
 
 function App() {
+  const path = window.location.pathname;
+  if (path !== "/" && path !== "") return <NotFound />;
+
   return (
     <div style={{position:"relative", minHeight:"100vh"}}>
       <HomeBoard />
