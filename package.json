@@ -13,5 +13,8 @@
   "description": "",
   "devDependencies": {
     "serve": "^14.2.6"
+  },
+  "dependencies": {
+    "animejs": "^4.4.1"
   }
 }
