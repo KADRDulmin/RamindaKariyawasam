@@ -289,9 +289,215 @@ function SocialsModal({ onClose }) {
   );
 }
 
+// ---------- RESUME DOWNLOAD OVERLAY ----------
+function ResumeDownloadOverlay({ onComplete }) {
+  const overlayRef = useRef(null);
+  const stampRef   = useRef(null);
+
+  // Randomised once per open so the animation is never identical
+  const stampRot = useRef((Math.random() * 18 - 9).toFixed(1));
+
+  const allSteps = [
+    { icon: '☕', text: 'Brewing coffee for extra energy...' },
+    { icon: '🎯', text: 'Sorting 45+ shipped projects...' },
+    { icon: '✨', text: 'Polishing achievements to a shine...' },
+    { icon: '🔥', text: 'Adding the secret sauce...' },
+    { icon: '🧠', text: 'Compressing 4 years of wisdom...' },
+    { icon: '🚀', text: 'Launching resume into orbit...' },
+    { icon: '🎪', text: 'Teaching the CV to do backflips...' },
+    { icon: '🌍', text: 'Sourcing compliments from the internet...' },
+  ];
+  const steps = useRef(
+    [...allSteps].sort(() => Math.random() - 0.5).slice(0, 4)
+  ).current;
+
+  const palette = ['#ffe58a','#ffb7c5','#b7e3c2','#a9d2ef','#d7c2f2','#ffcfa1'];
+  const confetti = useRef(
+    Array.from({ length: 55 }, (_, k) => ({
+      id: k,
+      color: palette[Math.floor(Math.random() * palette.length)],
+      w: Math.random() * 12 + 5,
+      h: Math.random() * 7  + 4,
+      round: Math.random() > 0.4 ? '50%' : `${Math.floor(Math.random() * 4)}px`
+    }))
+  ).current;
+
+  useEffect(() => {
+    const el    = overlayRef.current;
+    const stamp = stampRef.current;
+    const ROT   = parseFloat(stampRot.current);
+    const timers = [];
+    const T = (fn, ms) => timers.push(setTimeout(fn, ms));
+
+    // Phase 1 — backdrop fades in
+    anime({ targets: el, opacity: [0, 1], duration: 300, easing: 'easeOutSine' });
+
+    // Phase 2 — title springs down
+    T(() => anime({
+      targets: el.querySelector('.rda-title'),
+      translateY: [-70, 0], scale: [0.5, 1], opacity: [0, 1],
+      duration: 680, easing: 'spring(1, 75, 12, 3)'
+    }), 260);
+
+    // Phase 3 — steps slide in alternating left / right, each with checkmark
+    steps.forEach((_, i) => {
+      const base = 900 + i * 530;
+      const fromX = i % 2 === 0 ? -120 : 120;
+      const fromR = i % 2 === 0 ? '-9deg' : '9deg';
+      T(() => anime({
+        targets: el.querySelector(`.rda-step-${i}`),
+        translateX: [fromX, 0], rotate: [fromR, '0deg'],
+        opacity: [0, 1], duration: 440, easing: 'easeOutBack'
+      }), base);
+      T(() => anime({
+        targets: el.querySelector(`.rda-chk-${i}`),
+        scale: [0, 1.9, 1], rotate: ['-30deg', '12deg', '0deg'],
+        opacity: [0, 1], duration: 380, easing: 'easeOutBack'
+      }), base + 450);
+    });
+
+    // Phase 4 — stamp crashes down from above
+    const stampT = 900 + steps.length * 530 + 260;
+    T(() => anime({
+      targets: stamp,
+      translateY: [-Math.min(window.innerHeight * 0.55, 420), 0],
+      rotate: ['-24deg', `${ROT}deg`],
+      scale: [1.5, 1], opacity: [0, 1],
+      duration: 760, easing: 'spring(1, 55, 9, 5)'
+    }), stampT);
+
+    // Shockwave ring on impact
+    T(() => anime({
+      targets: el.querySelector('.rda-wave'),
+      scale: [0, 20], opacity: [0.55, 0],
+      duration: 680, easing: 'easeOutExpo'
+    }), stampT + 55);
+
+    // Stamp aftershock wobble
+    T(() => anime({
+      targets: stamp,
+      rotate: [`${ROT + 5}deg`, `${ROT}deg`],
+      duration: 420, easing: 'spring(1, 90, 14, 0)'
+    }), stampT + 790);
+
+    // Phase 5 — confetti explosion from center
+    T(() => anime({
+      targets: el.querySelectorAll('.rda-confetti'),
+      translateX: () => anime.random(
+        -Math.min(window.innerWidth  * 0.47, 400),
+         Math.min(window.innerWidth  * 0.47, 400)
+      ),
+      translateY: () => anime.random(
+        -Math.min(window.innerHeight * 0.42, 320),
+         Math.min(window.innerHeight * 0.42, 320)
+      ),
+      rotate:  () => anime.random(-960, 960),
+      opacity: [1, 0],
+      scale:   [() => (anime.random(9, 17) / 10), 0],
+      duration: () => anime.random(1100, 1950),
+      delay:   anime.stagger(15),
+      easing:  'easeOutExpo'
+    }), stampT + 370);
+
+    // Phase 6 — "sending your way…" types out character by character
+    const dlT = stampT + 1380;
+    T(() => anime({
+      targets: el.querySelectorAll('.rda-dl-char'),
+      opacity: [0, 1], translateY: [9, 0],
+      delay: anime.stagger(44), duration: 160, easing: 'easeOutSine'
+    }), dlT);
+
+    // Phase 7 — overlay scales up + fades out → download fires
+    T(() => anime({
+      targets: el,
+      opacity: [1, 0], scale: [1, 1.05],
+      duration: 500, easing: 'easeInCubic',
+      complete: onComplete
+    }), dlT + 1150);
+
+    return () => timers.forEach(clearTimeout);
+  }, []);
+
+  const dlText = '⬇ sending your way...';
+
+  return (
+    <div
+      ref={overlayRef}
+      style={{
+        position: 'fixed', inset: 0, zIndex: 600,
+        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+        background: 'var(--paper)', opacity: 0, overflow: 'hidden',
+        backgroundImage: 'radial-gradient(circle, var(--dot,rgba(60,40,20,0.1)) 1.5px, transparent 1.5px)',
+        backgroundSize: '28px 28px'
+      }}
+    >
+      {/* Shockwave ring — centred at stamp origin (~58% down) */}
+      <div className="rda-wave" style={{ position: 'absolute', top: '58%', left: '50%', transform: 'translate(-50%,-50%)', width: 22, height: 22, borderRadius: '50%', border: '3px solid var(--ink)', opacity: 0, pointerEvents: 'none' }} />
+
+      {/* Confetti — all pieces originate at viewport centre */}
+      <div style={{ position: 'absolute', top: '50%', left: '50%', pointerEvents: 'none', zIndex: 0 }}>
+        {confetti.map(c => (
+          <div key={c.id} className="rda-confetti" style={{ position: 'absolute', width: c.w, height: c.h, background: c.color, borderRadius: c.round, border: '1px solid rgba(42,36,31,0.18)' }} />
+        ))}
+      </div>
+
+      {/* Content column */}
+      <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', maxWidth: 440, padding: '0 clamp(16px,5vw,28px)' }}>
+
+        {/* Title */}
+        <div className="rda-title" style={{ fontFamily: "'Caveat Brush',cursive", fontSize: 'clamp(20px,5vw,36px)', color: 'var(--ink)', marginBottom: 'clamp(16px,3vh,28px)', textAlign: 'center', opacity: 0, lineHeight: 1.2 }}>
+          📄 Assembling your resume...
+        </div>
+
+        {/* Steps */}
+        <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 'clamp(8px,1.5vh,12px)', marginBottom: 'clamp(14px,2.5vh,26px)' }}>
+          {steps.map((s, i) => (
+            <div key={i} className={`rda-step-${i}`} style={{ display: 'flex', alignItems: 'center', gap: 12, background: 'var(--paper-2,rgba(244,232,205,0.7))', borderRadius: 8, padding: 'clamp(8px,1.5vh,12px) 14px', boxShadow: '2px 3px 10px var(--shadow)', opacity: 0, border: '1.5px solid var(--cork,rgba(42,36,31,0.12))' }}>
+              <span style={{ fontSize: 'clamp(16px,3vw,20px)', flexShrink: 0 }}>{s.icon}</span>
+              <span style={{ fontFamily: "'Patrick Hand',cursive", fontSize: 'clamp(12px,2.5vw,15px)', color: 'var(--ink)', flex: 1 }}>{s.text}</span>
+              <span className={`rda-chk-${i}`} style={{ fontSize: 'clamp(15px,3vw,18px)', opacity: 0, transform: 'scale(0)', flexShrink: 0 }}>✅</span>
+            </div>
+          ))}
+        </div>
+
+        {/* Stamp */}
+        <div ref={stampRef} style={{ position: 'relative', opacity: 0, marginBottom: 'clamp(14px,2.5vh,24px)' }}>
+          <div style={{ border: '3px solid rgba(200,50,50,0.75)', borderRadius: 6, padding: 'clamp(8px,1.5vw,14px) clamp(16px,3.5vw,32px)', transform: `rotate(${stampRot.current}deg)`, boxShadow: '3px 4px 14px rgba(200,50,50,0.2)' }}>
+            <div style={{ fontFamily: "'Caveat Brush',cursive", fontSize: 'clamp(17px,4vw,28px)', color: 'rgba(200,50,50,0.85)', textAlign: 'center', lineHeight: 1.15, letterSpacing: '0.04em' }}>
+              Certified Awesome™
+            </div>
+            <div style={{ fontFamily: "'Patrick Hand',cursive", fontSize: 'clamp(10px,2vw,13px)', color: 'rgba(200,50,50,0.65)', textAlign: 'center', marginTop: 3 }}>
+              Raminda Kariyawasam Approved ✓
+            </div>
+          </div>
+        </div>
+
+        {/* Download text — each character animates in */}
+        <div style={{ fontFamily: "'Caveat Brush',cursive", fontSize: 'clamp(15px,3.5vw,22px)', color: 'var(--ink)', textAlign: 'center' }}>
+          {dlText.split('').map((ch, i) => (
+            <span key={i} className="rda-dl-char" style={{ opacity: 0, display: 'inline-block', whiteSpace: 'pre' }}>{ch}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ---------- HOME ----------
 function HomeBoard() {
   const [showSocials, setShowSocials] = useState(false);
+  const [showResume,  setShowResume]  = useState(false);
+
+  function handleResumeComplete() {
+    setShowResume(false);
+    const a = document.createElement('a');
+    a.href = encodeURI('/uploads/Resume - Raminda Kariyawasam.pdf');
+    a.download = 'Resume - Raminda Kariyawasam.pdf';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => document.body.removeChild(a), 200);
+  }
+
   return (
     <section className="board board-wrap" data-screen-label="01 Home" id="board-home">
       <div style={{position:"relative", maxWidth: 1280, margin: "0 auto", minHeight: "70vh", padding: "0 12px"}}>
@@ -312,6 +518,7 @@ function HomeBoard() {
             <button className="btn" onClick={() => window.gotoBoard('work')}>📎 see my work →</button>
             <button className="btn pink" onClick={() => window.gotoBoard('contact')}>✉️ say hi</button>
             <button className="btn sky" onClick={() => setShowSocials(true)}>🔗 discover my socials</button>
+            <button className="btn mint" onClick={() => setShowResume(true)}>📎 grab my resume</button>
           </div>
 
           <div style={{marginTop: 40, display: "flex", gap: 18, alignItems: "center", flexWrap:"wrap"}}>
@@ -381,6 +588,7 @@ function HomeBoard() {
         ))}
       </div>
 
+      {showResume  && <ResumeDownloadOverlay onComplete={handleResumeComplete} />}
       {showSocials && <SocialsModal onClose={() => setShowSocials(false)} />}
     </section>
   );
