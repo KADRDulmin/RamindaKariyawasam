@@ -51,7 +51,7 @@ const RK = {
     // ───────────────────────── CLIENT WORK ─────────────────────────
     {
       id: "usdeed", name: "USDeedManagement", tag: "Multi-County US Deed Platform",
-      category: "client", color: "sky", icon: "📜",
+      category: "client", color: "sky", icon: "scroll",
       stack: ["Angular 21", "Spring Boot", "Java 21", "MySQL", "AWS", "Firebase", "Docker"],
       body: "Deed record management & public deed search across US counties, built for a title-abstract client.",
       role: "Full-Stack Engineer", org: "Leon Mineral Abstract (client)", year: "2025",
@@ -67,7 +67,7 @@ const RK = {
     },
     {
       id: "landman", name: "LandMan For A Day", tag: "Mineral-Rights Landman Marketplace",
-      category: "client", color: "peach", icon: "🛢️",
+      category: "client", color: "peach", icon: "map-trifold",
       stack: ["Angular 17", "Spring Boot", "Java 17", "PostgreSQL", "JWT", "Docker"],
       body: "A marketplace connecting property owners with qualified landmen for mineral-rights research.",
       role: "Full-Stack Engineer", org: "Title Data Design (client)", year: "2025",
@@ -83,7 +83,7 @@ const RK = {
     },
     {
       id: "lensly", name: "Lensly LK", tag: "Premium Camera Rental Platform",
-      category: "client", color: "mint", icon: "📷",
+      category: "client", color: "mint", icon: "camera",
       stack: ["PHP 8", "MySQL", "PHPMailer", "TCPDF", "JavaScript"],
       body: "An Apple-inspired, trilingual camera-rental management platform for a Sri Lankan business.",
       role: "Full-Stack Developer", org: "Lensly LK (client)", year: "2025",
@@ -101,7 +101,7 @@ const RK = {
     // ───────────────────── STARTUPS & PERSONAL ─────────────────────
     {
       id: "planzevo", name: "PlanzEvo", tag: "AI Event-Planning Platform",
-      category: "personal", color: "lav", icon: "🎉",
+      category: "personal", color: "lav", icon: "confetti",
       stack: ["Go", "AWS Lambda", "Neon Postgres", "Angular 21", "Nx", "Firebase", "AWS CDK"],
       body: "Sri Lanka's AI-powered event-planning platform — five customer suites plus a shared vendor marketplace.",
       role: "Founder / Full-Stack Engineer", org: "Startup", year: "2025 — now",
@@ -117,7 +117,7 @@ const RK = {
     },
     {
       id: "influencelk", name: "InfluenceLK", tag: "Influencer Collaboration Marketplace",
-      category: "personal", color: "pink", icon: "🤝",
+      category: "personal", color: "pink", icon: "handshake",
       stack: ["NestJS", "PostgreSQL", "TypeORM", "Next.js 16", "Socket.IO", "WebRTC"],
       body: "A white-label marketplace connecting Sri Lankan businesses with influencers — 'Fiverr × Upwork' with escrow.",
       role: "Founder / Full-Stack Engineer", org: "Startup", year: "2025",
@@ -133,7 +133,7 @@ const RK = {
     },
     {
       id: "literanet", name: "LiteraNet", tag: "Smart Library Platform",
-      category: "personal", color: "sky", icon: "📚",
+      category: "personal", color: "sky", icon: "books",
       stack: ["Node.js", "Express", "Angular", "MongoDB", "Docker", "k6"],
       body: "A full-stack MEAN library-management platform with a clean, modern reading experience.",
       role: "Full-Stack Developer", org: "Personal project", year: "2024",
@@ -148,7 +148,7 @@ const RK = {
     },
     {
       id: "kitchenpal", name: "KitchenPal", tag: "Kitchen & Food Management App",
-      category: "personal", color: "yellow", icon: "🍳",
+      category: "personal", color: "yellow", icon: "cooking-pot",
       stack: ["TypeScript", "Node.js", "Mobile", "MySQL"],
       body: "A kitchen and food-management app with a TypeScript/Node backend and a companion mobile client.",
       role: "Full-Stack Developer", org: "Personal project", year: "2024",
@@ -163,7 +163,7 @@ const RK = {
     },
     {
       id: "canteen", name: "Campus Canteen Ordering", tag: "Cross-Platform Lunch Ordering",
-      category: "personal", color: "peach", icon: "🍱",
+      category: "personal", color: "peach", icon: "fork-knife",
       stack: ["Flutter", "Dart", "Backend API"],
       body: "A cross-platform Flutter app for ordering lunch from the campus canteen.",
       role: "Mobile Developer", org: "Campus project", year: "2024",
@@ -180,7 +180,7 @@ const RK = {
     // ─────────────────── NSBM UNIVERSITY SYSTEMS ───────────────────
     {
       id: "nprofile", name: "UMIS Student Portal", tag: "NSBM Student Portal PWA",
-      category: "nsbm", color: "mint", icon: "🎓",
+      category: "nsbm", color: "mint", icon: "graduation-cap",
       stack: ["Next.js 16", "React 19", "NextAuth v5", "MySQL", "Gemini AI", "Tailwind"],
       body: "A Next.js PWA student portal for NSBM Green University with a role-gated staff area and AI features.",
       role: "Associate Software Engineer", org: "NSBM Green University", year: "2025 — now",
@@ -196,7 +196,7 @@ const RK = {
     },
     {
       id: "timetable", name: "Timetable Generator (Gen2)", tag: "CP-SAT Semester Timetabling",
-      category: "nsbm", color: "sky", icon: "🗓️",
+      category: "nsbm", color: "sky", icon: "calendar-dots",
       stack: ["Next.js 15", "Python", "FastAPI", "OR-Tools", "MySQL", "Entra ID"],
       body: "A constraint-solver semester timetable & lecture-hall management system for NSBM.",
       role: "Associate Software Engineer", org: "NSBM Green University", year: "2025",
@@ -212,7 +212,7 @@ const RK = {
     },
     {
       id: "umis2", name: "UMIS 2.0", tag: "University System Master Spec",
-      category: "nsbm", color: "lav", icon: "🏛️",
+      category: "nsbm", color: "lav", icon: "buildings",
       stack: ["Specification", "Architecture", "MySQL", "Security / IPDR"],
       body: "The master specification & architecture 'control tower' for NSBM's next-gen University Management Information System.",
       role: "Systems Architect / Author", org: "NSBM Green University", year: "2025",
@@ -228,7 +228,7 @@ const RK = {
     },
     {
       id: "ragbot", name: "NSBM RAG Bot", tag: "AI Retrieval-Augmented Chatbot",
-      category: "nsbm", color: "mint", icon: "🤖",
+      category: "nsbm", color: "mint", icon: "robot",
       stack: ["PHP", "Gemini API", "MySQL", "Python", "JavaScript"],
       body: "An AI RAG chatbot answering student queries from a document knowledge base, embedded on nsbm.ac.lk.",
       role: "Associate Software Engineer", org: "NSBM Green University", year: "2025",
@@ -244,7 +244,7 @@ const RK = {
     },
     {
       id: "examtrack", name: "ExamTrack", tag: "Exam Verification & Attendance",
-      category: "nsbm", color: "yellow", icon: "📝",
+      category: "nsbm", color: "yellow", icon: "exam",
       stack: ["PHP", "MySQL", "LDAP", "PHPMailer"],
       body: "An exam identity-verification and attendance system for NSBM invigilators and the exam department.",
       role: "Associate Software Engineer", org: "NSBM Green University", year: "2024",
@@ -260,7 +260,7 @@ const RK = {
     },
     {
       id: "enrollnow", name: "Enroll-Now Portal", tag: "Enrollment & Lead Management",
-      category: "nsbm", color: "pink", icon: "✅",
+      category: "nsbm", color: "pink", icon: "user-plus",
       stack: ["PHP 8", "MySQL", "JWT", "Chart.js", "PHPMailer"],
       body: "A web enrollment & lead-management system where prospects apply and staff track applications.",
       role: "Associate Software Engineer", org: "NSBM Green University", year: "2024",
@@ -276,7 +276,7 @@ const RK = {
     },
     {
       id: "research", name: "Research Portal", tag: "Academic Research Management",
-      category: "nsbm", color: "lav", icon: "🔬",
+      category: "nsbm", color: "lav", icon: "microscope",
       stack: ["PHP", "MySQL", "LDAP", "DOI / Scopus"],
       body: "A research-paper management portal for faculty with DOI and Scopus integration.",
       role: "Associate Software Engineer", org: "NSBM Green University", year: "2024",
@@ -291,7 +291,7 @@ const RK = {
     },
     {
       id: "library", name: "Library Management Portal", tag: "Koha-Integrated Library System",
-      category: "nsbm", color: "peach", icon: "📖",
+      category: "nsbm", color: "peach", icon: "book-open",
       stack: ["PHP", "Koha ILS", "Azure OAuth", "MySQL", "PHPMailer"],
       body: "A library portal integrating the Koha ILS with Microsoft / Azure single sign-on.",
       role: "Associate Software Engineer", org: "NSBM Green University", year: "2024",
@@ -306,7 +306,7 @@ const RK = {
     },
     {
       id: "jobportal", name: "NSBM Job Portal", tag: "Student Careers & Jobs",
-      category: "nsbm", color: "sky", icon: "💼",
+      category: "nsbm", color: "sky", icon: "briefcase",
       stack: ["PHP", "MySQL", "PHPMailer", "Composer"],
       body: "A job and career portal for NSBM students with CV handling and admin tools.",
       role: "Associate Software Engineer", org: "NSBM Green University", year: "2024",
@@ -321,7 +321,7 @@ const RK = {
     },
     {
       id: "intranet", name: "NSBM Intranet Portal", tag: "Internal Staff Hub with SSO",
-      category: "nsbm", color: "yellow", icon: "🔐",
+      category: "nsbm", color: "yellow", icon: "lock-key",
       stack: ["PHP", "OAuth / SSO", "MySQL"],
       body: "A single internal hub aggregating NSBM's university apps, notices and staff tools behind SSO.",
       role: "Associate Software Engineer", org: "NSBM Green University", year: "2024",

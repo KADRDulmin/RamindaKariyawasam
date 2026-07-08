@@ -311,14 +311,14 @@ function ResumeDownloadOverlay({ onComplete }) {
   const stampRot = useRef((Math.random() * 18 - 9).toFixed(1));
 
   const allSteps = [
-    { icon: '☕', text: 'Brewing coffee for extra energy...' },
-    { icon: '🎯', text: 'Sorting 45+ shipped projects...' },
-    { icon: '✨', text: 'Polishing achievements to a shine...' },
-    { icon: '🔥', text: 'Adding the secret sauce...' },
-    { icon: '🧠', text: 'Compressing 4 years of wisdom...' },
-    { icon: '🚀', text: 'Launching resume into orbit...' },
-    { icon: '🎪', text: 'Teaching the CV to do backflips...' },
-    { icon: '🌍', text: 'Sourcing compliments from the internet...' },
+    { icon: 'coffee', text: 'Brewing coffee for extra energy...' },
+    { icon: 'target', text: 'Sorting 45+ shipped projects...' },
+    { icon: 'sparkle', text: 'Polishing achievements to a shine...' },
+    { icon: 'flame', text: 'Adding the secret sauce...' },
+    { icon: 'brain', text: 'Compressing 4 years of wisdom...' },
+    { icon: 'rocket-launch', text: 'Launching resume into orbit...' },
+    { icon: 'tent', text: 'Teaching the CV to do backflips...' },
+    { icon: 'globe', text: 'Sourcing compliments from the internet...' },
   ];
   const steps = useRef(
     [...allSteps].sort(() => Math.random() - 0.5).slice(0, 4)
@@ -431,7 +431,7 @@ function ResumeDownloadOverlay({ onComplete }) {
     return () => timers.forEach(clearTimeout);
   }, []);
 
-  const dlText = '⬇ sending your way...';
+  const dlText = 'sending your way...';
 
   return (
     <div
@@ -459,16 +459,16 @@ function ResumeDownloadOverlay({ onComplete }) {
 
         {/* Title */}
         <div className="rda-title" style={{ fontFamily: "'Caveat Brush',cursive", fontSize: 'clamp(20px,5vw,36px)', color: 'var(--ink)', marginBottom: 'clamp(16px,3vh,28px)', textAlign: 'center', opacity: 0, lineHeight: 1.2 }}>
-          📄 Assembling your resume...
+          <Icon name="file-text" size="0.82em" style={{ marginRight: 10 }} />Assembling your resume...
         </div>
 
         {/* Steps */}
         <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 'clamp(8px,1.5vh,12px)', marginBottom: 'clamp(14px,2.5vh,26px)' }}>
           {steps.map((s, i) => (
             <div key={i} className={`rda-step-${i}`} style={{ display: 'flex', alignItems: 'center', gap: 12, background: 'var(--paper-2,rgba(244,232,205,0.7))', borderRadius: 8, padding: 'clamp(8px,1.5vh,12px) 14px', boxShadow: '2px 3px 10px var(--shadow)', opacity: 0, border: '1.5px solid var(--cork,rgba(42,36,31,0.12))' }}>
-              <span style={{ fontSize: 'clamp(16px,3vw,20px)', flexShrink: 0 }}>{s.icon}</span>
+              <span style={{ fontSize: 'clamp(16px,3vw,20px)', flexShrink: 0, display: 'inline-flex', color: 'var(--ink)' }}><Icon name={s.icon} size="1em" /></span>
               <span style={{ fontFamily: "'Patrick Hand',cursive", fontSize: 'clamp(12px,2.5vw,15px)', color: 'var(--ink)', flex: 1 }}>{s.text}</span>
-              <span className={`rda-chk-${i}`} style={{ fontSize: 'clamp(15px,3vw,18px)', opacity: 0, transform: 'scale(0)', flexShrink: 0 }}>✅</span>
+              <span className={`rda-chk-${i}`} style={{ fontSize: 'clamp(15px,3vw,18px)', opacity: 0, transform: 'scale(0)', flexShrink: 0, display: 'inline-flex', color: '#3a9d5d' }}><Icon name="check-circle" size="1em" /></span>
             </div>
           ))}
         </div>
@@ -528,10 +528,10 @@ function HomeBoard() {
             I'm an <b>Associate Software Engineer</b> at NSBM Green University. I build <span style={{background:"var(--note-yellow)", color:"var(--note-ink)", padding:"0 6px", borderRadius:4}}>Awsome</span> full-stack products — web, mobile, a little 3D.
           </p>
           <div style={{display:"flex", gap:14, flexWrap:"wrap", marginTop: 24}}>
-            <button className="btn" onClick={() => window.gotoBoard('work')}>📎 see my work →</button>
-            <button className="btn pink" onClick={() => window.gotoBoard('contact')}>✉️ say hi</button>
-            <button className="btn sky" onClick={() => setShowSocials(true)}>🔗 discover my socials</button>
-            <button className="btn mint" onClick={() => setShowResume(true)}>📎 grab my resume</button>
+            <button className="btn" onClick={() => window.gotoBoard('work')}><Icon name="briefcase" size="1em" style={{marginRight:7}} />see my work →</button>
+            <button className="btn pink" onClick={() => window.gotoBoard('contact')}><Icon name="hand-waving" size="1em" style={{marginRight:7}} />say hi</button>
+            <button className="btn sky" onClick={() => setShowSocials(true)}><Icon name="share-network" size="1em" style={{marginRight:7}} />discover my socials</button>
+            <button className="btn mint" onClick={() => setShowResume(true)}><Icon name="file-text" size="1em" style={{marginRight:7}} />grab my resume</button>
           </div>
 
           <div style={{marginTop: 40, display: "flex", gap: 18, alignItems: "center", flexWrap:"wrap"}}>
@@ -558,7 +558,7 @@ function HomeBoard() {
             }}/>
             <RotatingHeroPhoto />
             <div className="scribble" style={{fontSize:"1.5rem", textAlign:"center", marginTop: 6}}>
-              that's me ✌️
+              that's me <Icon name="hand-peace" size="0.95em" style={{marginLeft:2}} />
             </div>
           </div>
         </div>
@@ -629,7 +629,7 @@ function AboutBoard() {
               <ul style={{listStyle:"none", padding:0, margin:0}}>
                 {RK.quickFacts.map((f, i) => (
                   <li key={i} style={{fontSize:"1.1rem", margin:"6px 0", display:"flex", gap:10}}>
-                    <span>✦</span><span>{f}</span>
+                    <span style={{color:"var(--ink-soft)", marginTop:2}}><Icon name="sparkle" size={15} /></span><span>{f}</span>
                   </li>
                 ))}
               </ul>
@@ -652,7 +652,7 @@ function AboutBoard() {
                   <img src="assets/photo-grad.png" alt="Raminda Kariyawasam at University of Plymouth graduation ceremony, 2025" style={{maxWidth:"100%", maxHeight:"100%", objectFit:"contain"}}/>
                 </div>
                 <div className="scribble" style={{fontSize:"1.3rem", textAlign:"center", marginTop: 6, color:"var(--ink)"}}>
-                  Plymouth, 2025 🎓
+                  Plymouth, 2025 <Icon name="graduation-cap" size="0.95em" />
                 </div>
               </div>
             </div>
@@ -720,7 +720,7 @@ function ProjectModal({ project, onClose }) {
 
         {/* header */}
         <div style={{ display: "flex", alignItems: "flex-start", gap: 14, paddingRight: 40 }}>
-          <div style={{ fontSize: 44, lineHeight: 1 }}>{p.icon}</div>
+          <Icon name={p.icon} size={42} style={{ marginTop: 2 }} />
           <div>
             <h3 className="scribble" style={{ fontSize: "2.1rem", lineHeight: 1.05, margin: 0 }}>{p.name}</h3>
             <div className="mono" style={{ fontSize: 13, opacity: .8, marginTop: 4 }}>{p.tag}</div>
@@ -743,7 +743,7 @@ function ProjectModal({ project, onClose }) {
             <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "grid", gap: 9 }}>
               {p.features.map((f, i) => (
                 <li key={i} style={{ display: "flex", gap: 10, fontSize: "1rem", lineHeight: 1.45 }}>
-                  <span aria-hidden="true" style={{ flex: "0 0 auto", marginTop: 1 }}>✏️</span>
+                  <span aria-hidden="true" style={{ flex: "0 0 auto", marginTop: 3, opacity: .65 }}><Icon name="pencil-simple" size={15} /></span>
                   <span>{f}</span>
                 </li>
               ))}
@@ -802,7 +802,7 @@ function ProjectCard({ p, i, onOpen }) {
       onClick={handleClick}
     >
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <div style={{ fontSize: 32 }}>{p.icon}</div>
+        <Icon name={p.icon} size={30} />
         <div className="mono" style={{ fontSize: 12, opacity: .65 }}>#{String(i + 1).padStart(2, "0")}</div>
       </div>
       <h3 className="scribble" style={{ fontSize: "1.8rem", marginTop: 8 }}>{p.name}</h3>
@@ -921,7 +921,7 @@ function ContactBoard() {
   const [msg, setMsg] = useState("");
   const [sent, setSent] = useState(false);
   const mailto = () => {
-    const s = encodeURIComponent(subject || `Hello from ${name || "a friend"} 👋`);
+    const s = encodeURIComponent(subject || `Hello from ${name || "a friend"}`);
     const b = encodeURIComponent(`Hi Raminda,\n\n${msg}\n\n— ${name}`);
     window.location.href = `mailto:${RK.email}?subject=${s}&body=${b}`;
     setSent(true);
@@ -933,7 +933,7 @@ function ContactBoard() {
       <div style={{maxWidth: 1100, margin: "0 auto"}}>
         <div className="section-head">
           <div className="num">05</div>
-          <h2>Let's talk. 📮</h2>
+          <h2>Let's talk. <Icon name="mailbox" size="0.8em" /></h2>
         </div>
         <p style={{maxWidth: 560, fontSize:"1.1rem"}}>Pin a note to my fridge. I reply — usually within a cup of coffee.</p>
 
@@ -959,7 +959,7 @@ function ContactBoard() {
                   fontFamily:"inherit", fontSize:"1.1rem", padding:"6px 2px", color:"var(--note-ink)", outline:"none", resize:"vertical"}}/>
             </div>
             <div style={{display:"flex", gap: 12, alignItems:"center", marginTop: 18, flexWrap:"wrap"}}>
-              <button className="btn pink" onClick={mailto} type="button">✉️ send to raminda</button>
+              <button className="btn pink" onClick={mailto} type="button"><Icon name="paper-plane-tilt" size="1em" style={{marginRight:7}} />send to raminda</button>
               {sent && <span className="scribble" style={{fontSize:"1.3rem"}}>opening your mail app →</span>}
             </div>
             <div className="scribble" style={{marginTop: 18, fontSize: "1.3rem", textAlign:"right"}}>

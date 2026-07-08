@@ -117,7 +117,7 @@ function NotFound() {
               margin: "0 0 24px",
             }}
           >
-            Nothing. Nada. It's gone. Maybe it got stuck to someone's shoe. 🙃
+            Nothing. Nada. It's gone. Maybe it got stuck to someone's shoe. <Icon name="smiley" size="1.05em" style={{ transform: "rotate(180deg)", verticalAlign: "-0.2em" }} />
           </p>
 
           <a
