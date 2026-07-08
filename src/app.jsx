@@ -9,8 +9,7 @@ function App() {
     <div style={{position:"relative", minHeight:"100vh"}}>
       <HomeBoard />
       <AboutBoard />
-      <WorkBoard />
-      <NsbmBoard />
+      <ProjectsBoard />
       <ToolkitBoard />
       <ContactBoard />
       <footer style={{textAlign:"center", padding:"40px 20px 80px", color:"var(--ink-soft)", fontFamily:"'Patrick Hand'"}}>

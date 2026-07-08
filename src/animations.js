@@ -255,7 +255,7 @@
   /* ── SCROLL REVEAL ────────────────────────────────────────────────────── */
   function scrollReveal() {
     // Pre-hide section heads (non-home)
-    document.querySelectorAll('#board-about .section-head, #board-work .section-head, #board-nsbm .section-head, #board-toolkit .section-head, #board-contact .section-head').forEach(function (el) {
+    document.querySelectorAll('#board-about .section-head, #board-work .section-head, #board-toolkit .section-head, #board-contact .section-head').forEach(function (el) {
       var num = el.querySelector('.num');
       var h2  = el.querySelector('h2');
       if (num) { num.style.opacity = '0'; num.style.transform = 'scale(0.3) rotate(-20deg)'; }
@@ -263,7 +263,7 @@
     });
 
     // Pre-hide notes in non-home boards
-    var BOARDS = ['#board-about','#board-work','#board-nsbm','#board-toolkit','#board-contact'];
+    var BOARDS = ['#board-about','#board-work','#board-toolkit','#board-contact'];
     BOARDS.forEach(function (id) {
       var board = document.querySelector(id);
       if (!board) return;

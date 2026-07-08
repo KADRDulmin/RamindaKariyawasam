@@ -2,51 +2,64 @@
 const { useEffect, useState, useRef } = React;
 
 // Drag helper — makes any note draggable on a transient layer. Resets on reload.
+// Dragging only engages once the pointer moves past a small threshold, so a
+// plain click passes straight through (lets cards open their detail modal and
+// stops notes from jumping to an absolute layer on an accidental click).
 function useDraggable(ref, initialRot = 0) {
   useEffect(() => {
     if (window.innerWidth <= 768) return;
     const el = ref.current;
     if (!el) return;
-    let offX = 0, offY = 0;
+    const THRESHOLD = 6; // px of movement before a press becomes a drag
+    let offX = 0, offY = 0, startX = 0, startY = 0;
+    let armed = false;    // pointer is down but not yet dragging
     let dragging = false;
-    let placeholder = null;
-    const onDown = (e) => {
-      if (e.target.closest('a,button,input,textarea,select')) return;
+
+    const beginDrag = () => {
       dragging = true;
       el.classList.add('dragging');
       const rect = el.getBoundingClientRect();
-      const startX = (e.clientX ?? e.touches?.[0]?.clientX);
-      const startY = (e.clientY ?? e.touches?.[0]?.clientY);
-      offX = startX - rect.left;
-      offY = startY - rect.top;
       // Lock dimensions before reparenting so grid/flex sizing is preserved
       el.style.width = rect.width + 'px';
       el.style.height = rect.height + 'px';
       // Use absolute positioning within document so it scrolls with the page
-      const pageX = rect.left + window.scrollX;
-      const pageY = rect.top + window.scrollY;
       el.style.position = 'absolute';
-      el.style.left = pageX + 'px';
-      el.style.top = pageY + 'px';
+      el.style.left = (rect.left + window.scrollX) + 'px';
+      el.style.top = (rect.top + window.scrollY) + 'px';
       el.style.margin = '0';
       el.style.transform = `rotate(${initialRot}deg)`;
+      el.style.userSelect = 'none';
       // move to body so it can roam freely
-      if (el.parentNode !== document.body) {
-        document.body.appendChild(el);
-      }
-      e.preventDefault();
+      if (el.parentNode !== document.body) document.body.appendChild(el);
+    };
+
+    const onDown = (e) => {
+      if (e.target.closest('a,button,input,textarea,select')) return;
+      armed = true;
+      startX = (e.clientX ?? e.touches?.[0]?.clientX);
+      startY = (e.clientY ?? e.touches?.[0]?.clientY);
+      const rect = el.getBoundingClientRect();
+      offX = startX - rect.left;
+      offY = startY - rect.top;
     };
     const onMove = (e) => {
-      if (!dragging) return;
+      if (!armed) return;
       const x = (e.clientX ?? e.touches?.[0]?.clientX);
       const y = (e.clientY ?? e.touches?.[0]?.clientY);
+      if (!dragging) {
+        if (Math.hypot(x - startX, y - startY) < THRESHOLD) return;
+        beginDrag();
+      }
       el.style.left = (x - offX + window.scrollX) + 'px';
       el.style.top  = (y - offY + window.scrollY) + 'px';
+      e.preventDefault();
     };
     const onUp = () => {
+      armed = false;
       if (!dragging) return;
       dragging = false;
       el.classList.remove('dragging');
+      el.style.userSelect = '';
     };
     el.addEventListener('pointerdown', onDown);
     window.addEventListener('pointermove', onMove);
@@ -668,80 +681,190 @@ function AboutBoard() {
   );
 }
 
-// ---------- WORK (featured) ----------
-function WorkBoard() {
-  return (
-    <section className="board board-wrap" data-screen-label="03 Work" id="board-work">
-      <div style={{maxWidth: 1280, margin: "0 auto"}}>
-        <div className="section-head">
-          <div className="num">03</div>
-          <h2>Featured projects.</h2>
-        </div>
-        <p style={{fontSize:"1.1rem", maxWidth: 640}}>
-          A tiny slice — drag the notes, click to open, or hop to <a href={RK.github} target="_blank" rel="noopener">GitHub</a>.
-        </p>
+// ---------- PROJECT DETAIL MODAL ----------
+function ProjectModal({ project, onClose }) {
+  const p = project;
 
-        <div style={{marginTop: 36, display:"grid", gap: 30, gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))"}}>
-          {RK.projects.map((p, i) => {
-            const rot = [-3, 2, -2, 3, -4, 1, -1, 4][i % 8];
-            return (
-              <DraggableNote key={p.id} rot={rot} className={p.color} style={{minHeight: 220}}>
-                <div style={{display:"flex", alignItems:"center", justifyContent:"space-between"}}>
-                  <div style={{fontSize: 32}}>{p.icon}</div>
-                  <div className="mono" style={{fontSize:12, opacity:.65}}>#{String(i+1).padStart(2,"0")}</div>
-                </div>
-                <h3 className="scribble" style={{fontSize:"1.8rem", marginTop: 8}}>{p.name}</h3>
-                <div className="mono" style={{fontSize:12, opacity:.75, marginBottom: 6}}>{p.tag}</div>
-                <p style={{fontSize:"1rem", margin: "8px 0 12px"}}>{p.body}</p>
-                <div>
-                  {p.stack.slice(0,4).map((s,j)=>(
-                    <span className="chip" style={{"--chip-rot": `${(j%2?1:-1)}deg`}} key={j}>{s}</span>
-                  ))}
-                </div>
-                {p.link && p.link !== "#" && (
-                  <div style={{marginTop: 12}}>
-                    <a href={p.link} target="_blank" rel="noopener" className="mono" style={{fontSize:13, color:"var(--note-ink)"}}>→ view on github</a>
-                  </div>
-                )}
-              </DraggableNote>
-            );
-          })}
+  // Esc to close + lock body scroll while open
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [onClose]);
+
+  const catLabel = (RK.projectCategories.find(c => c.id === p.category) || {}).label || "";
+  const meta = [p.role, p.org, p.year].filter(Boolean).join("  ·  ");
+  const links = (p.links || []).filter(l => l && l.url && l.url !== "#");
+
+  return (
+    <div
+      onClick={onClose}
+      style={{ position: "fixed", inset: 0, zIndex: 600, background: "rgba(0,0,0,0.78)", display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}
+    >
+      <div
+        onClick={e => e.stopPropagation()}
+        className={`note no-tape ${p.color}`}
+        style={{ transform: "none", position: "relative", width: "100%", maxWidth: 720, maxHeight: "86vh", overflowY: "auto", borderRadius: 14, padding: "30px 30px 34px", boxShadow: "0 40px 100px rgba(0,0,0,0.6)" }}
+      >
+        {/* close */}
+        <button
+          onClick={onClose}
+          aria-label="Close"
+          style={{ position: "absolute", top: 14, right: 14, zIndex: 10, width: 34, height: 34, borderRadius: "50%", border: "none", cursor: "pointer", background: "rgba(0,0,0,0.4)", color: "#fff", fontSize: 16, display: "flex", alignItems: "center", justifyContent: "center", lineHeight: 1 }}
+        >✕</button>
+
+        {/* header */}
+        <div style={{ display: "flex", alignItems: "flex-start", gap: 14, paddingRight: 40 }}>
+          <div style={{ fontSize: 44, lineHeight: 1 }}>{p.icon}</div>
+          <div>
+            <h3 className="scribble" style={{ fontSize: "2.1rem", lineHeight: 1.05, margin: 0 }}>{p.name}</h3>
+            <div className="mono" style={{ fontSize: 13, opacity: .8, marginTop: 4 }}>{p.tag}</div>
+          </div>
         </div>
+
+        {/* category + meta */}
+        <div style={{ marginTop: 14, display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center" }}>
+          {catLabel && <span className="chip" style={{ "--chip-rot": "-1deg" }}>{catLabel}</span>}
+          {meta && <span className="mono" style={{ fontSize: 12.5, opacity: .75 }}>{meta}</span>}
+        </div>
+
+        {/* narrative */}
+        <p style={{ fontSize: "1.05rem", lineHeight: 1.6, margin: "18px 0 0" }}>{p.detail || p.body}</p>
+
+        {/* key features */}
+        {p.features && p.features.length > 0 && (
+          <div style={{ marginTop: 22 }}>
+            <div className="mono" style={{ fontSize: 12, letterSpacing: ".08em", textTransform: "uppercase", opacity: .7, marginBottom: 10 }}>Key features</div>
+            <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "grid", gap: 9 }}>
+              {p.features.map((f, i) => (
+                <li key={i} style={{ display: "flex", gap: 10, fontSize: "1rem", lineHeight: 1.45 }}>
+                  <span aria-hidden="true" style={{ flex: "0 0 auto", marginTop: 1 }}>✏️</span>
+                  <span>{f}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* stack */}
+        <div style={{ marginTop: 22 }}>
+          <div className="mono" style={{ fontSize: 12, letterSpacing: ".08em", textTransform: "uppercase", opacity: .7, marginBottom: 10 }}>Built with</div>
+          <div>
+            {p.stack.map((s, j) => (
+              <span className="chip" style={{ "--chip-rot": `${(j % 2 ? 1 : -1)}deg` }} key={j}>{s}</span>
+            ))}
+          </div>
+        </div>
+
+        {/* links (rendered only when a real URL exists) */}
+        {links.length > 0 && (
+          <div style={{ marginTop: 24, display: "flex", flexWrap: "wrap", gap: 10 }}>
+            {links.map((l, j) => (
+              <a
+                key={j} href={l.url} target="_blank" rel="noopener" className="mono"
+                style={{ fontSize: 13, textDecoration: "none", padding: "8px 14px", borderRadius: 999, border: "2px solid var(--note-ink)", color: "var(--note-ink)" }}
+              >→ {l.label}</a>
+            ))}
+          </div>
+        )}
       </div>
-    </section>
+    </div>
   );
 }
 
-// ---------- NSBM ORG PROJECTS ----------
-function NsbmBoard() {
+// ---------- PROJECT CARD ----------
+// Whole note is clickable to open the modal. We record the pointer-down
+// position and only treat it as a click (not a drag) if it barely moved,
+// so dragging a note around never pops the modal open.
+function ProjectCard({ p, i, onOpen }) {
+  const downPos = useRef(null);
+  const rot = [-3, 2, -2, 3, -4, 1, -1, 4][i % 8];
+
+  const handleDown = (e) => { downPos.current = { x: e.clientX, y: e.clientY }; };
+  const handleClick = (e) => {
+    if (e.target.closest("a,button")) return; // let real links/buttons work
+    const d = downPos.current;
+    if (d && Math.hypot(e.clientX - d.x, e.clientY - d.y) > 6) return; // it was a drag
+    onOpen(p);
+  };
+
   return (
-    <section className="board board-wrap" data-screen-label="04 NSBM" id="board-nsbm" style={{background:"linear-gradient(180deg, transparent, rgba(0,0,0,.03) 30%, transparent)"}}>
-      <div style={{maxWidth: 1280, margin: "0 auto"}}>
-        <div className="section-head">
-          <div className="num">04</div>
-          <h2>Projects at NSBM Green University</h2>
+    <DraggableNote
+      rot={rot}
+      className={p.color}
+      style={{ minHeight: 220, cursor: "pointer", display: "flex", flexDirection: "column" }}
+      onPointerDown={handleDown}
+      onClick={handleClick}
+    >
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <div style={{ fontSize: 32 }}>{p.icon}</div>
+        <div className="mono" style={{ fontSize: 12, opacity: .65 }}>#{String(i + 1).padStart(2, "0")}</div>
+      </div>
+      <h3 className="scribble" style={{ fontSize: "1.8rem", marginTop: 8 }}>{p.name}</h3>
+      <div className="mono" style={{ fontSize: 12, opacity: .75, marginBottom: 6 }}>{p.tag}</div>
+      <p style={{ fontSize: "1rem", margin: "8px 0 12px" }}>{p.body}</p>
+      <div style={{ marginTop: "auto" }}>
+        <div>
+          {p.stack.slice(0, 4).map((s, j) => (
+            <span className="chip" style={{ "--chip-rot": `${(j % 2 ? 1 : -1)}deg` }} key={j}>{s}</span>
+          ))}
         </div>
-        <p style={{fontSize:"1.1rem", maxWidth: 720}}>
-          During my time on the NSBM dev team, I've contributed to <b>{RK.nsbmProjects.length}+</b> internal tools across portals, mobile, AI and operations. Here's the full lineup.
+        <div className="mono" style={{ fontSize: 13, opacity: .8, marginTop: 12 }}>click for details →</div>
+      </div>
+    </DraggableNote>
+  );
+}
+
+// ---------- PROJECTS (filterable) ----------
+function ProjectsBoard() {
+  const [cat, setCat] = useState("all");
+  const [selected, setSelected] = useState(null);
+
+  const counts = { all: RK.projects.length };
+  RK.projects.forEach(p => { counts[p.category] = (counts[p.category] || 0) + 1; });
+
+  const visible = RK.projects.filter(p => cat === "all" || p.category === cat);
+
+  return (
+    <section className="board board-wrap" data-screen-label="03 Projects" id="board-work">
+      <div style={{ maxWidth: 1280, margin: "0 auto" }}>
+        <div className="section-head">
+          <div className="num">03</div>
+          <h2>Projects.</h2>
+        </div>
+        <p style={{ fontSize: "1.1rem", maxWidth: 700 }}>
+          Everything I've shipped — {RK.projects.length} projects across client work, university systems and my own startups. Filter by category, drag the notes, or <b>click any note for the full story</b>.
         </p>
 
-
-        <div style={{marginTop: 40, display:"grid", gap: 22, gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))"}}>
-          {RK.nsbmProjects.map((p, i) => {
-            const rot = [(-2), 1.5, -1, 2, -3, 1, -2, 3][i % 8];
+        {/* filter chips */}
+        <div style={{ marginTop: 24, display: "flex", flexWrap: "wrap", gap: 10 }}>
+          {RK.projectCategories.map(c => {
+            const active = cat === c.id;
             return (
-              <DraggableNote key={p.name} rot={rot} className={`${p.color} no-tape`}>
-                <div style={{display:"flex", alignItems:"center", justifyContent:"space-between"}}>
-                  <div style={{fontSize: 28}}>{p.icon}</div>
-                  <div className="mono" style={{fontSize:12, opacity:.7}}>{String(i+1).padStart(2,"0")}</div>
-                </div>
-                <h3 className="scribble" style={{fontSize:"1.6rem", marginTop: 6}}>{p.name}</h3>
-                <p style={{fontSize:"0.98rem", margin: "6px 0 0", lineHeight: 1.4}}>{p.body}</p>
-              </DraggableNote>
+              <button
+                key={c.id}
+                onClick={() => setCat(c.id)}
+                style={{ cursor: "pointer", fontSize: 15, padding: "7px 16px", borderRadius: 999, border: "2px solid var(--ink)", background: active ? "var(--ink)" : "transparent", color: active ? "var(--paper)" : "var(--ink)", transition: "all .15s", fontFamily: "'Patrick Hand', cursive" }}
+              >
+                {c.label} <span style={{ opacity: .65 }}>({counts[c.id] || 0})</span>
+              </button>
             );
           })}
         </div>
+
+        <div style={{ marginTop: 36, display: "grid", gap: 30, gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))" }}>
+          {visible.map((p, i) => (
+            <ProjectCard key={p.id} p={p} i={i} onOpen={setSelected} />
+          ))}
+        </div>
       </div>
+
+      {selected && <ProjectModal project={selected} onClose={() => setSelected(null)} />}
     </section>
   );
 }
@@ -749,10 +872,10 @@ function NsbmBoard() {
 // ---------- TOOLKIT ----------
 function ToolkitBoard() {
   return (
-    <section className="board board-wrap" data-screen-label="05 Toolkit" id="board-toolkit">
+    <section className="board board-wrap" data-screen-label="04 Toolkit" id="board-toolkit">
       <div style={{maxWidth: 1200, margin: "0 auto"}}>
         <div className="section-head">
-          <div className="num">05</div>
+          <div className="num">04</div>
           <h2>My toolbox.</h2>
         </div>
         <p style={{maxWidth: 560, fontSize:"1.1rem"}}>What I reach for on Monday morning.</p>
@@ -806,10 +929,10 @@ function ContactBoard() {
   };
 
   return (
-    <section className="board board-wrap" data-screen-label="06 Contact" id="board-contact">
+    <section className="board board-wrap" data-screen-label="05 Contact" id="board-contact">
       <div style={{maxWidth: 1100, margin: "0 auto"}}>
         <div className="section-head">
-          <div className="num">06</div>
+          <div className="num">05</div>
           <h2>Let's talk. 📮</h2>
         </div>
         <p style={{maxWidth: 560, fontSize:"1.1rem"}}>Pin a note to my fridge. I reply — usually within a cup of coffee.</p>
@@ -870,4 +993,4 @@ function ContactBoard() {
   );
 }
 
-Object.assign(window, { HomeBoard, AboutBoard, WorkBoard, NsbmBoard, ToolkitBoard, ContactBoard });
+Object.assign(window, { HomeBoard, AboutBoard, ProjectsBoard, ProjectCard, ProjectModal, ToolkitBoard, ContactBoard });
