@@ -77,9 +77,9 @@ test("unsupported metrics and stale positioning are absent", async () => {
   assert.match(combined, /Built as part of the NSBM development team/);
 });
 
-test("resume chooser points to four existing files and preserves the immutable original", async () => {
+test("resume chooser points to five existing files and preserves the immutable original", async () => {
   const data = await portfolioData();
-  assert.equal(data.resumeOptions.length, 4);
+  assert.equal(data.resumeOptions.length, 5);
   for (const option of data.resumeOptions) {
     const local = path.join(ROOT, decodeURI(option.file).replace(/^\//, ""));
     assert.equal(existsSync(local), true, `${option.id} PDF does not exist`);

@@ -1,0 +1,25 @@
+{
+  "variant": "Node.js / TypeScript + AI Full Stack",
+  "output": "Resume - Raminda Kariyawasam - NodeJS TypeScript and AI Full Stack.pdf",
+  "document_title": "Raminda Kariyawasam - Node.js, TypeScript and AI Full Stack Resume",
+  "document_subject": "Full-stack software engineer building typed Node.js platforms with controlled AI, retrieval, optimization, security, and production operations.",
+  "role": "Full-Stack Software Engineer - Node.js / TypeScript + AI",
+  "profile": "Full-stack software engineer combining Node.js and TypeScript product engineering with controlled AI systems. Builds authenticated Gemini tools, document-grounded retrieval, realtime services, relational data workflows, usage accounting, and optimization services across Next.js, NestJS, Python, and production security boundaries.",
+  "skills": [
+    {"title": "Node.js & TypeScript", "items": ["TypeScript", "Node.js / Express", "NestJS", "Next.js / React", "REST APIs", "Socket.IO / WebRTC", "Runtime validation"]},
+    {"title": "AI & Optimization", "items": ["Gemini function calling", "RAG / File Search", "OR-Tools CP-SAT", "Tool policy controls", "Usage / cost accounting", "Retention controls"]},
+    {"title": "Data & Security", "items": ["PostgreSQL / MySQL", "MongoDB / Redis", "Entra ID / Auth.js", "JWT / RBAC", "Rate limiting", "HMAC / origin controls", "Audit state"]},
+    {"title": "Delivery", "items": ["Docker / Compose", "GitHub Actions", "Linux", "Apache / Nginx", "PM2", "Testing", "Observability"]}
+  ],
+  "experience": [
+    {"company": "NSBM University", "title": "Associate Software Engineer", "period": "2025 - Present", "bullets": ["Build typed university workflows and controlled AI tools with session-owned identity, authorization gates, validation, and usage accounting.", "Design service and data boundaries for retrieval, realtime interactions, migrations, retention, optimization, and production operations."]},
+    {"company": "Iplay Global", "title": "UI Developer Intern", "period": "2022 - 2023", "bullets": ["Implemented responsive interfaces and integrated frontend workflows with REST APIs."]},
+    {"company": "Infigo Developers", "title": "Developer", "period": "2020 - 2022", "bullets": ["Delivered client websites and developed practical React and Angular foundations in a startup team."]}
+  ],
+  "projects": [
+    {"name": "GreenMate AI", "stack": "Next.js, TypeScript, Gemini, MySQL", "bullets": ["Implemented authenticated Gemini function tools where student identity comes from the server session, never model arguments.", "Added global/per-tool controls, sanitization, rate limiting, usage accounting, and retention-aware history."]},
+    {"name": "NSBM RAG Bot", "stack": "Gemini File Search, PHP, MySQL", "bullets": ["Built document-grounded retrieval, an embeddable responsive client, and administrative dataset/session tooling.", "Applied HMAC signing, origin allowlisting, database rate limits, sanitization, and usage reporting."]},
+    {"name": "Timetable Generator Gen2", "stack": "Next.js, FastAPI, OR-Tools", "bullets": ["Connected authenticated TypeScript workflows to private CP-SAT compute for full-semester allocation constraints.", "Kept source-system access read-only and isolated optimization writes behind a shared-secret service boundary."]},
+    {"name": "Doc-Assist Pro", "stack": "Node, Express, PostgreSQL", "url": "https://github.com/KADRDulmin/Doc-Assist-Pro", "bullets": ["Built as a team across a Node API, React Native patient and doctor clients, and Angular administration.", "Connected appointment, record, prescription, and doctor-recommendation workflows through one backend."]}
+  ]
+}

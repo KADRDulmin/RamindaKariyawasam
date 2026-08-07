@@ -184,10 +184,10 @@ function ResumeChooser({ onClose }) {
         <button ref={closeRef} className="dialog-close" onClick={onClose} aria-label="Close resume chooser">×</button>
         <div className="mono eyebrow">choose your evidence lens</div>
         <h2 id="resume-title" className="scribble dialog-title">Which résumé fits?</h2>
-        <p id="resume-description">All four are one-page PDFs. The targeted versions keep the original visual system and emphasize different engineering work.</p>
+        <p id="resume-description">All five are one-page PDFs. The targeted versions keep the original visual system and emphasize different engineering work.</p>
         <div className="resume-option-grid">
           {RK.resumeOptions.map((option, index) => (
-            <a key={option.id} data-resume-option={option.id} className={["resume-option", "yellow", "mint", "sky", "peach"][index]} href={encodeURI(option.file)} download={option.file.split("/").pop()} onClick={onClose}>
+            <a key={option.id} data-resume-option={option.id} className={`resume-option ${["yellow", "mint", "sky", "peach", "yellow"][index]}`} href={encodeURI(option.file)} download={option.file.split("/").pop()} onClick={onClose}>
               <span className="resume-option-number mono">0{index + 1}</span>
               <span><strong>{option.label}</strong><small>{option.note}</small></span>
               <Icon name="download-simple" size={22} aria-hidden="true" />

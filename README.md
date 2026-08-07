@@ -38,7 +38,7 @@ Here is a look at the portfolio in action, showcasing both the desktop and mobil
 - **Playful Cursor & Doodles:** Custom pencil cursor and hand-drawn doodles for a very unique, personalized feel.
 - **Light & Dark Themes:** Seamlessly switch between a light parchment "paper" theme and a dark "cork" theme.
 - **Accessible Interactions:** Focus-trapped dialogs, Escape close, focus restoration, visible keyboard focus, reduced motion, and mobile stacking.
-- **Targeted Résumés:** One chooser provides the immutable original plus Node.js/TypeScript, AI Full Stack, and Java Enterprise versions.
+- **Targeted Résumés:** One chooser provides the immutable original plus Node.js/TypeScript, AI Full Stack, combined Node.js/TypeScript + AI, and Java Enterprise versions.
 - **React Powered:** Built using React components (`.jsx`) for modular, maintainable, and interactive UI elements.
 - **Beautiful Typography:** Hand-drawn web fonts using _Patrick Hand_, _Caveat Brush_, and _Space Mono_.
 

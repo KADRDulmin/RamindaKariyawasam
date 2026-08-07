@@ -15,14 +15,18 @@ ORIGINAL_SHA256 = "F185F90DE4CF709EFEADE67C89B1593A1D06FB2747D5A0CF6685AF3E46695
 GENERATED = [
     ("nodejs-typescript", "Resume - Raminda Kariyawasam - NodeJS TypeScript.pdf"),
     ("ai-full-stack", "Resume - Raminda Kariyawasam - AI Full Stack.pdf"),
+    ("nodejs-typescript-ai-full-stack", "Resume - Raminda Kariyawasam - NodeJS TypeScript and AI Full Stack.pdf"),
     ("java-enterprise", "Resume - Raminda Kariyawasam - Java Enterprise.pdf"),
 ]
 REQUIRED_LINKS = {
     "mailto:raminda5575@gmail.com",
     "https://www.ramindak.com/",
     "https://www.linkedin.com/in/raminda-dulmin/",
+    "https://www.iit.ac.lk/course/msc-cyber-security-and-forensics/",
     "tel:+94758702922",
 }
+PORTRAIT_CLIP = "n 155 751.5 m 155 785.4655 127.4655 813 93.5 813 c 59.53449 813 32 785.4655 32 751.5 c 32 717.5345 59.53449 690 93.5 690 c 127.4655 690 155 717.5345 155 751.5 c W* n"
+PORTRAIT_MATRIX = "142.3611 0 0 195.0544 21.92141 618.3413 cm"
 
 
 def sha256(path: Path) -> str:
@@ -61,6 +65,7 @@ def main() -> int:
         text = page.extract_text() or ""
         normalized = " ".join(text.split())
         page_links = links(page)
+        page_stream = page.get_contents().get_data().decode("latin-1", errors="replace")
         image_count = len(page.images)
         resources = page.get("/Resources", {})
         if hasattr(resources, "get_object"):
@@ -71,7 +76,7 @@ def main() -> int:
         font_count = len(fonts)
         if (page_width, page_height) != (595.0, 842.0):
             failures.append(f"{filename}: expected 595x842 points, found {page_width}x{page_height}")
-        for required in ("Raminda Kariyawasam", "Professional Profile", "Education", "Skills", "Experience", "Highlighted Projects", "NSBM University"):
+        for required in ("Raminda Kariyawasam", "Professional Profile", "Education", "MSc Cyber Security and Forensics", "2026 - Present", "Skills", "Experience", "Highlighted Projects", "NSBM University"):
             if required not in normalized:
                 failures.append(f"{filename}: missing extractable text {required!r}")
         if len(normalized) < 1500:
@@ -80,6 +85,8 @@ def main() -> int:
             failures.append(f"{filename}: missing contact links {sorted(REQUIRED_LINKS - page_links)}")
         if image_count != 1:
             failures.append(f"{filename}: expected one portrait image, found {image_count}")
+        if PORTRAIT_CLIP not in page_stream or PORTRAIT_MATRIX not in page_stream:
+            failures.append(f"{filename}: portrait crop no longer matches the immutable original")
         if font_count < 3:
             failures.append(f"{filename}: expected embedded text fonts, found {font_count}")
 

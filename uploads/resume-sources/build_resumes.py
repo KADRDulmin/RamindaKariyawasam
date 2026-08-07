@@ -31,8 +31,11 @@ ORIGINAL = ROOT / "uploads" / "Resume - Raminda Kariyawasam.pdf"
 VARIANTS = {
     "nodejs-typescript": SOURCE_ROOT / "nodejs-typescript" / "content.json",
     "ai-full-stack": SOURCE_ROOT / "ai-full-stack" / "content.json",
+    "nodejs-typescript-ai-full-stack": SOURCE_ROOT / "nodejs-typescript-ai-full-stack" / "content.json",
     "java-enterprise": SOURCE_ROOT / "java-enterprise" / "content.json",
 }
+
+MSC_URL = "https://www.iit.ac.lk/course/msc-cyber-security-and-forensics/"
 
 
 def load_content(path: Path) -> dict:
@@ -174,9 +177,19 @@ def draw_header(canvas: Canvas, image: Image.Image, role: str) -> None:
     image_bytes.seek(0)
     canvas.saveState()
     clip = canvas.beginPath()
-    clip.circle(87.5, 752.5, 62.5)
+    # Match the immutable source PDF's portrait geometry exactly: a 123 pt
+    # circular clip translated to (32, 690), then the original image transform.
+    clip.circle(93.5, 751.5, 61.5)
     canvas.clipPath(clip, fill=0, stroke=0)
-    canvas.drawImage(ImageReader(image_bytes), 25, 669, width=125, height=166.7, preserveAspectRatio=False, mask="auto")
+    canvas.drawImage(
+        ImageReader(image_bytes),
+        21.921409,
+        618.341324,
+        width=142.361115,
+        height=195.054382,
+        preserveAspectRatio=False,
+        mask="auto",
+    )
     canvas.restoreState()
 
     canvas.setFillColor(ORANGE)
@@ -202,13 +215,20 @@ def draw_profile(canvas: Canvas, content: dict, x: float, y: float, max_width: f
 def draw_education(canvas: Canvas, x: float, y: float) -> float:
     y = heading(canvas, "Education", x, y)
     entries = [
-        ("BSc (Hons) in Software Engineering", "University of Plymouth, UK", "2022 - 2025"),
-        ("IT Foundation Programme", "NSBM Green University, Sri Lanka", "2020 - 2021"),
+        ("MSc Cyber Security and Forensics", "IIT Sri Lanka / University of Westminster, UK", "2026 - Present", MSC_URL),
+        ("BSc (Hons) in Software Engineering", "University of Plymouth, UK", "2022 - 2025", None),
+        ("IT Foundation Programme", "NSBM Green University, Sri Lanka", "2020 - 2021", None),
     ]
-    for title, place, period in entries:
+    for title, place, period, url in entries:
         canvas.setFillColor(INK)
         canvas.setFont("CormorantSemi", 11.1)
         canvas.drawString(x, y, title)
+        if url:
+            title_width = width(title, "CormorantSemi", 11.1)
+            canvas.setStrokeColor(INK)
+            canvas.setLineWidth(.4)
+            canvas.line(x, y - 1.2, x + title_width, y - 1.2)
+            canvas.linkURL(url, (x, y - 3, x + title_width, y + 11), relative=0)
         y -= 12.2
         canvas.setFillColor(SOFT)
         canvas.setFont("Cormorant", 9.5)

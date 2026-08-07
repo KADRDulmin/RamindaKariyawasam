@@ -62,6 +62,7 @@ const RK = {
     { id: "original", label: "Original", note: "General full-stack profile", file: "/uploads/Resume - Raminda Kariyawasam.pdf" },
     { id: "node", label: "Node.js / TypeScript", note: "Backend, realtime, and typed systems", file: "/uploads/Resume - Raminda Kariyawasam - NodeJS TypeScript.pdf" },
     { id: "ai", label: "AI Full Stack", note: "RAG, agentic tools, and optimization", file: "/uploads/Resume - Raminda Kariyawasam - AI Full Stack.pdf" },
+    { id: "node-ai", label: "Node.js / TypeScript + AI", note: "Typed platforms with production AI systems", file: "/uploads/Resume - Raminda Kariyawasam - NodeJS TypeScript and AI Full Stack.pdf" },
     { id: "java", label: "Java Enterprise", note: "Spring, data workflows, and enterprise UI", file: "/uploads/Resume - Raminda Kariyawasam - Java Enterprise.pdf" }
   ],
 

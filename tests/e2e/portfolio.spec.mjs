@@ -46,15 +46,15 @@ test.describe("evidence-led portfolio", () => {
     await expect(trigger).toBeFocused();
   });
 
-  test("resume chooser exposes four real download anchors", async ({ page }) => {
+  test("resume chooser exposes five real download anchors", async ({ page }) => {
     await page.goto("/");
     const trigger = page.getByRole("button", { name: /choose a résumé/i });
     await trigger.click();
     const dialog = page.getByRole("dialog", { name: /Which résumé fits/ });
     await expect(dialog).toBeVisible();
     const options = dialog.locator("a[download][data-resume-option]");
-    await expect(options).toHaveCount(4);
-    for (let index = 0; index < 4; index += 1) {
+    await expect(options).toHaveCount(5);
+    for (let index = 0; index < 5; index += 1) {
       const href = await options.nth(index).getAttribute("href");
       const response = await page.request.get(href);
       expect(response.ok()).toBeTruthy();
