@@ -47,13 +47,13 @@ export const ANNIVERSARY_EVENT = Object.freeze({
       "Celebrate 25 beautiful years of love, laughter, and togetherness with Srimantha and Geethanjali. The celebration begins at 6:00 PM and continues onwards.",
   },
   rsvp: {
-    endpoint: "",
-    method: "POST",
-    enabled: false,
+    channel: "whatsapp",
+    whatsappNumber: "94778915586",
+    enabled: true,
     privacyNotice:
-      "Your details are used only to manage attendance for this celebration. This page does not store RSVP information in your browser.",
+      "This page does not store your RSVP. When you continue, WhatsApp opens a pre-filled message for you to review and send.",
     unconfiguredMessage:
-      "Online RSVP delivery has not been connected yet. Your information was not sent or stored.",
+      "WhatsApp RSVP is temporarily unavailable. Your information was not sent or stored.",
   },
   gallery: [
     {

@@ -79,3 +79,12 @@ dist
 .eslintcache
 .stylelintcache
 .npm
+test-results/
+playwright-report/
+/tests
+playwright.config.mjs
+/scripts
+serve.json
+serve.json
+package-lock.json
+package-lock.json

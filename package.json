@@ -6,13 +6,18 @@
     "start": "serve .",
     "dev": "serve .",
     "build": "node scripts/build-anniversary.mjs",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "node --check srimantha_and_geethanjali_anniversary/event-config.mjs && node --check srimantha_and_geethanjali_anniversary/invitation-utils.mjs && node --check scripts/build-anniversary.mjs && node --check scripts/lint-anniversary.mjs && node scripts/lint-anniversary.mjs",
+    "test": "npm run test:unit && npm run test:e2e",
+    "test:unit": "node --test tests/anniversary.test.mjs",
+    "test:e2e": "playwright test"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
+    "@playwright/test": "^1.54.2",
     "esbuild": "0.28.1",
     "serve": "^14.2.6"
   },

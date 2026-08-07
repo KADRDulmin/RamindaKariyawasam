@@ -14,6 +14,7 @@ import "swiper/css/a11y";
 import { ANNIVERSARY_EVENT as event } from "./event-config.mjs";
 import {
   buildGoogleCalendarUrl,
+  buildWhatsAppRsvpUrl,
   getCountdownState,
   validateRsvp,
 } from "./invitation-utils.mjs";
@@ -676,13 +677,12 @@ function CalendarDialog({ open, onClose }) {
 function RsvpDialog({ open, onClose }) {
   const dialogRef = useRef(null);
   const formRef = useRef(null);
-  const lastSuccessfulSubmission = useRef("");
+  const lastPreparedSubmission = useRef({ fingerprint: "", preparedAt: 0 });
   const [attending, setAttending] = useState("");
   const [messageLength, setMessageLength] = useState(0);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState({ message: "", type: "" });
   const [submitting, setSubmitting] = useState(false);
-  const [delivered, setDelivered] = useState(false);
   useNativeDialog(dialogRef, open, "#guest-name");
 
   const errorProps = (name) => ({
@@ -692,7 +692,7 @@ function RsvpDialog({ open, onClose }) {
 
   const submit = async (eventObject) => {
     eventObject.preventDefault();
-    if (submitting || delivered) return;
+    if (submitting) return;
     const formData = new FormData(formRef.current);
     const response = formData.get("attending") === "yes" ? "yes" : formData.get("attending") === "no" ? "no" : "";
     const values = {
@@ -718,42 +718,35 @@ function RsvpDialog({ open, onClose }) {
       setStatus({ message: "This RSVP could not be submitted.", type: "error" });
       return;
     }
-    if (!event.rsvp.enabled || !event.rsvp.endpoint) {
+    if (!event.rsvp.enabled || event.rsvp.channel !== "whatsapp" || !event.rsvp.whatsappNumber) {
       setStatus({ message: event.rsvp.unconfiguredMessage, type: "error" });
       return;
     }
 
     const fingerprint = JSON.stringify(values);
-    if (fingerprint === lastSuccessfulSubmission.current) {
-      setStatus({ message: "This RSVP has already been delivered from this page.", type: "success" });
+    const preparedAt = Date.now();
+    if (
+      fingerprint === lastPreparedSubmission.current.fingerprint &&
+      preparedAt - lastPreparedSubmission.current.preparedAt < 2500
+    ) {
+      setStatus({
+        message: "WhatsApp is already opening with this RSVP. Review the message there and tap Send to confirm.",
+        type: "info",
+      });
       return;
     }
 
     setSubmitting(true);
     try {
-      const endpointResponse = await fetch(event.rsvp.endpoint, {
-        method: event.rsvp.method || "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          eventId: event.id,
-          guestName: values.guestName,
-          attending: values.attending,
-          guestCount: values.guestCount,
-          contactNumber: values.contactNumber,
-          message: values.message,
-          eventTimeZone: event.timeZone,
-          submittedAt: new Date().toISOString(),
-        }),
-        cache: "no-store",
-        credentials: "omit",
-        referrerPolicy: "strict-origin-when-cross-origin",
+      const whatsappUrl = buildWhatsAppRsvpUrl(values);
+      lastPreparedSubmission.current = { fingerprint, preparedAt };
+      window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+      setStatus({
+        message: "WhatsApp has opened with your RSVP. Review the message, then tap Send to confirm your attendance.",
+        type: "info",
       });
-      if (!endpointResponse.ok) throw new Error(`RSVP endpoint returned ${endpointResponse.status}`);
-      lastSuccessfulSubmission.current = fingerprint;
-      setDelivered(true);
-      setStatus({ message: "Thank you. Your RSVP has been delivered successfully.", type: "success" });
     } catch {
-      setStatus({ message: "We could not deliver your RSVP. Please check your connection and try again.", type: "error" });
+      setStatus({ message: "We could not open WhatsApp. Please check your connection and try again.", type: "error" });
     } finally {
       setSubmitting(false);
     }
@@ -818,8 +811,9 @@ function RsvpDialog({ open, onClose }) {
 
           <p className="form-privacy"><Icon name="check" />{event.rsvp.privacyNotice}</p>
           <p className={`form-status ${status.type ? `is-${status.type}` : ""}`} data-form-status role="status" aria-live="polite">{status.message}</p>
-          <button className="button button-primary form-submit" type="submit" data-submit disabled={submitting || delivered} aria-busy={submitting}>
-            <span data-submit-label>{delivered ? "RSVP Sent" : submitting ? "Sending…" : "Send RSVP"}</span>
+          <button className="button button-primary form-submit" type="submit" data-submit disabled={submitting} aria-busy={submitting}>
+            <span data-submit-label>{submitting ? "Opening WhatsApp…" : "Continue in WhatsApp"}</span>
+            {!submitting && <Icon name="external" />}
             <span className="button-spinner" data-submit-spinner hidden={!submitting} aria-hidden="true" />
           </button>
         </form>

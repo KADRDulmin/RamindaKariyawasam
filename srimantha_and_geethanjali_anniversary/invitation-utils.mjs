@@ -32,6 +32,42 @@ export function buildGoogleCalendarUrl(event = ANNIVERSARY_EVENT) {
   return `https://calendar.google.com/calendar/render?${parameters}`;
 }
 
+export function buildWhatsAppRsvpMessage(values, event = ANNIVERSARY_EVENT) {
+  const attending = values.attending === "yes";
+  const lines = [
+    "25TH ANNIVERSARY RSVP",
+    event.couple.displayName,
+    "",
+    "GUEST DETAILS",
+    `Name: ${values.guestName}`,
+    `Attendance: ${attending ? "Joyfully accepts" : "Regretfully declines"}`,
+  ];
+
+  if (attending) lines.push(`Number of guests: ${values.guestCount}`);
+  lines.push(`Contact number: ${values.contactNumber}`);
+
+  if (values.message) {
+    lines.push("", "MESSAGE FOR THE COUPLE", values.message);
+  }
+
+  lines.push(
+    "",
+    "CELEBRATION",
+    `Date: ${event.dateLabel}`,
+    `Time: ${event.timeLabel}`,
+    `Venue: ${event.venue.name}`,
+  );
+
+  return lines.join("\n");
+}
+
+export function buildWhatsAppRsvpUrl(values, event = ANNIVERSARY_EVENT) {
+  const phoneNumber = String(event.rsvp.whatsappNumber || "").replace(/\D/g, "");
+  if (!phoneNumber) throw new Error("A WhatsApp RSVP number has not been configured.");
+  const message = buildWhatsAppRsvpMessage(values, event);
+  return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+}
+
 export function validateRsvp(values) {
   const errors = {};
   if (values.guestName.length < 2) errors.guestName = "Please enter the guest name.";
