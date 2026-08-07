@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="S and G 25 monogram">
+  <rect width="64" height="64" rx="14" fill="#102724"/>
+  <rect x="4.5" y="4.5" width="55" height="55" rx="11" fill="none" stroke="#d8d5ce" stroke-width="1"/>
+  <text x="32" y="28" fill="#f6f1e7" font-family="Georgia, serif" font-size="16" font-style="italic" text-anchor="middle">S &amp; G</text>
+  <path d="M18 34h28" stroke="#aeb4b3" stroke-width=".8"/>
+  <text x="32" y="51" fill="#e5e2dc" font-family="Georgia, serif" font-size="16" font-weight="700" text-anchor="middle">25</text>
+</svg>

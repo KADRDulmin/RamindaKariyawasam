@@ -1,0 +1,33 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+PRODID:-//Raminda Kariyawasam//Silver Jubilee Invitation//EN
+X-WR-CALNAME:Srimantha & Geethanjali — 25th Anniversary
+X-WR-TIMEZONE:Asia/Colombo
+BEGIN:VTIMEZONE
+TZID:Asia/Colombo
+X-LIC-LOCATION:Asia/Colombo
+BEGIN:STANDARD
+TZOFFSETFROM:+0530
+TZOFFSETTO:+0530
+TZNAME:+0530
+DTSTART:19700101T000000
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:srimantha-geethanjali-25@ramindak.com
+DTSTAMP:20260807T065412Z
+DTSTART;TZID=Asia/Colombo:20260822T180000
+SUMMARY:Srimantha & Geethanjali — 25th Anniversary Celebration
+DESCRIPTION:Celebrate 25 beautiful years of love\, laughter\, and togethern
+ ess with Srimantha and Geethanjali. The celebration begins at 6:00 PM and
+  continues onwards.
+LOCATION:Monarch Imperial\, 31A New Hospital Road\, Sri Jayawardenepura Kot
+ te 10100\, Sri Lanka
+URL:https://www.ramindak.com/srimantha_and_geethanjali_anniversary/
+STATUS:CONFIRMED
+TRANSP:OPAQUE
+SEQUENCE:0
+END:VEVENT
+END:VCALENDAR

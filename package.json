@@ -5,6 +5,7 @@
   "scripts": {
     "start": "serve .",
     "dev": "serve .",
+    "build": "node scripts/build-anniversary.mjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -12,9 +13,15 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "esbuild": "0.28.1",
     "serve": "^14.2.6"
   },
   "dependencies": {
-    "animejs": "^4.4.1"
+    "@fontsource-variable/cormorant-garamond": "5.3.0",
+    "@fontsource-variable/manrope": "5.3.0",
+    "animejs": "4.4.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "swiper": "14.1.0"
   }
 }
