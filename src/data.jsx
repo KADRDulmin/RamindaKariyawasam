@@ -1,354 +1,324 @@
-// Shared content — pulled from resume + GitHub (incl. NSBM dev-team org)
+// Public portfolio content. Claims are controlled by docs/portfolio-evidence.md.
 const RK = {
   name: "Raminda Kariyawasam",
   short: "Raminda",
   handle: "@KADRDulmin",
-  role: "Associate Software Engineer",
+  role: "Full-Stack Software Engineer",
+  currentRole: "Associate Software Engineer",
   at: "NSBM Green University",
   location: "Sri Lanka",
   email: "raminda5575@gmail.com",
   phone: "+94 75-870 29 22",
-  linkedin: "https://linkedin.com/in/raminda-dulmin/",
+  website: "https://www.ramindak.com",
+  linkedin: "https://www.linkedin.com/in/raminda-dulmin/",
   github: "https://github.com/KADRDulmin",
-  orgGithub: "https://github.com/orgs/nsbm-dev-team/repositories",
+  portfolioSource: "https://github.com/KADRDulmin/RamindaKariyawasam",
+
+  heroThesis: "Full-stack software engineer building AI-enabled university platforms, optimization systems, secure enterprise applications, and production infrastructure.",
+  heroSupport: "At NSBM Green University, I work across TypeScript and Node.js, PHP, Java and Spring, Python, databases, cloud infrastructure, and the operational details that turn features into dependable systems.",
 
   about: [
-    "I'm a Software Engineering graduate from the University of Plymouth (class of 2025) working full-stack — from immersive 3D web apps to mobile, cloud deployments and everything in between.",
-    "Right now I build tools at NSBM Green University's dev team — internal portals, AI integrations, public mobile apps. Outside the day job I tinker with React, Three.js, Flutter, Firebase and Docker.",
-    "Turning caffeine into code since 2020. Currently collecting semicolons."
+    "I am a Software Engineering graduate from the University of Plymouth and an Associate Software Engineer at NSBM Green University.",
+    "My work spans AI assistants, retrieval systems, constraint optimization, student and staff workflows, enterprise Java applications, mobile clients, databases, deployment, observability, and security controls.",
+    "I care about the seams: identity crossing a service boundary, a solver returning an explainable conflict, a private tool refusing unsafe input, and a release that can be operated after it ships."
   ],
 
   timeline: [
-    { year: "2025 — now", title: "Associate Software Engineer", place: "NSBM Green University", body: "Internal university systems, AI integrations, public mobile apps." },
-    { year: "2022 — 2023", title: "UI Developer Intern", place: "Iplay Global", body: "Hands-on with HTML, CSS, JS and UI frameworks on client web builds." },
-    { year: "2020 — 2022", title: "Infigo Developers", place: "Start-up", body: "WordPress dev + React / Angular fundamentals." },
-    { year: "2022 — 2025", title: "BSc (Hons) Software Engineering", place: "University of Plymouth, UK", body: "Graduated 2025." },
-    { year: "2020 — 2021", title: "IT Foundation", place: "NSBM University, Sri Lanka" }
+    { year: "2025 - present", title: "Associate Software Engineer", place: "NSBM Green University", body: "Built as part of the NSBM development team across university platforms, AI integrations, optimization systems, and internal operations." },
+    { year: "2022 - 2023", title: "UI Developer Intern", place: "Iplay Global", body: "Frontend implementation and API integration for client web work." },
+    { year: "2020 - 2022", title: "Developer", place: "Infigo Developers", body: "Client websites and early React and Angular work in a startup environment." },
+    { year: "2022 - 2025", title: "BSc (Hons) Software Engineering", place: "University of Plymouth, UK", body: "Graduated in 2025." },
+    { year: "2020 - 2021", title: "IT Foundation Programme", place: "NSBM Green University, Sri Lanka" }
+  ],
+
+  quickFacts: [
+    "I work comfortably from interface state to database and deployment boundaries.",
+    "My recent focus is controlled AI: grounded retrieval, authenticated tools, and measurable usage.",
+    "I enjoy constraint systems where correctness matters more than a plausible-looking answer.",
+    "Private university and client code stays private; public claims here are source-checked."
   ],
 
   skills: {
-    Frontend: ["React", "Angular", "Three.js", "Flutter", "React Native", "TypeScript", "Tailwind"],
-    Backend: ["Node.js", "Express", "Java", "PHP", "Python", "Go"],
-    "Database & Cloud": ["MongoDB", "MySQL", "PostgreSQL", "Firebase", "AWS", "GCP", "Docker"],
-    Design: ["Figma", "Adobe Suite", "UX research", "Prototyping"],
-    Tools: ["Git", "GitHub Actions", "Jira", "Notion", "VS Code", "Android Studio"]
+    "AI & Optimization": ["Gemini function calling", "RAG / File Search", "OR-Tools CP-SAT", "Prompt and tool controls", "Local speech design"],
+    "Frontend": ["React", "Next.js", "Angular", "TypeScript", "Flutter", "Responsive UI", "Accessibility"],
+    "Backend & APIs": ["Node.js", "NestJS", "Express", "Java", "Spring Boot", "PHP", "Python", "FastAPI"],
+    "Data & Security": ["MySQL", "PostgreSQL", "MongoDB", "Redis", "Entra ID", "OAuth / JWT", "RBAC", "Audit trails"],
+    "Operations": ["Docker", "GitHub Actions", "AWS", "Linux", "Apache / Nginx", "Sentry", "Migrations", "Observability"]
   },
 
-  // Project categories used by the filter chips in the Projects board
   projectCategories: [
     { id: "all", label: "All" },
-    { id: "client", label: "Client Work" },
-    { id: "nsbm", label: "NSBM Systems" },
-    { id: "personal", label: "Startups & Personal" }
+    { id: "featured", label: "Featured" },
+    { id: "nsbm", label: "NSBM systems" },
+    { id: "ai", label: "AI & optimization" },
+    { id: "node", label: "Node / TypeScript" },
+    { id: "java", label: "Java / enterprise" },
+    { id: "php", label: "PHP systems" },
+    { id: "mobile", label: "Mobile / IoT" },
+    { id: "independent", label: "Client / startup / personal" }
   ],
 
-  // Every substantial project I've shipped. `category` drives the filter,
-  // the light fields (icon/name/tag/body/stack) render the card, and the
-  // rich fields (detail/features/role/org/year/links) render the modal.
-  // `links` is empty where the repo is private (client / org / internal) —
-  // add { label, url } here to surface a live demo or source link.
+  resumeOptions: [
+    { id: "original", label: "Original", note: "General full-stack profile", file: "/uploads/Resume - Raminda Kariyawasam.pdf" },
+    { id: "node", label: "Node.js / TypeScript", note: "Backend, realtime, and typed systems", file: "/uploads/Resume - Raminda Kariyawasam - NodeJS TypeScript.pdf" },
+    { id: "ai", label: "AI Full Stack", note: "RAG, agentic tools, and optimization", file: "/uploads/Resume - Raminda Kariyawasam - AI Full Stack.pdf" },
+    { id: "java", label: "Java Enterprise", note: "Spring, data workflows, and enterprise UI", file: "/uploads/Resume - Raminda Kariyawasam - Java Enterprise.pdf" }
+  ],
+
   projects: [
-    // ───────────────────────── CLIENT WORK ─────────────────────────
     {
-      id: "usdeed", name: "USDeedManagement", tag: "Multi-County US Deed Platform",
-      category: "client", color: "sky", icon: "scroll",
-      stack: ["Angular 21", "Spring Boot", "Java 21", "MySQL", "AWS", "Firebase", "Docker"],
-      body: "Deed record management & public deed search across US counties, built for a title-abstract client.",
-      role: "Full-Stack Engineer", org: "Leon Mineral Abstract (client)", year: "2025",
-      detail: "A full-stack platform that lets county staff ingest, manage and audit official deed records while giving the public — deed researchers, attorneys, landmen and property owners — a fast, searchable way to find, save and export them. Two standalone Angular portals (admin + user) talk to a Spring Boot REST API backed by MySQL, with PDFs stored in S3 and the whole stack shipped to AWS via Docker.",
-      features: [
-        "Public 19-field deed search with sortable, draggable & persisted columns, sticky headers and an in-app PDF viewer",
-        "Admin portal: deed CRUD, a multi-step add-record flow, and bulk CSV upload with real-time async progress tracking",
-        "Saved searches and 'run sheets' — named land-title research folders you can rerun, filter by and export to Excel",
-        "Firebase auth with rollback, account-credit top-ups, an immutable audit trail and a MapStruct / Liquibase data layer",
-        "Deployed on AWS S3 + CloudFront (front end) and ECS via ECR (API), wired through GitHub Actions with OIDC"
-      ],
+      id: "greenmate", name: "UMIS Student Portal / GreenMate AI", tagline: "Authenticated AI inside a university platform",
+      summary: "A Next.js student portal with a Gemini assistant that can answer questions and call controlled university-data tools without accepting identity from the model.",
+      role: "Associate Software Engineer", organization: "NSBM Green University development team", period: "2025 - present", status: "Implemented", featured: true,
+      categories: ["featured", "nsbm", "ai", "node"], capabilities: ["Agentic AI", "SSO", "PWA", "Usage accounting"], color: "mint", icon: "robot",
+      stack: ["Next.js 16", "React 19", "TypeScript", "Gemini", "Auth.js", "MySQL"],
+      architecture: ["Next.js student portal", "Authenticated Gemini tool loop", "Read-only university data tools"],
+      hardProblems: ["Keep student identity server-owned across every tool call", "Expose only tools enabled by global and per-tool policy", "Persist useful cost and retention signals without weakening session ownership"],
+      features: ["Function tools cover profile, results, attendance, schedules, fees, payments, and applications", "Role-gated staff surfaces, PWA behavior, notifications, and migration-backed data access"],
+      security: ["Microsoft Entra SSO", "Server-side auth re-checks", "Session ownership", "Input sanitization and rate limiting"],
+      operations: ["Prompt, cached, output, and model usage accounting", "Retention-aware active/deleted message handling", "Idempotent database migrations"],
       links: []
     },
     {
-      id: "landman", name: "LandMan For A Day", tag: "Mineral-Rights Landman Marketplace",
-      category: "client", color: "peach", icon: "map-trifold",
-      stack: ["Angular 17", "Spring Boot", "Java 17", "PostgreSQL", "JWT", "Docker"],
-      body: "A marketplace connecting property owners with qualified landmen for mineral-rights research.",
-      role: "Full-Stack Engineer", org: "Title Data Design (client)", year: "2025",
-      detail: "A platform that matches property owners with vetted 'landmen' to research and verify mineral rights. It splits into separate admin and user portals over a Spring Boot API, with JWT-secured auth, PostgreSQL persistence and a Dockerised, AWS CodeDeploy-driven pipeline.",
-      features: [
-        "User portal: post mineral-rights jobs, search work, multi-step landman registration and an assignments dashboard",
-        "Admin portal: real-time stats, user/staff CRUD, landman qualification verification & assignment management",
-        "JWT auth with HTTP interceptors, route guards, HTTP caching and lazy-loaded Angular Material routes",
-        "Payment integration plus a polished full-page loading system with animated dual-circle spinners",
-        "Dockerised backend with an AWS CodeDeploy (appspec.yml) CI/CD flow"
-      ],
+      id: "ragbot", name: "NSBM RAG Bot", tagline: "Document-grounded answers for university queries",
+      summary: "A framework-free PHP retrieval assistant using Gemini File Search, with an embeddable widget and administrative dataset controls.",
+      role: "Associate Software Engineer", organization: "NSBM Green University development team", period: "2025", status: "Implemented; rollout acceptance pending", featured: true,
+      categories: ["featured", "nsbm", "ai", "php"], capabilities: ["RAG", "Embeddable widget", "Dataset admin", "Request controls"], color: "sky", icon: "chats-circle",
+      stack: ["PHP", "Gemini File Search", "MySQL", "JavaScript", "Python crawler"],
+      architecture: ["Floating site widget", "PHP conversation API", "Gemini managed retrieval store"],
+      hardProblems: ["Ground answers in an indexed knowledge base", "Ship one widget across desktop and mobile contexts", "Keep dataset sync and usage visible to operators"],
+      features: ["Desktop popup, mobile full-screen mode, and isolated iframe UI", "Dataset upload/management, session archive, transcripts, and usage reporting"],
+      security: ["HMAC-signed requests", "Origin allowlist", "Sanitization", "Database-backed rate limiting"],
+      operations: ["Managed retrieval-store uploads and metadata", "Crawler-assisted content preparation", "Final live knowledge-base acceptance remains an operator step"],
       links: []
     },
     {
-      id: "lensly", name: "Lensly LK", tag: "Premium Camera Rental Platform",
-      category: "client", color: "mint", icon: "camera",
-      stack: ["PHP 8", "MySQL", "PHPMailer", "TCPDF", "JavaScript"],
-      body: "An Apple-inspired, trilingual camera-rental management platform for a Sri Lankan business.",
-      role: "Full-Stack Developer", org: "Lensly LK (client)", year: "2025",
-      detail: "A production-grade camera rental system where customers browse gear, check live availability, calculate costs, sign digital agreements and track rentals — fully in English, Sinhala and Tamil. Built in PHP 8 with a microservices-style split into customer portal, admin portal and a shared backend API over one MySQL database.",
-      features: [
-        "Database-driven trilingual UI (English / Sinhala / Tamil) — every string localised, none hardcoded",
-        "Real-time rental calculator (deposits, accessories, delivery, tax) plus an availability calendar with conflict detection",
-        "Full lifecycle Pending→Approved→Active→Completed with auto invoices, staged emails and versioned digital agreements",
-        "Damage tracking with photo evidence & deposit deductions; admin revenue analytics with CSV/PDF export",
-        "Hardened: bcrypt, CSRF tokens, XSS escaping, rate limiting and a full before/after audit-log table"
-      ],
-      links: []
-    },
-
-    // ───────────────────── STARTUPS & PERSONAL ─────────────────────
-    {
-      id: "planzevo", name: "PlanzEvo", tag: "AI Event-Planning Platform",
-      category: "personal", color: "lav", icon: "confetti",
-      stack: ["Go", "AWS Lambda", "Neon Postgres", "Angular 21", "Nx", "Firebase", "AWS CDK"],
-      body: "Sri Lanka's AI-powered event-planning platform — five customer suites plus a shared vendor marketplace.",
-      role: "Founder / Full-Stack Engineer", org: "Startup", year: "2025 — now",
-      detail: "An AI-powered event-planning product spanning five suites — WeddingPlanner, Tickets, PartyPlanner, CorporatePlanner and PlanzEvo Glow — over a shared vendor marketplace, each on its own subdomain. The backend is Go 'Lambdalith' microservices on AWS Lambda (Function URLs, no API Gateway) with a Neon Postgres data layer; the front end is an Angular 21 zoneless Nx monorepo of five portals, fronted by a separate Next.js marketing site that drives the pre-seed waitlist.",
-      features: [
-        "Go microservices (Clean Architecture, Chi router, sqlc + pgx, Wire DI) deployed via AWS CDK-in-Go",
-        "Angular 21 signals/zoneless Nx monorepo — corporate, party, tickets, vendor & wedding portals on a shared design system",
-        "Typed API client auto-generated from backend OpenAPI specs, with JWT-claim entitlement & role guards",
-        "Neon Postgres + PgBouncer, an SNS/SQS event bus, Sentry and Firebase auth; en / si / ta i18n",
-        "Companion Next.js 16 waitlist landing page with animated, WCAG-AA marketing sections"
-      ],
+      id: "timetable-gen2", name: "Timetable Generator Gen2", tagline: "Constraint-solved semester timetabling",
+      summary: "A full-semester timetable and hall-allocation system using OR-Tools CP-SAT behind a private compute boundary.",
+      role: "Associate Software Engineer", organization: "NSBM Green University development team", period: "2025", status: "Implemented", featured: true,
+      categories: ["featured", "nsbm", "ai", "node"], capabilities: ["Constraint optimization", "RBAC", "Conflict handling", "Service isolation"], color: "lav", icon: "calendar-dots",
+      stack: ["Next.js 15", "TypeScript", "Python", "FastAPI", "OR-Tools", "MySQL"],
+      architecture: ["Next.js UI and orchestration", "Private FastAPI compute service", "Read-only UMIS + isolated app database"],
+      hardProblems: ["Encode documented academic, lecturer, room, and time constraints", "Optimize a complete semester instead of a single placement", "Return explicit conflicts rather than silently overwriting allocations"],
+      features: ["Lecturer workload planning and registrar generation workflow", "Public aggregate hall-utilization view and oversight roles"],
+      security: ["Microsoft Entra authentication", "Role-based access", "Private service secret", "Read-only source-system access"],
+      operations: ["PM2 and Apache deployment path", "Solver/API tests and CI/CD documentation", "HTTP 409 collision responses"],
       links: []
     },
     {
-      id: "influencelk", name: "InfluenceLK", tag: "Influencer Collaboration Marketplace",
-      category: "personal", color: "pink", icon: "handshake",
-      stack: ["NestJS", "PostgreSQL", "TypeORM", "Next.js 16", "Socket.IO", "WebRTC"],
-      body: "A white-label marketplace connecting Sri Lankan businesses with influencers — 'Fiverr × Upwork' with escrow.",
-      role: "Founder / Full-Stack Engineer", org: "Startup", year: "2025",
-      detail: "A fully white-labelable SaaS marketplace where businesses hire influencers for promotional videos through an escrow-backed flow. The backend is a NestJS modular monolith of eight service modules with in-process messaging; the front end is Next.js 16 with runtime theming pulled live from the database, so the whole platform can be rebranded without a restart.",
-      features: [
-        "Escrow hire flow: order → funds held → deliver → approve → payout minus commission, with wallet ledgers & reviews",
-        "Live white-labeling — name, logo, colours, commission %, boost tiers & plans all editable from the admin panel",
-        "Realtime Instagram-style chat (typing, seen, presence) plus 1:1 WebRTC audio/video calls via perfect-negotiation",
-        "Social linking (YouTube / FB / IG / TikTok / X) with nightly stat sync & AES-256-GCM encrypted tokens",
-        "A hybrid recommendation engine, membership growth mechanics, disputes with escrow freeze and admin analytics"
-      ],
+      id: "us-deed", name: "US Deed Management", tagline: "Multi-county deed workflow prototype",
+      summary: "Two Angular portals and a Spring Boot foundation for deed search, saved research, record administration, and bulk-ingestion workflows.",
+      role: "Full-Stack Engineer", organization: "Leon Mineral Abstract client team", period: "2025 - present", status: "Prototype / active development", featured: true,
+      categories: ["featured", "java", "independent"], capabilities: ["Enterprise search", "Bulk workflow", "Schema evolution", "Dual portals"], color: "peach", icon: "scroll",
+      stack: ["Angular 21", "TypeScript", "Spring Boot 4", "Java 21", "MySQL", "Liquibase"],
+      architecture: ["Public research portal", "Administrative portal", "Spring Boot backend foundation"],
+      hardProblems: ["Model a detailed multi-field deed search", "Keep long-running CSV ingestion understandable in the interface", "Evolve a county-oriented domain without claiming unfinished integrations"],
+      features: ["Search UI, saved searches, run sheets, column controls, PDF workflow, and CSV progress UI", "Backend domain, migration, service, and deployment foundations"],
+      security: ["Firebase authentication flow in the portals", "Role-oriented administration foundation"],
+      operations: ["Build and deployment workflows are present", "Production integration and deployment remain in progress"],
       links: []
     },
     {
-      id: "literanet", name: "LiteraNet", tag: "Smart Library Platform",
-      category: "personal", color: "sky", icon: "books",
-      stack: ["Node.js", "Express", "Angular", "MongoDB", "Docker", "k6"],
-      body: "A full-stack MEAN library-management platform with a clean, modern reading experience.",
-      role: "Full-Stack Developer", org: "Personal project", year: "2024",
-      detail: "A smart library-management platform built on the MEAN stack with a decoupled backend and Angular front end, containerised with Docker Compose and load-tested with k6 — focused on a clean, modern UX over classic catalogue and borrowing workflows.",
-      features: [
-        "MEAN-stack architecture (MongoDB, Express, Angular, Node) with a decoupled REST API",
-        "Docker Compose orchestration for reproducible local & deploy environments",
-        "k6 load-testing scripts to validate performance under concurrency",
-        "A modern, responsive catalogue and borrowing experience"
-      ],
+      id: "umis2", name: "UMIS 2.0", tagline: "University platform foundation and master architecture",
+      summary: "An implemented Next.js/NestJS platform foundation paired with a broader specification for a shared university identity, services, storage, and audit model.",
+      role: "Software Engineer / architecture contributor", organization: "NSBM Green University development team", period: "2025 - present", status: "Foundation in development",
+      categories: ["nsbm", "node", "java"], capabilities: ["Platform architecture", "Service boundaries", "Shared auth", "Specification"], color: "yellow", icon: "buildings",
+      stack: ["Next.js 14", "NestJS", "PostgreSQL", "Drizzle", "Redis", "MinIO", "Docker"],
+      architecture: ["Student and staff frontends", "NestJS domain services", "PostgreSQL, Redis, and object storage"],
+      hardProblems: ["Create reusable identity and authorization foundations", "Separate current code from a much larger future roadmap"],
+      features: ["Implemented monorepo scaffolding, shared auth packages, services, frontends, and local infrastructure", "Master specifications cover future academic and administrative domains"],
+      security: ["Shared authentication and RBAC foundations", "Security and audit requirements in the architecture set"],
+      operations: ["Docker Compose development environment", "Future modules are labelled specification, not shipped product"],
       links: []
     },
     {
-      id: "kitchenpal", name: "KitchenPal", tag: "Kitchen & Food Management App",
-      category: "personal", color: "yellow", icon: "cooking-pot",
-      stack: ["TypeScript", "Node.js", "Mobile", "MySQL"],
-      body: "A kitchen and food-management app with a TypeScript/Node backend and a companion mobile client.",
-      role: "Full-Stack Developer", org: "Personal project", year: "2024",
-      detail: "A food and kitchen management application pairing a TypeScript/Node backend with a mobile client (KitchenPal-mobile), covering pantry, recipes and food organisation with structured backend setup, health-check tooling and a secrets generator.",
-      features: [
-        "TypeScript/Node backend with typed config, health-check scripts and a secrets generator",
-        "A companion mobile client (KitchenPal-mobile)",
-        "Kitchen / pantry and food-management workflows",
-        "Structured backend setup and environment tooling"
-      ],
+      id: "examtrack", name: "ExamTrack", tagline: "Internal examination operations",
+      summary: "A PHP examination-management system covering schedules, halls, seating, identity checks, attendance, incidents, admissions, and reports.",
+      role: "Associate Software Engineer", organization: "NSBM Green University development team", period: "2025", status: "Implemented",
+      categories: ["nsbm", "php"], capabilities: ["Exam operations", "Identity checks", "Audit logs", "Reporting"], color: "pink", icon: "exam",
+      stack: ["PHP", "MySQL", "LDAP", "JavaScript", "TCPDF"], architecture: ["Role-based web portal", "PHP application services", "MySQL examination records"],
+      hardProblems: ["Coordinate halls, seats, schedules, lecturer assignments, and attendance", "Capture offence evidence and rescheduling state without losing traceability"],
+      features: ["Student identity/photo verification, attendance, admissions, offence reporting, email, insights, and exports"],
+      security: ["LDAP with controlled fallback", "Bcrypt-backed accounts", "Prepared PDO queries", "Role and audit controls"], operations: ["PDF generation", "Email notifications", "Operational reporting"], links: []
+    },
+    {
+      id: "enroll-now", name: "Enroll-Now Portal", tagline: "Inquiry routing and follow-up workflow",
+      summary: "A public inquiry and admissions follow-up system with dynamic programmes, round-robin assignment, call tracking, notes, statuses, and reporting.",
+      role: "Associate Software Engineer", organization: "NSBM Green University development team", period: "2025", status: "Implemented",
+      categories: ["nsbm", "php"], capabilities: ["Assignment workflow", "Admissions", "Reporting", "Messaging"], color: "mint", icon: "user-plus",
+      stack: ["PHP", "MySQL", "Bootstrap", "Chart.js", "Email / SMS"], architecture: ["Public inquiry form", "Assistant workflow portal", "Administrative reporting"],
+      hardProblems: ["Distribute inquiries fairly while preserving specialist handling", "Maintain a useful chronological interaction history"],
+      features: ["Faculty/program selection, round-robin assignment, calls, notes, bulk reassignment, CSV/PDF, email and SMS"],
+      security: ["Session/JWT role checks", "Prepared database queries"], operations: ["Assistant and admin reporting", "Planned features are excluded from the public claim"], links: []
+    },
+    {
+      id: "research-portal", name: "Research Publications Portal", tagline: "Publication submission and review",
+      summary: "An LDAP-backed portal for research publication forms, PDF submissions, researcher profiles, DOI metadata, review, and soft deletion.",
+      role: "Associate Software Engineer", organization: "NSBM Green University development team", period: "2025", status: "Implemented",
+      categories: ["nsbm", "php"], capabilities: ["Dynamic forms", "Document workflow", "LDAP", "Moderation"], color: "sky", icon: "article",
+      stack: ["PHP", "MySQL", "LDAP", "PDF uploads", "Email"], architecture: ["Researcher submission UI", "Administrative review", "Publication and profile database"],
+      hardProblems: ["Support several publication types without flattening their fields", "Keep document filenames and deletion state consistent"],
+      features: ["Publication forms, PDF rename/storage, DOI field, Scholar/ORCID profiles, status emails, and soft delete"],
+      security: ["LDAP access", "Server-side validation and PDF type checks"], operations: ["Scopus is recorded metadata, not a claimed API integration"], links: []
+    },
+    {
+      id: "library-portal", name: "Library Management Portal", tagline: "Catalogue, circulation, and room booking",
+      summary: "A PHP library portal for catalogue availability, borrowing and overdue state, item condition, study-room reservations, news, and administration.",
+      role: "Associate Software Engineer", organization: "NSBM Green University development team", period: "2025", status: "Implemented",
+      categories: ["nsbm", "php"], capabilities: ["Catalogue", "Circulation", "Reservations", "OAuth"], color: "lav", icon: "books",
+      stack: ["PHP", "MySQL", "Microsoft OAuth", "JavaScript", "WebP"], architecture: ["Student catalogue portal", "Circulation and booking workflows", "Administrative content tools"],
+      hardProblems: ["Keep item availability, due state, condition, and room reservations coherent", "Harden user-supplied images for public display"],
+      features: ["Search/pagination, borrowing, due/overdue state, conditions, room reservations, news, and administration"],
+      security: ["OAuth state checks", "Role controls", "Prepared queries", "MIME validation and WebP conversion"], operations: ["Application-level settings/search caching", "No live Koha integration claim"], links: []
+    },
+    {
+      id: "registration-kiosk", name: "Registration Kiosk", tagline: "Resilient Android kiosk shell",
+      summary: "A Flutter Android kiosk that launches on boot, keeps a registration WebView full-screen, and recovers from connectivity loss.",
+      role: "Associate Software Engineer", organization: "NSBM Green University development team", period: "2025", status: "Implemented",
+      categories: ["nsbm", "mobile"], capabilities: ["Kiosk mode", "Offline recovery", "Boot launch"], color: "peach", icon: "device-mobile",
+      stack: ["Flutter", "Dart", "Android", "WebView"], architecture: ["Native kiosk shell", "Registration WebView", "Connectivity monitor"],
+      hardProblems: ["Recover a fixed-purpose device cleanly after network loss", "Prevent accidental navigation away from the task"], features: ["Auto-launch, portrait/full-screen mode, retry, reconnect, and kiosk back behavior"], security: [], operations: ["Designed for unattended registration stations"], links: []
+    },
+    {
+      id: "intranet", name: "NSBM Intranet", tagline: "Role-aware internal application hub",
+      summary: "An internal PHP hub that organizes applications and navigation by department and role, with account and department administration.",
+      role: "Associate Software Engineer", organization: "NSBM Green University development team", period: "2025", status: "Implemented",
+      categories: ["nsbm", "php"], capabilities: ["Internal portal", "Role navigation", "Administration"], color: "yellow", icon: "squares-four",
+      stack: ["PHP", "MySQL", "OAuth", "JavaScript"], architecture: ["Authenticated hub", "Department/role navigation", "Application directory"],
+      hardProblems: ["Present different operational tools without exposing irrelevant navigation"], features: ["Application aggregation, user management, and controlled department switching"], security: ["OAuth/session checks", "Department and role controls"], operations: [], links: []
+    },
+    {
+      id: "job-portal", name: "NSBM Job Portal", tagline: "Student recruitment workflow",
+      summary: "A PHP portal for job listings, student applications, CV attachments, notifications, and administrative review.",
+      role: "Associate Software Engineer", organization: "NSBM Green University development team", period: "2025", status: "Implemented",
+      categories: ["nsbm", "php"], capabilities: ["Recruitment", "File workflow", "Email"], color: "mint", icon: "briefcase",
+      stack: ["PHP", "MySQL", "PHPMailer", "Composer"], architecture: ["Student job portal", "Application workflow", "Administrative review"],
+      hardProblems: ["Keep applicant documents and application state connected across review"], features: ["Listings, applications, CV attachments, email, and administrative controls"], security: ["Session/role controls", "Upload validation"], operations: ["Email delivery"], links: []
+    },
+    {
+      id: "timetable-gen1", name: "Timetable Generator Gen1", tagline: "Genetic-algorithm predecessor",
+      summary: "The first-generation university timetabling system, using a genetic algorithm behind a React/TypeScript and PHP application.",
+      role: "Associate Software Engineer", organization: "NSBM Green University development team", period: "2025", status: "Implemented predecessor",
+      categories: ["nsbm", "ai", "php"], capabilities: ["Genetic algorithm", "Timetabling", "Relational modeling"], color: "pink", icon: "calendar-check",
+      stack: ["React", "TypeScript", "PHP", "MySQL", "Genetic algorithm"], architecture: ["React planning UI", "PHP backend", "Relational timetable data"],
+      hardProblems: ["Search a large timetable solution space before the CP-SAT redesign"], features: ["Planning, generation, and timetable presentation"], security: [], operations: ["Presented as Gen2's predecessor, not a duplicate current system"], links: []
+    },
+    {
+      id: "lunch-ordering", name: "Campus Lunch Ordering", tagline: "Staff ordering and canteen fulfilment",
+      summary: "A Flutter and PHP workflow for staff lookup, attendance validation, lunch ordering, fulfilment confirmation, and order history.",
+      role: "Software Engineer", organization: "NSBM development team project", period: "2024", status: "Implemented",
+      categories: ["nsbm", "php", "mobile"], capabilities: ["Mobile workflow", "Attendance validation", "Order state"], color: "sky", icon: "fork-knife",
+      stack: ["Flutter", "Dart", "PHP", "MySQL", "Secure storage"], architecture: ["Staff mobile client", "Ordering API", "Canteen fulfilment workflow"],
+      hardProblems: ["Connect staff identity and attendance to an order without slowing fulfilment"], features: ["EPF lookup, attendance check, ordering, confirmation, and history"], security: ["Stored-session controls"], operations: ["Canteen-facing order handling"], links: []
+    },
+    {
+      id: "boc-payment", name: "BOC Payment Portal", tagline: "Hosted-checkout integration workflow",
+      summary: "A Next.js payment portal that creates and verifies hosted-checkout sessions, records transaction state, and produces email receipts.",
+      role: "Associate Software Engineer", organization: "NSBM Green University development team", period: "2025", status: "Implemented integration",
+      categories: ["nsbm", "node"], capabilities: ["Payments", "Session state", "Validation", "Receipts"], color: "lav", icon: "credit-card",
+      stack: ["Next.js 14", "TypeScript", "MySQL", "Zod", "Nodemailer", "iron-session"], architecture: ["Payment form", "Server-side checkout routes", "Transaction and receipt records"],
+      hardProblems: ["Reconcile browser return state with server-side verification"], features: ["Checkout creation, verification, receipts, and email"], security: ["Server-side schema validation", "Protected session state"], operations: ["Transaction and email records"], links: []
+    },
+    {
+      id: "sdg-widget", name: "SDG Widget", tagline: "Accessible dependency-free Web Component",
+      summary: "A configurable Sustainable Development Goals widget with Shadow DOM isolation, responsive layout, keyboard access, and reduced-motion behavior.",
+      role: "Software Engineer", organization: "NSBM development team project", period: "2025", status: "Implemented",
+      categories: ["nsbm", "node"], capabilities: ["Web Component", "Accessibility", "Responsive UI"], color: "peach", icon: "globe-hemisphere-west",
+      stack: ["JavaScript", "Web Components", "Shadow DOM", "CSS"], architecture: ["Custom element", "Shadow DOM styles", "Configurable goal data"],
+      hardProblems: ["Embed safely into unrelated pages without CSS collisions"], features: ["Responsive grid, canonical link fallback, labels, focus behavior, and motion preference support"], security: [], operations: ["Dependency-free distribution"], links: []
+    },
+    {
+      id: "landman", name: "LandMan For A Day", tagline: "Mineral-rights service marketplace",
+      summary: "Separate Angular user and admin portals over a Spring Boot API for jobs, qualification review, assignments, and account workflows.",
+      role: "Full-Stack Engineer", organization: "Title Data Design client team", period: "2025", status: "Active development",
+      categories: ["java", "independent"], capabilities: ["Marketplace", "Dual portals", "JWT", "Docker"], color: "mint", icon: "map-trifold",
+      stack: ["Angular 19", "Spring Boot", "Java", "PostgreSQL", "JWT", "Docker"], architecture: ["User portal", "Administrative portal", "Spring Boot REST API"],
+      hardProblems: ["Coordinate qualification, job, and assignment state across two audiences"], features: ["Job posting/search, registration, verification, user administration, assignments, and dashboard UI"],
+      security: ["JWT authentication", "Route guards and interceptors"], operations: ["Docker Compose and deployment descriptors", "Presented as active development"], links: []
+    },
+    {
+      id: "influencelk", name: "InfluenceLK", tagline: "White-label creator marketplace",
+      summary: "A NestJS and Next.js marketplace foundation with escrow/wallet state, runtime branding, real-time chat and presence, and WebRTC calls.",
+      role: "Founder / Full-Stack Engineer", organization: "Startup team", period: "2025 - present", status: "Product foundation implemented",
+      categories: ["node", "independent"], capabilities: ["Realtime", "WebRTC", "Escrow ledger", "White-label"], color: "pink", icon: "handshake",
+      stack: ["NestJS 11", "Next.js 16", "TypeScript", "PostgreSQL", "Socket.IO", "WebRTC"], architecture: ["Next.js marketplace", "NestJS modular monolith", "PostgreSQL and realtime gateway"],
+      hardProblems: ["Keep escrow holds, release, refund, and disputes legible", "Negotiate peer calls safely when both sides can initiate", "Apply brand settings at runtime"],
+      features: ["Wallet/escrow flows, real-time messages, typing, read/presence events, admin settings, and WebRTC perfect negotiation"],
+      security: ["Authenticated socket connection", "Role-oriented administration"], operations: ["Database-driven runtime configuration"], links: []
+    },
+    {
+      id: "kitchenpal", name: "KitchenPal", tagline: "Multi-client food-waste workflow",
+      summary: "A Node, Angular, Flutter, and PostgreSQL system for stock batches, expiry alerts, recipe suggestions, approvals, sales deduction, and analytics.",
+      role: "Full-Stack Engineer", organization: "Team project", period: "2025", status: "Implemented",
+      categories: ["node", "mobile", "independent"], capabilities: ["Inventory", "Realtime alerts", "FIFO", "Multi-client"], color: "yellow", icon: "cooking-pot",
+      stack: ["Node.js", "Express", "Angular 20", "Flutter", "PostgreSQL", "Socket.IO"], architecture: ["Flutter staff client", "Angular administration", "Express API and PostgreSQL"],
+      hardProblems: ["Deduct ingredient batches in FIFO order", "Coordinate expiry alerts and approval state across clients"],
+      features: ["Inventory batches, notifications, recipe suggestions, discount approval, sales deduction, and analytics"],
+      security: ["JWT roles", "Helmet", "Validation middleware"], operations: ["Docker Compose", "Backend and client CI workflows"], links: []
+    },
+    {
+      id: "planzevo", name: "PlanzEvo", tagline: "Multi-portal event-planning platform",
+      summary: "An in-development event-planning platform spanning Angular/Nx portals, Go service foundations, shared vendor capabilities, and a Next.js marketing application.",
+      role: "Founder / Full-Stack Engineer", organization: "Startup team", period: "2025 - present", status: "Active development",
+      categories: ["node", "independent"], capabilities: ["Multi-portal", "Typed contracts", "Event architecture", "Marketing"], color: "sky", icon: "confetti",
+      stack: ["Angular 21", "Nx", "Go", "PostgreSQL", "AWS CDK", "Next.js 16"], architecture: ["Angular portal monorepo", "Go service foundations", "Next.js marketing and waitlist"],
+      hardProblems: ["Share a design and API contract across several event domains", "Keep active product development distinct from public promises"],
+      features: ["Corporate, party, tickets, vendor, and wedding portal foundations with generated API contracts"],
+      security: ["Entitlement and role guard foundations"], operations: ["Sentry integration", "Firebase hosting/deployment configuration", "Clearly labelled active development"], links: []
+    },
+    {
+      id: "doc-assist", name: "Doc-Assist Pro", tagline: "Multi-client healthcare workflow",
+      summary: "A public team project combining a Node/Express API, PostgreSQL, patient and doctor React Native clients, and an Angular admin portal.",
+      role: "Full-Stack Developer", organization: "Academic team project", period: "2024", status: "Implemented team project",
+      categories: ["node", "mobile", "independent"], capabilities: ["Appointments", "Recommendation workflow", "Multi-client", "Docker"], color: "lav", icon: "first-aid",
+      stack: ["Node.js", "Express", "PostgreSQL", "React Native", "Angular", "Docker"], architecture: ["Patient client", "Doctor client and admin portal", "Node API and PostgreSQL"],
+      hardProblems: ["Serve patient, doctor, and administrator workflows from one backend"], features: ["Appointments, medical records, prescriptions, doctor recommendation, and administration"],
+      security: ["JWT-backed API flow"], operations: ["Docker Compose environment"],
+      links: [{ label: "Public source", url: "https://github.com/KADRDulmin/Doc-Assist-Pro" }]
+    },
+    {
+      id: "literanet", name: "LiteraNet", tagline: "Realtime smart-library platform",
+      summary: "An Angular and Node team project for catalogue, reservations, loans, notifications, branch administration, and analytics.",
+      role: "Full-Stack Developer", organization: "Academic team project", period: "2024", status: "Implemented team project",
+      categories: ["node", "independent"], capabilities: ["Realtime", "Library workflow", "Load testing", "Docker"], color: "peach", icon: "book-open-text",
+      stack: ["Angular 19", "Node.js", "Express", "MongoDB", "Socket.IO", "Docker"], architecture: ["Angular patron/admin UI", "Express API and realtime layer", "MongoDB and S3 assets"],
+      hardProblems: ["Keep loans, due dates, reservations, and notifications coherent"], features: ["Catalogue, reservations, dashboards, realtime notifications, branches, staff, and analytics"],
+      security: ["JWT authentication and access controls"], operations: ["Docker Compose", "k6 load-test assets", "Built as a team"],
       links: []
     },
     {
-      id: "canteen", name: "Campus Canteen Ordering", tag: "Cross-Platform Lunch Ordering",
-      category: "personal", color: "peach", icon: "fork-knife",
-      stack: ["Flutter", "Dart", "Backend API"],
-      body: "A cross-platform Flutter app for ordering lunch from the campus canteen.",
-      role: "Mobile Developer", org: "Campus project", year: "2024",
-      detail: "A campus canteen lunch-ordering system built in Flutter/Dart from a single codebase targeting Android, iOS, web, Windows, macOS and Linux, with its own backend for menu and order handling.",
-      features: [
-        "A single Flutter/Dart codebase targeting mobile, web and desktop",
-        "Menu browsing and a lunch-ordering flow",
-        "A dedicated backend for orders & menu data",
-        "A campus-focused ordering experience"
-      ],
-      links: []
-    },
-
-    // ─────────────────── NSBM UNIVERSITY SYSTEMS ───────────────────
-    {
-      id: "nprofile", name: "UMIS Student Portal", tag: "NSBM Student Portal PWA",
-      category: "nsbm", color: "mint", icon: "graduation-cap",
-      stack: ["Next.js 16", "React 19", "NextAuth v5", "MySQL", "Gemini AI", "Tailwind"],
-      body: "A Next.js PWA student portal for NSBM Green University with a role-gated staff area and AI features.",
-      role: "Associate Software Engineer", org: "NSBM Green University", year: "2025 — now",
-      detail: "Part of NSBM's UMIS ecosystem: a Next.js 16 PWA where students use a rich dashboard and staff access role-gated admin tools. It authenticates via Microsoft Entra ID SSO, ships idempotent DB migrations as code, and layers on AI, notifications and a security-monitoring subsystem — with every API route re-checking auth server-side (guarding against the CVE-2025-29927 class rather than trusting middleware).",
-      features: [
-        "Microsoft Entra ID SSO (NextAuth v5) with per-route server-side auth re-checks and edge middleware",
-        "A cinematic MIS analytics dashboard — animated KPI cards, count-ups, SVG gauges and scroll-driven motion",
-        "A security-monitoring / intrusion-detection subsystem with masked-sender SMS alerts",
-        "Hall management and a student-grouping algorithm; QR scanning, PDF generation, push & email notifications",
-        "Gemini AI, @tanstack/react-table, dnd-kit, Framer Motion / GSAP animation and pooled MySQL access"
-      ],
-      links: []
+      id: "edustay", name: "EduStay", tagline: "Student accommodation marketplace",
+      summary: "A public PHP team project connecting students, landlords, wardens, and administrators around accommodation listings and reservations.",
+      role: "Full-Stack Developer", organization: "Academic team project", period: "2023", status: "Implemented team project",
+      categories: ["php", "independent"], capabilities: ["Listings", "Reservations", "Map UI", "Role workflows"], color: "mint", icon: "house-line",
+      stack: ["PHP", "MySQL", "JavaScript", "Maps"], architecture: ["Student and landlord portal", "Warden approval workflow", "PHP/MySQL application"],
+      hardProblems: ["Coordinate listing approval and reservation state across four roles"], features: ["Property CRUD, images, map browsing, warden validation, reservations, and administration"], security: ["Role-oriented login flows"], operations: [],
+      links: [{ label: "Public source", url: "https://github.com/KADRDulmin/EduStay" }]
     },
     {
-      id: "timetable", name: "Timetable Generator (Gen2)", tag: "CP-SAT Semester Timetabling",
-      category: "nsbm", color: "sky", icon: "calendar-dots",
-      stack: ["Next.js 15", "Python", "FastAPI", "OR-Tools", "MySQL", "Entra ID"],
-      body: "A constraint-solver semester timetable & lecture-hall management system for NSBM.",
-      role: "Associate Software Engineer", org: "NSBM Green University", year: "2025",
-      detail: "A full-semester lecture-timetable generator built on Google OR-Tools CP-SAT. A Next.js 15 app owns UI, auth, RBAC and API routes, while an isolated Python FastAPI service does the CP-SAT compute only. Lecturers plan workload, the Assistant Registrar assigns modules and generates timetables, and a public dashboard shows live hall utilisation.",
-      features: [
-        "A CP-SAT constraint solver with documented hard constraints (H1–H11) and an explicit objective function",
-        "Two-service architecture: a Next.js web app plus a private Python/FastAPI compute service behind a shared secret",
-        "Reads the UMIS DB strictly read-only and writes its own app DB; hall allocation returns HTTP 409 on clash",
-        "A public live hall-utilisation dashboard and role-based DVC / Registrar oversight",
-        "Exhaustively documented — an Obsidian vault of 105 wikilinked notes plus architecture / security / CD specs"
-      ],
-      links: []
-    },
-    {
-      id: "umis2", name: "UMIS 2.0", tag: "University System Master Spec",
-      category: "nsbm", color: "lav", icon: "buildings",
-      stack: ["Specification", "Architecture", "MySQL", "Security / IPDR"],
-      body: "The master specification & architecture 'control tower' for NSBM's next-gen University Management Information System.",
-      role: "Systems Architect / Author", org: "NSBM Green University", year: "2025",
-      detail: "The governance and specification hub for UMIS 2.0 — an integrated, end-to-end university system sharing one student identity, one notification framework, one payments backbone, one document vault and one audit trail. This repo holds no product code; it is the authoritative 1,200+ line master spec, database architecture, phased build prompts, an AI-agent harness and security (IPDR) baseline that every implemented module builds against.",
-      features: [
-        "A master specification plus database-architecture doc governing the whole UMIS ecosystem",
-        "A 'one student, one identity forever' model (Inquiry ID → permanent UMIS ID) across every module",
-        "Specs for registration, academics, attendance/eligibility, exams, results, hostel, library, careers & alumni",
-        "An AI-agent harness with session protocols, memory and phased implementation prompts",
-        "A security / IPDR baseline, ER diagrams, maker–checker on sensitive actions and full audit trails"
-      ],
-      links: []
-    },
-    {
-      id: "ragbot", name: "NSBM RAG Bot", tag: "AI Retrieval-Augmented Chatbot",
-      category: "nsbm", color: "mint", icon: "robot",
-      stack: ["PHP", "Gemini API", "MySQL", "Python", "JavaScript"],
-      body: "An AI RAG chatbot answering student queries from a document knowledge base, embedded on nsbm.ac.lk.",
-      role: "Associate Software Engineer", org: "NSBM Green University", year: "2025",
-      detail: "A Retrieval-Augmented Generation chatbot that answers student questions grounded strictly in an uploaded document knowledge base, deployed as an embeddable floating widget on NSBM's live sites. Built in framework-less PHP with Google Gemini's File Search Store for cloud-side embedding and retrieval, so there is no local vector DB to run.",
-      features: [
-        "A RAG pipeline over Gemini File Search — admins upload PDF/Markdown, answers stay document-grounded (no hallucination)",
-        "An embeddable floating widget (widget.js): desktop popup, mobile fullscreen, self-contained iframe UI",
-        "Admin dashboard: drag-drop dataset manager, live session viewer, archived-chat audit & transcript viewer",
-        "Security: HMAC-SHA256 request signing, CORS whitelist, MySQL rate limiting and CSP frame-ancestors headers",
-        "A companion Python crawl4ai scraper that builds the knowledge base from site content"
-      ],
-      links: []
-    },
-    {
-      id: "examtrack", name: "ExamTrack", tag: "Exam Verification & Attendance",
-      category: "nsbm", color: "yellow", icon: "exam",
-      stack: ["PHP", "MySQL", "LDAP", "PHPMailer"],
-      body: "An exam identity-verification and attendance system for NSBM invigilators and the exam department.",
-      role: "Associate Software Engineer", org: "NSBM Green University", year: "2024",
-      detail: "An examination verification system that lets lecturers and invigilators confirm student identity and attendance during exams, and lets the examination department manage exam logistics. Built in framework-less PHP with an MVC structure, a RESTful API and LDAP authentication against the university directory.",
-      features: [
-        "Invigilator portal: module/date search, hall & seat lists, photo-based identity verification and attendance marking",
-        "Quick jump to a student's exam profile by ID, plus pre-filled exam-offence reporting",
-        "Admin portal: modules, halls, students, schedules, attendance records and reported offences",
-        "LDAP authentication against the university UMIS directory, with a fallback",
-        "Security-hardened: bcrypt, PDO prepared statements, session timeout and role-based access"
-      ],
-      links: []
-    },
-    {
-      id: "enrollnow", name: "Enroll-Now Portal", tag: "Enrollment & Lead Management",
-      category: "nsbm", color: "pink", icon: "user-plus",
-      stack: ["PHP 8", "MySQL", "JWT", "Chart.js", "PHPMailer"],
-      body: "A web enrollment & lead-management system where prospects apply and staff track applications.",
-      role: "Associate Software Engineer", org: "NSBM Green University", year: "2024",
-      detail: "A production-ready (v2.0) student enrollment and lead-management system for NSBM. Prospective students submit inquiries through a public form; staff then manage, call, track and report on applications through a JWT-secured admin dashboard with charts and multi-format reporting.",
-      features: [
-        "A public enrollment form with dynamic faculty→programme filtering and automated email + SMS confirmations",
-        "An admin dashboard with real-time stats and Chart.js faculty / programme breakdowns",
-        "Call tracking with notes/history, a status workflow (Pending / Called / Processed) and advanced search",
-        "Six report types (enrollment, call activity, staff performance, faculty, daily, custom) exportable to PDF/CSV",
-        "JWT auth, role-based Admin/Assistant permissions, PDO-guarded SQL and Dialog SMS integration"
-      ],
-      links: []
-    },
-    {
-      id: "research", name: "Research Portal", tag: "Academic Research Management",
-      category: "nsbm", color: "lav", icon: "microscope",
-      stack: ["PHP", "MySQL", "LDAP", "DOI / Scopus"],
-      body: "A research-paper management portal for faculty with DOI and Scopus integration.",
-      role: "Associate Software Engineer", org: "NSBM Green University", year: "2024",
-      detail: "An academic research-paper management portal for faculty, handling submissions and tracking with LDAP authentication, email notifications and integrations with DOI and Scopus for publication metadata.",
-      features: [
-        "Research-paper submission, tracking and management for faculty",
-        "LDAP authentication against the university directory",
-        "DOI and Scopus integrations, delivered via dedicated migrations",
-        "Email notifications via PHPMailer over a MySQL backend"
-      ],
-      links: []
-    },
-    {
-      id: "library", name: "Library Management Portal", tag: "Koha-Integrated Library System",
-      category: "nsbm", color: "peach", icon: "book-open",
-      stack: ["PHP", "Koha ILS", "Azure OAuth", "MySQL", "PHPMailer"],
-      body: "A library portal integrating the Koha ILS with Microsoft / Azure single sign-on.",
-      role: "Associate Software Engineer", org: "NSBM Green University", year: "2024",
-      detail: "A large PHP library-management portal for NSBM that layers a modern front end and single sign-on over the open-source Koha integrated library system, covering catalogue, borrowing and member workflows plus SEO and FTP-based deployment.",
-      features: [
-        "Integration with the Koha open-source ILS (a dedicated Koha database)",
-        "Microsoft / Azure OAuth authentication",
-        "Email via PHPMailer and Composer-managed dependencies",
-        "SEO implementation and FTP deployment tooling"
-      ],
-      links: []
-    },
-    {
-      id: "jobportal", name: "NSBM Job Portal", tag: "Student Careers & Jobs",
-      category: "nsbm", color: "sky", icon: "briefcase",
-      stack: ["PHP", "MySQL", "PHPMailer", "Composer"],
-      body: "A job and career portal for NSBM students with CV handling and admin tools.",
-      role: "Associate Software Engineer", org: "NSBM Green University", year: "2024",
-      detail: "A PHP job / career portal for NSBM students with separate student and admin areas, covering job listings, applications with CV attachment handling and templated email notifications.",
-      features: [
-        "Student and admin areas over a PHP + MySQL stack",
-        "Job listings and applications with CV attachment handling",
-        "Templated email notifications via PHPMailer",
-        "Composer-managed dependencies"
-      ],
-      links: []
-    },
-    {
-      id: "intranet", name: "NSBM Intranet Portal", tag: "Internal Staff Hub with SSO",
-      category: "nsbm", color: "yellow", icon: "lock-key",
-      stack: ["PHP", "OAuth / SSO", "MySQL"],
-      body: "A single internal hub aggregating NSBM's university apps, notices and staff tools behind SSO.",
-      role: "Associate Software Engineer", org: "NSBM Green University", year: "2024",
-      detail: "An internal intranet portal that aggregates the university's apps, notices and staff tools behind a single OAuth / SSO login, acting as the central entry point for staff.",
-      features: [
-        "An OAuth / SSO authentication flow (auth, callback, routing)",
-        "Aggregates internal university apps and staff tools",
-        "User management for staff access",
-        "A central internal hub for the NSBM ecosystem"
-      ],
-      links: []
+      id: "bus-black-box", name: "Bus Black Box", tagline: "IoT safety and telemetry prototype",
+      summary: "A paired Flutter and embedded-system team project for bus location and sensor telemetry using Firebase-backed data exchange.",
+      role: "Mobile / IoT Developer", organization: "Academic team project", period: "2024", status: "Implemented prototype",
+      categories: ["mobile", "independent"], capabilities: ["IoT", "Telemetry", "Flutter", "Firebase"], color: "pink", icon: "bus",
+      stack: ["Flutter", "Dart", "Firebase", "NodeMCU", "GPS", "Sensors"], architecture: ["Embedded sensor device", "Firebase telemetry", "Flutter monitoring client"],
+      hardProblems: ["Bring location, speed, motion, and hazard signals into one prototype workflow"], features: ["Mobile monitoring client and embedded safety-system prototype"], security: [], operations: ["Academic prototype with documented system tests"],
+      links: [
+        { label: "Mobile source", url: "https://github.com/KADRDulmin/Bus-Black-Box-Mobile-App" },
+        { label: "IoT source", url: "https://github.com/KADRDulmin/BUS-BLACK-BOX-SECURITY-SYSTEM" }
+      ]
     }
   ],
 
   heroPhotoOrder: [
-    "assets/photo-suit-pose.png",
-    "assets/photo-grad.png",
-    "assets/photo-suit.png",
-    "assets/photo-degree-looking.png"
-  ],
-
-  quickFacts: [
-    "Coffee ≫ Tea",
-    "Builds in React, Angular, PHP & Go",
-    "Shipped 20+ products across client, university & startup work",
-    "Dockerizes everything"
+    { src: "assets/photo-suit.png", width: 408, height: 612, alt: "Raminda Kariyawasam in a suit - professional portrait" },
+    { src: "assets/photo-grad.png", width: 408, height: 612, alt: "Raminda Kariyawasam at the University of Plymouth graduation ceremony in 2025" },
+    { src: "assets/photo-suit-pose.png", width: 408, height: 612, alt: "Raminda Kariyawasam in a suit" },
+    { src: "assets/photo-degree-looking.png", width: 408, height: 612, alt: "Raminda Kariyawasam holding his degree certificate" }
   ]
 };
+
+// Keep the public schema explicit for every record while allowing featured
+// projects to opt in where they are declared above.
+RK.projects = RK.projects.map((project) => ({ featured: false, ...project }));
 
 window.RK = RK;

@@ -1,9 +1,9 @@
 <div align="center">
 
-  <h1>Raminda Kariyawasam — Interactive Portfolio</h1>
+  <h1>Raminda Kariyawasam — Full-Stack Software Engineer</h1>
   
   <p>
-    <strong>Associate Software Engineer</strong> @NSBM-Green_University.
+    AI-enabled university platforms, optimization systems, secure enterprise applications, and production infrastructure.
   </p>
   
   <p>
@@ -32,19 +32,23 @@ Here is a look at the portfolio in action, showcasing both the desktop and mobil
 
 ## ✨ Features
 
-- **Interactive Sticky Notes:** Drag, drop, and interact with notes across the board to discover projects and skills.
+- **Engineering Evidence:** Featured case studies expose architecture lanes, hard problems, security boundaries, and operational considerations.
+- **Complete Catalogue:** Multi-category filters cover verified NSBM, AI, Node/TypeScript, Java, PHP, mobile/IoT, client, startup, and personal work.
+- **Interactive Sticky Notes:** Drag notes on wide pointer devices or open every project by keyboard without dragging.
 - **Playful Cursor & Doodles:** Custom pencil cursor and hand-drawn doodles for a very unique, personalized feel.
 - **Light & Dark Themes:** Seamlessly switch between a light parchment "paper" theme and a dark "cork" theme.
-- **Responsive Design:** Perfectly optimized for both large desktop monitors and small mobile screens.
+- **Accessible Interactions:** Focus-trapped dialogs, Escape close, focus restoration, visible keyboard focus, reduced motion, and mobile stacking.
+- **Targeted Résumés:** One chooser provides the immutable original plus Node.js/TypeScript, AI Full Stack, and Java Enterprise versions.
 - **React Powered:** Built using React components (`.jsx`) for modular, maintainable, and interactive UI elements.
 - **Beautiful Typography:** Hand-drawn web fonts using _Patrick Hand_, _Caveat Brush_, and _Space Mono_.
 
 ## 🛠️ Tech Stack
 
-- **Frontend:** HTML5, CSS3, JavaScript (ES6+), React
+- **Frontend:** HTML5, CSS3, JavaScript (ES6+), React 18
 - **Styling:** Custom Vanilla CSS variables for theming
-- **Fonts:** Google Fonts
-- **Tooling:** `serve` via npm for local development
+- **Fonts:** Patrick Hand, Caveat Brush, Shadows Into Light, and Space Mono
+- **Quality:** Node tests, Playwright, axe-core, PDF validation, and link checks
+- **Tooling:** `serve` via npm for local development; deterministic ReportLab résumé generation
 
 ## 🚀 Installation & Local Development
 
@@ -53,8 +57,8 @@ This project requires minimal setup. It uses `serve` to render the `index.html` 
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/your-username/my-portfolio.git
-   cd my-portfolio
+   git clone https://github.com/KADRDulmin/RamindaKariyawasam.git
+   cd RamindaKariyawasam
    ```
 
 2. **Install development dependencies:**

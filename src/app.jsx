@@ -1,19 +1,18 @@
-// App root — single page, all boards stacked
-const { useEffect, useState } = React;
-
+// App root - single page, all boards stacked.
 function App() {
   const path = window.location.pathname;
   if (path !== "/" && path !== "") return <NotFound />;
 
   return (
-    <div style={{position:"relative", minHeight:"100vh"}}>
+    <div style={{ position: "relative", minHeight: "100vh" }}>
       <HomeBoard />
       <AboutBoard />
+      <FeaturedEngineeringBoard />
       <ProjectsBoard />
       <ToolkitBoard />
       <ContactBoard />
-      <footer style={{textAlign:"center", padding:"40px 20px 80px", color:"var(--ink-soft)", fontFamily:"'Patrick Hand'"}}>
-        made with sticky notes & papper · raminda · 2026
+      <footer style={{ textAlign: "center", padding: "40px 20px 80px", color: "var(--ink-soft)", fontFamily: "'Patrick Hand'" }}>
+        made with sticky notes &amp; paper · Raminda · 2026
       </footer>
     </div>
   );

@@ -6,10 +6,12 @@
     "start": "serve .",
     "dev": "serve .",
     "build": "node scripts/build-anniversary.mjs",
-    "lint": "node --check srimantha_and_geethanjali_anniversary/event-config.mjs && node --check srimantha_and_geethanjali_anniversary/invitation-utils.mjs && node --check scripts/build-anniversary.mjs && node --check scripts/lint-anniversary.mjs && node scripts/lint-anniversary.mjs",
+    "lint": "node --check srimantha_and_geethanjali_anniversary/event-config.mjs && node --check srimantha_and_geethanjali_anniversary/invitation-utils.mjs && node --check scripts/build-anniversary.mjs && node --check scripts/lint-anniversary.mjs && node --check scripts/check-public-links.mjs && node --check tests/portfolio-data.test.mjs && node --check tests/e2e/portfolio.spec.mjs && node scripts/lint-anniversary.mjs",
     "test": "npm run test:unit && npm run test:e2e",
-    "test:unit": "node --test tests/anniversary.test.mjs",
-    "test:e2e": "playwright test"
+    "test:unit": "node --test tests/*.test.mjs",
+    "test:e2e": "playwright test",
+    "verify:links": "node scripts/check-public-links.mjs",
+    "verify:resumes": "python scripts/verify-resumes.py"
   },
   "keywords": [],
   "author": "",

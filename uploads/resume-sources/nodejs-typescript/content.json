@@ -1,0 +1,25 @@
+{
+  "variant": "Node.js / TypeScript",
+  "output": "Resume - Raminda Kariyawasam - NodeJS TypeScript.pdf",
+  "document_title": "Raminda Kariyawasam - Node.js and TypeScript Resume",
+  "document_subject": "Full-stack software engineer focused on Node.js, TypeScript, realtime systems, data, and operations.",
+  "role": "Full-Stack Software Engineer - Node.js / TypeScript",
+  "profile": "Full-stack software engineer building typed web platforms and backend workflows with Node.js, TypeScript, React, Next.js, NestJS, and relational databases. Experienced with authenticated AI tools, realtime communication, API boundaries, migrations, Docker delivery, and operational usage signals.",
+  "skills": [
+    {"title": "Node.js & TypeScript", "items": ["TypeScript", "Node.js / Express", "NestJS", "Next.js / React", "REST APIs", "Socket.IO / WebRTC", "Runtime validation", "Unit / API tests"]},
+    {"title": "Data & Security", "items": ["PostgreSQL / MySQL", "MongoDB / Redis", "SQL / indexing", "Migrations", "Entra ID / Auth.js", "JWT / RBAC", "Validation / audit trails"]},
+    {"title": "Delivery", "items": ["Docker / Compose", "GitHub Actions", "Linux", "AWS", "Apache / Nginx", "PM2", "Sentry / observability"]},
+    {"title": "Product UI", "items": ["Angular", "Flutter", "Responsive UI", "Accessibility", "State workflows", "API integration"]}
+  ],
+  "experience": [
+    {"company": "NSBM University", "title": "Associate Software Engineer", "period": "2025 - Present", "bullets": ["Build Next.js and TypeScript university workflows plus authenticated Gemini tools with server-owned identity and policy gates.", "Operate MySQL-backed services with migrations, rate limits, usage accounting, audit state, and retention-aware chat history."]},
+    {"company": "Iplay Global", "title": "UI Developer Intern", "period": "2022 - 2023", "bullets": ["Implemented responsive interfaces and integrated frontend workflows with REST APIs."]},
+    {"company": "Infigo Developers", "title": "Developer", "period": "2020 - 2022", "bullets": ["Delivered client websites and developed practical React and Angular foundations in a startup team."]}
+  ],
+  "projects": [
+    {"name": "GreenMate AI", "stack": "Next.js, TypeScript, Gemini, MySQL", "bullets": ["Implemented an authenticated function-call loop where student identity is derived from the session, never model arguments.", "Added global/per-tool controls, rate limiting, sanitization, usage accounting, and session-owned history."]},
+    {"name": "InfluenceLK", "stack": "NestJS, Next.js, PostgreSQL", "bullets": ["Built modular marketplace foundations with runtime white-label settings and escrow/wallet ledger states.", "Implemented Socket.IO chat, typing/read/presence events, and WebRTC perfect negotiation for peer calls."]},
+    {"name": "Doc-Assist Pro", "stack": "Node, Express, PostgreSQL", "url": "https://github.com/KADRDulmin/Doc-Assist-Pro", "bullets": ["Built as a team across a Node API, React Native patient and doctor clients, and Angular administration.", "Connected appointment, record, prescription, and doctor-recommendation workflows through one backend."]},
+    {"name": "LiteraNet", "stack": "Node, Angular, MongoDB, Socket.IO", "bullets": ["Built as a team: catalogue, loan, reservation, branch, dashboard, and realtime-notification workflows.", "Packaged with Docker Compose and maintained k6 load-test assets for the API surface."]}
+  ]
+}

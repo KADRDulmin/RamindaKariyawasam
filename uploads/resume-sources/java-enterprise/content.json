@@ -1,0 +1,25 @@
+{
+  "variant": "Java Enterprise",
+  "output": "Resume - Raminda Kariyawasam - Java Enterprise.pdf",
+  "document_title": "Raminda Kariyawasam - Java Enterprise Resume",
+  "document_subject": "Full-stack software engineer focused on Java, Spring Boot, Angular, data workflows, security, and delivery.",
+  "role": "Full-Stack Software Engineer - Java Enterprise",
+  "profile": "Full-stack software engineer building enterprise workflow foundations with Java, Spring Boot, Angular, TypeScript, relational databases, schema migrations, REST APIs, authentication, and Docker. Experienced translating detailed operational domains into searchable interfaces, auditable state, controlled service boundaries, and deployment-ready application structure.",
+  "skills": [
+    {"title": "Java & APIs", "items": ["Java 17 / 21", "Spring Boot", "Spring Security", "REST APIs", "JPA / Hibernate", "MapStruct", "Maven", "Service boundaries"]},
+    {"title": "Enterprise UI", "items": ["Angular", "TypeScript", "RxJS", "Angular Material", "Route guards", "Responsive workflow UI", "API integration"]},
+    {"title": "Data & Security", "items": ["MySQL / PostgreSQL", "Liquibase", "Schema migrations", "JWT / Firebase auth", "RBAC", "Validation / audit state", "Read-only integration"]},
+    {"title": "Delivery", "items": ["Docker / Compose", "GitHub Actions", "AWS foundations", "Linux", "Testing", "CI/CD documentation", "Operational handover"]}
+  ],
+  "experience": [
+    {"company": "NSBM University", "title": "Associate Software Engineer", "period": "2025 - Present", "bullets": ["Build secure university workflows across role-based portals, relational data, authentication, reports, and service integrations.", "Contribute architecture, migrations, tests, deployment notes, and operational controls as part of the NSBM development team."]},
+    {"company": "Iplay Global", "title": "UI Developer Intern", "period": "2022 - 2023", "bullets": ["Implemented responsive interfaces and integrated frontend workflows with REST APIs."]},
+    {"company": "Infigo Developers", "title": "Developer", "period": "2020 - 2022", "bullets": ["Delivered client websites and developed practical React and Angular foundations in a startup team."]}
+  ],
+  "projects": [
+    {"name": "US Deed Management", "stack": "Angular 21, Spring Boot 4, Java 21", "bullets": ["Built an in-development multi-county search/admin prototype with detailed deed search, saved research, PDF workflow, and CSV progress UI.", "Implemented backend domain and migration foundations with Spring services and Liquibase; production integration remains in progress."]},
+    {"name": "LandMan For A Day", "stack": "Angular, Spring Boot, PostgreSQL", "bullets": ["Contributed separate client and administrative portals over a Spring REST API for jobs, qualification review, and assignments.", "Applied JWT guards/interceptors and Docker Compose foundations; the product is presented as active development."]},
+    {"name": "Timetable Generator Gen2", "stack": "Next.js, FastAPI, OR-Tools, MySQL", "bullets": ["Designed a strict service boundary between authenticated workflow orchestration and private optimization compute.", "Used read-only source-system access, an isolated write database, role controls, documented constraints, and explicit HTTP 409 conflicts."]},
+    {"name": "ExamTrack", "stack": "PHP, MySQL, LDAP, TCPDF", "bullets": ["Built as part of the NSBM team across schedules, halls, seating, identity checks, attendance, incidents, admissions, and reporting.", "Applied LDAP fallback rules, bcrypt accounts, prepared queries, role controls, evidence uploads, and audit logs."]}
+  ]
+}
