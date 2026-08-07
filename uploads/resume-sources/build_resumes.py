@@ -35,9 +35,6 @@ VARIANTS = {
     "java-enterprise": SOURCE_ROOT / "java-enterprise" / "content.json",
 }
 
-MSC_URL = "https://www.iit.ac.lk/course/msc-cyber-security-and-forensics/"
-
-
 def load_content(path: Path) -> dict:
     with path.open("r", encoding="utf-8") as handle:
         return json.load(handle)
@@ -215,20 +212,14 @@ def draw_profile(canvas: Canvas, content: dict, x: float, y: float, max_width: f
 def draw_education(canvas: Canvas, x: float, y: float) -> float:
     y = heading(canvas, "Education", x, y)
     entries = [
-        ("MSc Cyber Security and Forensics", "IIT Sri Lanka / University of Westminster, UK", "2026 - Present", MSC_URL),
-        ("BSc (Hons) in Software Engineering", "University of Plymouth, UK", "2022 - 2025", None),
-        ("IT Foundation Programme", "NSBM Green University, Sri Lanka", "2020 - 2021", None),
+        ("MSc Cyber Security and Forensics", "University of Westminster, UK", "2026 - Present"),
+        ("BSc (Hons) in Software Engineering", "University of Plymouth, UK", "2022 - 2025"),
+        ("IT Foundation Programme", "NSBM Green University, Sri Lanka", "2020 - 2021"),
     ]
-    for title, place, period, url in entries:
+    for title, place, period in entries:
         canvas.setFillColor(INK)
         canvas.setFont("CormorantSemi", 11.1)
         canvas.drawString(x, y, title)
-        if url:
-            title_width = width(title, "CormorantSemi", 11.1)
-            canvas.setStrokeColor(INK)
-            canvas.setLineWidth(.4)
-            canvas.line(x, y - 1.2, x + title_width, y - 1.2)
-            canvas.linkURL(url, (x, y - 3, x + title_width, y + 11), relative=0)
         y -= 12.2
         canvas.setFillColor(SOFT)
         canvas.setFont("Cormorant", 9.5)
@@ -281,16 +272,9 @@ def draw_projects(canvas: Canvas, projects: list[dict], x: float, y: float, max_
         title_lines = wrap(title, "CormorantSemi", 10.3, max_width)
         canvas.setFillColor(INK)
         canvas.setFont("CormorantSemi", 10.3)
-        first_y = y
         for line in title_lines:
             canvas.drawString(x, y, line)
             y -= 12.2
-        if project.get("url"):
-            title_width = min(max_width, width(title_lines[0], "CormorantSemi", 10.3))
-            canvas.setStrokeColor(INK)
-            canvas.setLineWidth(.4)
-            canvas.line(x, first_y - 1, x + title_width, first_y - 1)
-            canvas.linkURL(project["url"], (x, y, x + max_width, first_y + 9), relative=0)
         y -= 3
         y = draw_bullets(canvas, project["bullets"], x + 2, y, max_width - 2, size=8.35, leading=12.5, gap=2.5)
         y -= 10

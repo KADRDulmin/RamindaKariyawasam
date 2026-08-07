@@ -19,7 +19,7 @@
   "projects": [
     {"name": "GreenMate AI", "stack": "Next.js, TypeScript, Gemini, MySQL", "bullets": ["Implemented an authenticated function-call loop where student identity is derived from the session, never model arguments.", "Added global/per-tool controls, rate limiting, sanitization, usage accounting, and session-owned history."]},
     {"name": "InfluenceLK", "stack": "NestJS, Next.js, PostgreSQL", "bullets": ["Built modular marketplace foundations with runtime white-label settings and escrow/wallet ledger states.", "Implemented Socket.IO chat, typing/read/presence events, and WebRTC perfect negotiation for peer calls."]},
-    {"name": "Doc-Assist Pro", "stack": "Node, Express, PostgreSQL", "url": "https://github.com/KADRDulmin/Doc-Assist-Pro", "bullets": ["Built as a team across a Node API, React Native patient and doctor clients, and Angular administration.", "Connected appointment, record, prescription, and doctor-recommendation workflows through one backend."]},
+    {"name": "Doc-Assist Pro", "stack": "Node, Express, PostgreSQL", "bullets": ["Built as a team across a Node API, React Native patient and doctor clients, and Angular administration.", "Connected appointment, record, prescription, and doctor-recommendation workflows through one backend."]},
     {"name": "LiteraNet", "stack": "Node, Angular, MongoDB, Socket.IO", "bullets": ["Built as a team: catalogue, loan, reservation, branch, dashboard, and realtime-notification workflows.", "Packaged with Docker Compose and maintained k6 load-test assets for the API surface."]}
   ]
 }

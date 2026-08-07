@@ -22,7 +22,6 @@ REQUIRED_LINKS = {
     "mailto:raminda5575@gmail.com",
     "https://www.ramindak.com/",
     "https://www.linkedin.com/in/raminda-dulmin/",
-    "https://www.iit.ac.lk/course/msc-cyber-security-and-forensics/",
     "tel:+94758702922",
 }
 PORTRAIT_CLIP = "n 155 751.5 m 155 785.4655 127.4655 813 93.5 813 c 59.53449 813 32 785.4655 32 751.5 c 32 717.5345 59.53449 690 93.5 690 c 127.4655 690 155 717.5345 155 751.5 c W* n"
@@ -81,8 +80,12 @@ def main() -> int:
                 failures.append(f"{filename}: missing extractable text {required!r}")
         if len(normalized) < 1500:
             failures.append(f"{filename}: too little extractable text ({len(normalized)} characters)")
-        if not REQUIRED_LINKS.issubset(page_links):
-            failures.append(f"{filename}: missing contact links {sorted(REQUIRED_LINKS - page_links)}")
+        if page_links != REQUIRED_LINKS:
+            failures.append(
+                f"{filename}: links must be contact-only; "
+                f"missing={sorted(REQUIRED_LINKS - page_links)}, "
+                f"unexpected={sorted(page_links - REQUIRED_LINKS)}"
+            )
         if image_count != 1:
             failures.append(f"{filename}: expected one portrait image, found {image_count}")
         if PORTRAIT_CLIP not in page_stream or PORTRAIT_MATRIX not in page_stream:
