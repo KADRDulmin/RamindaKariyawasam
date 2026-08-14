@@ -49,4 +49,4 @@ Current build budgets are enforced in `tests/site-build.test.mjs`: portfolio Jav
 
 ## Deployment
 
-`.github/workflows/deploy-pages.yml` builds and validates the project on `main`, uploads only `dist/`, and deploys with GitHub's official Pages actions. The source repository can remain a normal development project while GitHub Pages receives only static production files.
+The repository uses GitHub Pages branch publishing from `main` and `/(root)`, with no custom CI/CD workflow. `npm run build` creates the tested `dist/` artifact and synchronizes the same browser-ready `index.html`, `404.html`, hashed JavaScript/CSS, fonts, and `.nojekyll` marker into the committed repository root. Pushing those generated files to `main` triggers GitHub's built-in Pages deployment.

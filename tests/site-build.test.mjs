@@ -32,6 +32,26 @@ test("production output uses local optimized assets instead of browser compilati
   assert.ok(stylesheetBytes < 70 * 1024, `portfolio CSS is unexpectedly large: ${stylesheetBytes} bytes`);
 });
 
+test("repository root is a synchronized branch-publishable Pages site", async () => {
+  const distHtml = await readFile(path.join(DIST, "index.html"), "utf8");
+  const rootHtml = await readFile(path.join(ROOT, "index.html"), "utf8");
+  const distNotFound = await readFile(path.join(DIST, "404.html"), "utf8");
+  const rootNotFound = await readFile(path.join(ROOT, "404.html"), "utf8");
+
+  assert.equal(rootHtml, distHtml, "root index.html must match the tested production artifact");
+  assert.equal(rootNotFound, distNotFound, "root 404.html must match the tested production artifact");
+  assert.equal(existsSync(path.join(ROOT, ".nojekyll")), true, "branch publishing requires root .nojekyll");
+
+  const scriptPath = rootHtml.match(/<script src="\.\/(assets\/portfolio-[^"]+\.js)" defer><\/script>/)?.[1];
+  const stylesheetPath = rootHtml.match(/<link rel="stylesheet" href="\.\/(assets\/portfolio-[^"]+\.css)" \/>/)?.[1];
+  assert.ok(scriptPath && existsSync(path.join(ROOT, scriptPath)), "root production JavaScript is missing");
+  assert.ok(stylesheetPath && existsSync(path.join(ROOT, stylesheetPath)), "root production CSS is missing");
+  assert.equal(existsSync(path.join(ROOT, "assets", "fonts", "patrick-hand-latin-400-normal.woff2")), true);
+  assert.equal(existsSync(path.join(ROOT, ".github", "workflows", "deploy-pages.yml")), false);
+  assert.equal(existsSync(path.join(ROOT, ".github", "workflows", "deploy-vercel.yml.disabled")), false);
+  assert.equal(existsSync(path.join(ROOT, "vercel.json.example")), false);
+});
+
 test("deployment artifact contains public routes but excludes raw anniversary photographs", async () => {
   for (const relativePath of [
     "index.html",

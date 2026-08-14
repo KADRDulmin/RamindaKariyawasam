@@ -18,7 +18,7 @@ The production build now:
 - uses one pointer listener plus per-drag pointer capture instead of dozens of global drag listeners;
 - stops animation loops while idle or hidden and uses native Web Animations for scroll effects;
 - extracts and hashes CSS/JavaScript for browser caching;
-- publishes only the required static files through a compact `dist/` artifact.
+- publishes the same optimized static files through both `dist/` and the repository root.
 
 A controlled cold-load comparison (1.6 Mbps, 150 ms latency, 4× CPU slowdown) reduced the initial transfer from about 2.35 MB/32 requests to about 365 KB/10 requests. The browser `load` measurement fell from about 13.1 seconds on the old live build to about 1.34 seconds for the optimized build. See [the performance note](docs/PERFORMANCE.md) for scope and methodology.
 
@@ -28,7 +28,7 @@ A controlled cold-load comparison (1.6 Mbps, 150 ms latency, 4× CPU slowdown) r
 - Vanilla CSS and native Web Animations
 - esbuild
 - Node test runner, Playwright, and axe-core
-- GitHub Actions and GitHub Pages
+- Branch-based GitHub Pages
 
 The anniversary invitation under `/srimantha_and_geethanjali_anniversary/` is built into the same deployment with its optimized responsive images, self-hosted fonts, and bundled React application.
 
@@ -41,12 +41,12 @@ npm ci
 npm start
 ```
 
-`npm start` builds the same `dist/` artifact used in production and serves it locally. The source `index.html` is a build template; do not serve the repository root directly.
+`npm start` builds the production artifact, synchronizes the browser-ready entry files to the repository root, and serves `dist/` locally. The editable HTML templates live under `src/`; root `index.html` and `404.html` are generated files.
 
 Useful commands:
 
 ```bash
-npm run build       # create dist/
+npm run build       # create dist/ and synchronize the GitHub Pages root
 npm run preview     # serve an existing dist/
 npm run lint        # validate JavaScript and invitation sources
 npm run test:unit   # data and invitation unit tests
@@ -57,19 +57,26 @@ npm test            # complete build and test sequence
 
 ## GitHub Pages deployment
 
-The workflow at `.github/workflows/deploy-pages.yml` runs on pushes to `main` and can also be started manually. It uses only GitHub-hosted Actions and the standard GitHub Pages artifact/deployment actions.
+There is no custom CI/CD workflow and no Vercel deployment. GitHub Pages publishes the committed production files directly from `main`.
 
-In the repository settings, set **Pages → Build and deployment → Source** to **GitHub Actions**. The workflow installs the lockfile, validates the sources, creates `dist/`, runs unit/build-contract tests, uploads that directory, and deploys it to the `github-pages` environment.
+Configure the repository once under **Settings → Pages → Build and deployment**:
+
+- **Source:** Deploy from a branch
+- **Branch:** `main`
+- **Folder:** `/(root)`
+
+Before pushing a source change, run `npm run build` and commit the generated root `index.html`, `404.html`, `.nojekyll`, `assets/portfolio-*`, and `assets/fonts/` changes together with the source changes. A normal push to `main` then triggers GitHub's built-in `pages build and deployment` process. No custom Actions runner or GitHub App token is used by this repository.
 
 ## Main project structure
 
 ```text
-src/                     portfolio React and browser runtime
-scripts/build-site.mjs   complete production/static artifact builder
+src/                     React runtime and editable HTML templates
+index.html, 404.html     generated production entry files published by Pages
+assets/portfolio-*       generated production JavaScript and CSS
+scripts/build-site.mjs   builds dist/ and synchronizes the published root
 tests/                   unit, build-contract, accessibility, and E2E tests
 srimantha_and_geethanjali_anniversary/
                           invitation source and optimized media
-.github/workflows/       free GitHub Pages CI/CD
 dist/                    generated deployment artifact (gitignored)
 ```
 

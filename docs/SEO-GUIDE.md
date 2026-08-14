@@ -3,6 +3,8 @@
 
 The code changes are already done. Everything in this guide is stuff only **you** can do because it requires logging into accounts, uploading files, or creating images. Follow these steps after you deploy the latest code to your live site.
 
+> `index.html` is generated for GitHub Pages. Make HTML or metadata edits in `src/index.template.html`, then run `npm run build` before committing.
+
 ---
 
 ## Step 1 — Create a Social Media Preview Image (OG Card)
@@ -21,7 +23,7 @@ When someone shares your site link on LinkedIn, Facebook, WhatsApp, Discord, or 
    - Small: **www.ramindak.com**
 6. Export as PNG → save it as `og-card.png`
 7. Place it in your project at `assets/og-card.png`
-8. In `index.html`, find the two lines that say `photo-suit-pose.png` inside `og:image` and `twitter:image` and change both to `assets/og-card.png`
+8. In `src/index.template.html`, update the `og:image` and `twitter:image` entries to `assets/og-card.png`, then run `npm run build`
 
 ---
 
@@ -38,7 +40,7 @@ A favicon is the tiny icon that appears in browser tabs and bookmarks. The code 
 5. Customize colours if you want, then click **Generate your Favicons**
 6. Download the package — it will contain `favicon.ico`, `favicon-32x32.png`, `favicon-16x16.png`, `apple-touch-icon.png`
 7. Place all those files at the **root** of your project (same folder as `index.html`)
-8. In `index.html`, replace this line:
+8. In `src/index.template.html`, replace this line:
    ```html
    <link rel="icon" type="image/png" href="assets/photo-suit.png" />
    ```
@@ -93,17 +95,7 @@ Analytics shows you how many people visit your site, where they come from, and w
 2. Click **Start measuring** → create an account (your name) and a property (`ramindak.com`)
 3. Choose **Web** → enter `https://www.ramindak.com/` → create stream
 4. Copy your **Measurement ID** — it looks like `G-XXXXXXXXXX`
-5. In `index.html`, add this just before the closing `</head>` tag:
-   ```html
-   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-   <script>
-     window.dataLayer = window.dataLayer || [];
-     function gtag(){dataLayer.push(arguments);}
-     gtag('js', new Date());
-     gtag('config', 'G-XXXXXXXXXX');
-   </script>
-   ```
-   Replace both `G-XXXXXXXXXX` with your actual ID.
+5. In `src/analytics.js`, replace the existing `G-...` measurement ID in both the `gtag("config", ...)` call and Google Tag Manager script URL, then run `npm run build`.
 
 ---
 
@@ -231,7 +223,7 @@ This creates a separate page indexed by Google that mentions your name + skills,
 ## Summary Checklist
 
 - [ ] Create 1200×630 OG card image in Canva and add to `assets/og-card.png`
-- [ ] Update `og:image` and `twitter:image` in `index.html` to point to `assets/og-card.png`
+- [ ] Update `og:image` and `twitter:image` in `src/index.template.html`, then run `npm run build`
 - [ ] Generate proper favicon at realfavicongenerator.net and replace the icon tags
 - [ ] Deploy the latest code to `www.ramindak.com`
 - [ ] Set up Google Search Console and submit `sitemap.xml`

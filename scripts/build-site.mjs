@@ -8,6 +8,8 @@ const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDirectory, "..");
 const outputDirectory = path.join(projectRoot, "dist");
 const outputAssets = path.join(outputDirectory, "assets");
+const indexTemplate = path.join(projectRoot, "src", "index.template.html");
+const notFoundTemplate = path.join(projectRoot, "src", "404.template.html");
 const anniversarySource = path.join(projectRoot, "srimantha_and_geethanjali_anniversary");
 const anniversaryOutput = path.join(outputDirectory, "srimantha_and_geethanjali_anniversary");
 
@@ -72,9 +74,9 @@ const javascriptOutput = Object.entries(javascriptBuild.metafile.outputs).find((
 if (!javascriptOutput) throw new Error("The portfolio JavaScript entry was not emitted.");
 const javascriptFile = path.basename(javascriptOutput[0]);
 
-let html = await readFile(path.join(projectRoot, "index.html"), "utf8");
+let html = await readFile(indexTemplate, "utf8");
 const inlineStyle = html.match(/<style>([\s\S]*?)<\/style>/);
-if (!inlineStyle) throw new Error("The portfolio stylesheet block is missing from index.html.");
+if (!inlineStyle) throw new Error("The portfolio stylesheet block is missing from src/index.template.html.");
 
 const performanceCss = `
 .note{transform:translate3d(var(--drag-x,0px),var(--drag-y,0px),0) rotate(var(--rot,-2deg))}
@@ -168,12 +170,33 @@ await writeFile(path.join(anniversaryOutput, "styles.css"), minifiedAnniversaryS
 await copyFileTo(path.join(anniversarySource, "favicon.svg"), path.join(anniversaryOutput, "favicon.svg"));
 await cp(path.join(anniversarySource, "assets", "images"), path.join(anniversaryOutput, "assets", "images"), { recursive: true });
 
-let notFoundHtml = await readFile(path.join(projectRoot, "404.html"), "utf8");
+let notFoundHtml = await readFile(notFoundTemplate, "utf8");
 notFoundHtml = notFoundHtml
   .replace(/\s*<link rel="preconnect" href="https:\/\/fonts\.googleapis\.com" \/>[\s\S]*?<link href="https:\/\/fonts\.googleapis\.com[\s\S]*?rel="stylesheet" \/>/, "")
   .replace("  <style>", `  <style>\n${fontCss.replaceAll('url("./fonts/', 'url("./assets/fonts/')}`);
 await writeFile(path.join(outputDirectory, "404.html"), notFoundHtml, "utf8");
 await writeFile(path.join(outputDirectory, ".nojekyll"), "", "utf8");
+
+// GitHub Pages is configured to publish main/(root) without a custom Actions
+// workflow. Keep the browser-ready entry points and generated assets committed
+// at the repository root while retaining dist/ for local preview and testing.
+const publishedAssets = path.join(projectRoot, "assets");
+const publishedAssetEntries = await readdir(publishedAssets, { withFileTypes: true });
+await Promise.all(publishedAssetEntries
+  .filter((entry) => entry.isFile() && /^portfolio-[a-z0-9-]+\.(?:js|css)$/i.test(entry.name))
+  .map((entry) => rm(path.join(publishedAssets, entry.name), { force: true })));
+
+await Promise.all([
+  copyFileTo(path.join(outputAssets, javascriptFile), path.join(publishedAssets, javascriptFile)),
+  copyFileTo(path.join(outputAssets, stylesheetFile), path.join(publishedAssets, stylesheetFile)),
+  copyFileTo(path.join(outputDirectory, "index.html"), path.join(projectRoot, "index.html")),
+  copyFileTo(path.join(outputDirectory, "404.html"), path.join(projectRoot, "404.html")),
+]);
+
+const publishedFonts = path.join(publishedAssets, "fonts");
+await rm(publishedFonts, { recursive: true, force: true });
+await cp(outputFonts, publishedFonts, { recursive: true });
+await writeFile(path.join(projectRoot, ".nojekyll"), "", "utf8");
 
 async function directorySize(directory) {
   let bytes = 0;
@@ -188,5 +211,6 @@ const javascriptBytes = (await stat(path.join(outputAssets, javascriptFile))).si
 const stylesheetBytes = (await stat(path.join(outputAssets, stylesheetFile))).size;
 const totalBytes = await directorySize(outputDirectory);
 console.log(`Built ${webPath(path.relative(projectRoot, outputDirectory))}/ for GitHub Pages`);
+console.log("Synced optimized static entry files to main/(root) for branch publishing");
 console.log(`Portfolio bundle: ${(javascriptBytes / 1024).toFixed(1)} KB; CSS: ${(stylesheetBytes / 1024).toFixed(1)} KB`);
 console.log(`Deploy artifact: ${(totalBytes / 1024 / 1024).toFixed(2)} MB`);
