@@ -1,5 +1,10 @@
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import "./data.jsx";
+import { Icon } from "./icons.jsx";
+import { Sparkle, Squiggle } from "./doodles.jsx";
+
 // Tactile portfolio boards with keyboard-first interactions.
-const { useEffect, useMemo, useRef, useState } = React;
+const RK = window.RK;
 
 function useDraggable(ref, initialRot = 0) {
   useEffect(() => {
@@ -9,48 +14,47 @@ function useDraggable(ref, initialRot = 0) {
     const threshold = 6;
     let armed = false;
     let dragging = false;
+    let activePointer = null;
     let startX = 0;
     let startY = 0;
-    let offX = 0;
-    let offY = 0;
+    let originX = Number(el.dataset.dragX || 0);
+    let originY = Number(el.dataset.dragY || 0);
 
     const beginDrag = () => {
       dragging = true;
       el.dataset.wasDragged = "true";
       el.classList.add("dragging");
-      const rect = el.getBoundingClientRect();
-      el.style.width = `${rect.width}px`;
-      el.style.minHeight = `${rect.height}px`;
-      el.style.position = "absolute";
-      el.style.left = `${rect.left + window.scrollX}px`;
-      el.style.top = `${rect.top + window.scrollY}px`;
-      el.style.margin = "0";
-      el.style.transform = `rotate(${initialRot}deg)`;
       el.style.userSelect = "none";
-      if (el.parentNode !== document.body) document.body.appendChild(el);
     };
 
     const onDown = (event) => {
       if (event.button !== undefined && event.button !== 0) return;
       if (event.target.closest("a,input,textarea,select")) return;
       armed = true;
+      activePointer = event.pointerId;
       el.dataset.wasDragged = "false";
       startX = event.clientX;
       startY = event.clientY;
-      const rect = el.getBoundingClientRect();
-      offX = startX - rect.left;
-      offY = startY - rect.top;
+      originX = Number(el.dataset.dragX || 0);
+      originY = Number(el.dataset.dragY || 0);
+      el.setPointerCapture?.(event.pointerId);
     };
     const onMove = (event) => {
-      if (!armed) return;
+      if (!armed || event.pointerId !== activePointer) return;
       if (!dragging && Math.hypot(event.clientX - startX, event.clientY - startY) < threshold) return;
       if (!dragging) beginDrag();
-      el.style.left = `${event.clientX - offX + window.scrollX}px`;
-      el.style.top = `${event.clientY - offY + window.scrollY}px`;
+      const dragX = originX + event.clientX - startX;
+      const dragY = originY + event.clientY - startY;
+      el.dataset.dragX = String(dragX);
+      el.dataset.dragY = String(dragY);
+      el.style.setProperty("--drag-x", `${dragX}px`);
+      el.style.setProperty("--drag-y", `${dragY}px`);
       event.preventDefault();
     };
-    const onUp = () => {
+    const onUp = (event) => {
+      if (activePointer !== null && event.pointerId !== activePointer) return;
       armed = false;
+      activePointer = null;
       if (!dragging) return;
       dragging = false;
       el.classList.remove("dragging");
@@ -59,12 +63,16 @@ function useDraggable(ref, initialRot = 0) {
     };
 
     el.addEventListener("pointerdown", onDown);
-    window.addEventListener("pointermove", onMove, { passive: false });
-    window.addEventListener("pointerup", onUp);
+    el.addEventListener("pointermove", onMove);
+    el.addEventListener("pointerup", onUp);
+    el.addEventListener("pointercancel", onUp);
+    el.dataset.dragReady = "true";
     return () => {
       el.removeEventListener("pointerdown", onDown);
-      window.removeEventListener("pointermove", onMove);
-      window.removeEventListener("pointerup", onUp);
+      el.removeEventListener("pointermove", onMove);
+      el.removeEventListener("pointerup", onUp);
+      el.removeEventListener("pointercancel", onUp);
+      delete el.dataset.dragReady;
     };
   }, [ref, initialRot]);
 }
@@ -136,16 +144,31 @@ function RotatingHeroPhoto() {
 
   useEffect(() => {
     if (reduced) return undefined;
-    const id = window.setInterval(() => setIndex((value) => (value + 1) % photos.length), 4000);
+    const id = window.setInterval(() => {
+      if (document.visibilityState === "visible") setIndex((value) => (value + 1) % photos.length);
+    }, 4000);
     return () => window.clearInterval(id);
   }, [photos.length, reduced]);
+
+  useEffect(() => {
+    const preloadNext = () => {
+      const image = new Image();
+      image.src = photos[(index + 1) % photos.length].src;
+    };
+    if (window.requestIdleCallback) {
+      const id = window.requestIdleCallback(preloadNext, { timeout: 1500 });
+      return () => window.cancelIdleCallback(id);
+    }
+    const id = window.setTimeout(preloadNext, 500);
+    return () => window.clearTimeout(id);
+  }, [index, photos]);
 
   const photo = photos[index];
   return (
     <div>
       <div className="hero-photo-stack">
         <div className="hero-photo-layer active">
-          <img src={photo.src} width={photo.width} height={photo.height} alt={photo.alt} />
+          <img src={photo.src} width={photo.width} height={photo.height} alt={photo.alt} decoding="async" fetchPriority="high" />
         </div>
       </div>
       <div className="photo-dots" aria-hidden="true">
@@ -268,7 +291,7 @@ function AboutBoard() {
           </div>
           <div>
             <div className="graduation-polaroid">
-              <img src="assets/photo-grad.png" width="408" height="612" alt="Raminda Kariyawasam at the University of Plymouth graduation ceremony in 2025" />
+              <img src="assets/photo-grad.png" width="408" height="612" loading="lazy" decoding="async" alt="Raminda Kariyawasam at the University of Plymouth graduation ceremony in 2025" />
               <div className="scribble">Plymouth, 2025 <Icon name="graduation-cap" size="0.95em" /></div>
             </div>
             <h3 className="scribble subhead">life so far</h3>
@@ -496,3 +519,5 @@ function ContactBoard() {
 }
 
 Object.assign(window, { HomeBoard, AboutBoard, FeaturedEngineeringBoard, ProjectsBoard, ProjectCard, ProjectModal, ToolkitBoard, ContactBoard });
+
+export { HomeBoard, AboutBoard, FeaturedEngineeringBoard, ProjectsBoard, ToolkitBoard, ContactBoard };

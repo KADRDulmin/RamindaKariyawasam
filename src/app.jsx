@@ -1,3 +1,11 @@
+import React from "react";
+import { createRoot } from "react-dom/client";
+import { AboutBoard, ContactBoard, FeaturedEngineeringBoard, HomeBoard, ProjectsBoard, ToolkitBoard } from "./boards.jsx";
+import NotFound from "./not-found.jsx";
+import { initAnimations } from "./animations.js";
+import { initRuntime } from "./runtime.js";
+import { scheduleAnalytics } from "./analytics.js";
+
 // App root - single page, all boards stacked.
 function App() {
   const path = window.location.pathname;
@@ -18,5 +26,13 @@ function App() {
   );
 }
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+initRuntime();
+const root = createRoot(document.getElementById("root"));
 root.render(<App />);
+if (window.location.pathname === "/" || window.location.pathname === "") {
+  requestAnimationFrame(() => {
+    if (window.requestIdleCallback) window.requestIdleCallback(initAnimations, { timeout: 1000 });
+    else window.setTimeout(initAnimations, 0);
+  });
+}
+scheduleAnalytics();

@@ -1,81 +1,80 @@
-<div align="center">
+# Raminda Kariyawasam — Full-Stack Software Engineer
 
-  <h1>Raminda Kariyawasam — Full-Stack Software Engineer</h1>
-  
-  <p>
-    AI-enabled university platforms, optimization systems, secure enterprise applications, and production infrastructure.
-  </p>
-  
-  <p>
-    <a href="#features">Features</a> •
-    <a href="#previews">Previews</a> •
-    <a href="#tech-stack">Tech Stack</a> •
-    <a href="#installation">Installation</a>
-  </p>
+An evidence-led portfolio for AI-enabled university platforms, optimization systems, secure enterprise applications, and production infrastructure.
 
-</div>
+Live site: [www.ramindak.com](https://www.ramindak.com/)
 
----
+## Performance architecture
 
-## 👀 Previews
+The site remains a static GitHub Pages deployment. Next.js was evaluated, but GitHub Pages cannot run request-time SSR or other Node.js server features; Next.js would have to use `output: "export"`. For this single-page portfolio, a production React bundle gives the useful performance benefits without adding a framework layer that cannot provide SSR on the selected host.
 
-Here is a look at the portfolio in action, showcasing both the desktop and mobile experiences:
+The production build now:
 
-<div align="center">
-  <img src="uploads/desktop-screenshot-of-the-website.png" alt="Desktop View" width="68%" style="border-radius: 12px; margin-right: 2%; box-shadow: 0 10px 30px rgba(0,0,0,0.2);" />
-  <img src="uploads/mobile-screenshot-of-the-website.png" alt="Mobile View" width="28%" style="border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2);" />
-</div>
+- bundles and minifies React, JSX, and application code with esbuild;
+- uses React's production runtime instead of Babel and development UMD builds in the browser;
+- removes unused Three.js and prevents Spline from loading on the home page;
+- self-hosts the five portfolio fonts with `font-display: swap`;
+- delays Google Tag Manager, Google Analytics, and Microsoft Clarity until after initial load;
+- uses one pointer listener plus per-drag pointer capture instead of dozens of global drag listeners;
+- stops animation loops while idle or hidden and uses native Web Animations for scroll effects;
+- extracts and hashes CSS/JavaScript for browser caching;
+- publishes only the required static files through a compact `dist/` artifact.
 
-<div align="center">
-  <i>Designed to be sticky, playful, and responsive across all devices.</i>
-</div>
+A controlled cold-load comparison (1.6 Mbps, 150 ms latency, 4× CPU slowdown) reduced the initial transfer from about 2.35 MB/32 requests to about 365 KB/10 requests. The browser `load` measurement fell from about 13.1 seconds on the old live build to about 1.34 seconds for the optimized build. See [the performance note](docs/PERFORMANCE.md) for scope and methodology.
 
-## ✨ Features
+## Stack
 
-- **Engineering Evidence:** Featured case studies expose architecture lanes, hard problems, security boundaries, and operational considerations.
-- **Complete Catalogue:** Multi-category filters cover verified NSBM, AI, Node/TypeScript, Java, PHP, mobile/IoT, client, startup, and personal work.
-- **Interactive Sticky Notes:** Drag notes on wide pointer devices or open every project by keyboard without dragging.
-- **Playful Cursor & Doodles:** Custom pencil cursor and hand-drawn doodles for a very unique, personalized feel.
-- **Light & Dark Themes:** Seamlessly switch between a light parchment "paper" theme and a dark "cork" theme.
-- **Accessible Interactions:** Focus-trapped dialogs, Escape close, focus restoration, visible keyboard focus, reduced motion, and mobile stacking.
-- **Targeted Résumés:** One chooser provides the immutable original plus Node.js/TypeScript, AI Full Stack, combined Node.js/TypeScript + AI, and Java Enterprise versions.
-- **React Powered:** Built using React components (`.jsx`) for modular, maintainable, and interactive UI elements.
-- **Beautiful Typography:** Hand-drawn web fonts using _Patrick Hand_, _Caveat Brush_, and _Space Mono_.
+- React 18 with production bundling
+- Vanilla CSS and native Web Animations
+- esbuild
+- Node test runner, Playwright, and axe-core
+- GitHub Actions and GitHub Pages
 
-## 🛠️ Tech Stack
+The anniversary invitation under `/srimantha_and_geethanjali_anniversary/` is built into the same deployment with its optimized responsive images, self-hosted fonts, and bundled React application.
 
-- **Frontend:** HTML5, CSS3, JavaScript (ES6+), React 18
-- **Styling:** Custom Vanilla CSS variables for theming
-- **Fonts:** Patrick Hand, Caveat Brush, Shadows Into Light, and Space Mono
-- **Quality:** Node tests, Playwright, axe-core, PDF validation, and link checks
-- **Tooling:** `serve` via npm for local development; deterministic ReportLab résumé generation
+## Local development
 
-## 🚀 Installation & Local Development
+Requirements: Node.js 22+ and npm.
 
-This project requires minimal setup. It uses `serve` to render the `index.html` and parse the React files dynamically.
+```bash
+npm ci
+npm start
+```
 
-1. **Clone the repository:**
+`npm start` builds the same `dist/` artifact used in production and serves it locally. The source `index.html` is a build template; do not serve the repository root directly.
 
-   ```bash
-   git clone https://github.com/KADRDulmin/RamindaKariyawasam.git
-   cd RamindaKariyawasam
-   ```
+Useful commands:
 
-2. **Install development dependencies:**
+```bash
+npm run build       # create dist/
+npm run preview     # serve an existing dist/
+npm run lint        # validate JavaScript and invitation sources
+npm run test:unit   # data and invitation unit tests
+npm run test:build  # production bundle and artifact budgets
+npm run test:e2e    # browser, accessibility, and responsive tests
+npm test            # complete build and test sequence
+```
 
-   ```bash
-   npm install
-   ```
+## GitHub Pages deployment
 
-3. **Start the local server:**
-   ```bash
-   npm start
-   ```
-   _The site will be up and running at [http://localhost:3000](http://localhost:3000) (or whichever port `serve` allocates)._
+The workflow at `.github/workflows/deploy-pages.yml` runs on pushes to `main` and can also be started manually. It uses only GitHub-hosted Actions and the standard GitHub Pages artifact/deployment actions.
 
-## 📬 Say Hi
+In the repository settings, set **Pages → Build and deployment → Source** to **GitHub Actions**. The workflow installs the lockfile, validates the sources, creates `dist/`, runs unit/build-contract tests, uploads that directory, and deploys it to the `github-pages` environment.
 
-- **Name:** Raminda Kariyawasam
-- **Role:** Associate Software Engineer @ NSBM Green University
+## Main project structure
 
-**Enjoy exploring the site! Scroll, drag the notes, and poke around!** ✌️
+```text
+src/                     portfolio React and browser runtime
+scripts/build-site.mjs   complete production/static artifact builder
+tests/                   unit, build-contract, accessibility, and E2E tests
+srimantha_and_geethanjali_anniversary/
+                          invitation source and optimized media
+.github/workflows/       free GitHub Pages CI/CD
+dist/                    generated deployment artifact (gitignored)
+```
+
+## Contact
+
+- GitHub: [KADRDulmin](https://github.com/KADRDulmin)
+- LinkedIn: [raminda-dulmin](https://linkedin.com/in/raminda-dulmin/)
+- Email: [raminda5575@gmail.com](mailto:raminda5575@gmail.com)

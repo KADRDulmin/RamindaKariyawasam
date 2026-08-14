@@ -81,10 +81,17 @@ dist
 .npm
 test-results/
 playwright-report/
-/tests
+# Keep the production build and its CI coverage versioned while leaving local
+# asset-generation helpers and experimental tests private to the workspace.
+/scripts/*
+!/scripts/build-site.mjs
+!/scripts/lint-anniversary.mjs
+/tests/*
+!/tests/anniversary.test.mjs
+!/tests/site-build.test.mjs
+!/tests/e2e/
+/tests/e2e/*
+!/tests/e2e/anniversary.spec.mjs
 playwright.config.mjs
-/scripts
 serve.json
 serve.json
-package-lock.json
-package-lock.json

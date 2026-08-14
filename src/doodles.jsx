@@ -1,7 +1,8 @@
-// Decorative SVG doodles used on the boards
-const { useEffect, useRef, useState } = React;
+import React, { useEffect, useRef, useState } from "react";
 
-const Arrow = ({ className = "", style }) => (
+// Decorative SVG doodles used on the boards
+
+export const Arrow = ({ className = "", style }) => (
   <svg className={className} style={style} viewBox="0 0 120 80" width="120" height="80" fill="none" stroke="var(--ink)" strokeWidth="2.5" strokeLinecap="round">
     <path d="M6 50 C 20 10, 60 10, 90 40" />
     <path d="M90 40 L 82 34" />
@@ -9,38 +10,38 @@ const Arrow = ({ className = "", style }) => (
   </svg>
 );
 
-const Star = ({ size = 30, color = "var(--ink)", style, className }) => (
+export const Star = ({ size = 30, color = "var(--ink)", style, className }) => (
   <svg className={className} style={style} viewBox="0 0 24 24" width={size} height={size}>
     <path d="M12 2 L14.5 9 L22 10 L16 14.5 L18 22 L12 18 L6 22 L8 14.5 L2 10 L9.5 9 Z" fill="none" stroke={color} strokeWidth="1.8" strokeLinejoin="round"/>
   </svg>
 );
 
-const Swirl = ({ style, className }) => (
+export const Swirl = ({ style, className }) => (
   <svg className={className} style={style} viewBox="0 0 60 60" width="60" height="60" fill="none" stroke="var(--ink)" strokeWidth="2" strokeLinecap="round">
     <path d="M30 30 m -12 0 a 12 12 0 1 1 24 0 a 8 8 0 1 1 -16 0 a 5 5 0 1 1 10 0" />
   </svg>
 );
 
-const Heart = ({ size = 24, style, className }) => (
+export const Heart = ({ size = 24, style, className }) => (
   <svg className={className} style={style} viewBox="0 0 24 24" width={size} height={size}>
     <path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z" fill="#e05c5c" stroke="var(--line)" strokeWidth="1.5"/>
   </svg>
 );
 
-const Sparkle = ({ size = 20, style, className }) => (
+export const Sparkle = ({ size = 20, style, className }) => (
   <svg className={className} style={style} viewBox="0 0 24 24" width={size} height={size}>
     <path d="M12 2 V10 M12 14 V22 M2 12 H10 M14 12 H22" stroke="var(--ink)" strokeWidth="2" strokeLinecap="round"/>
   </svg>
 );
 
-const Squiggle = ({ style, className, w = 120, color = "var(--ink)" }) => (
+export const Squiggle = ({ style, className, w = 120, color = "var(--ink)" }) => (
   <svg className={className} style={style} viewBox="0 0 120 20" width={w} height="20" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round">
     <path d="M2 10 Q 12 2, 22 10 T 42 10 T 62 10 T 82 10 T 102 10 T 118 10"/>
   </svg>
 );
 
 // Cursor-reactive sticky note for hero
-function ReactiveNote({ children, baseRot = 0, color = "yellow", x = 50, y = 50, strength = 14, size = "auto", tape = true, pin = false, zIndex = 1 }) {
+export function ReactiveNote({ children, baseRot = 0, color = "yellow", x = 50, y = 50, strength = 14, size = "auto", tape = true, pin = false, zIndex = 1 }) {
   const ref = useRef(null);
   const [tilt, setTilt] = useState({ rx: 0, ry: 0, rz: baseRot });
 

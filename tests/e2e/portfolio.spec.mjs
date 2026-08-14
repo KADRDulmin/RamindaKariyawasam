@@ -29,6 +29,28 @@ test.describe("evidence-led portfolio", () => {
     }
   });
 
+  test("dragging keeps cards React-owned and filtering remains stable", async ({ page }) => {
+    const errors = [];
+    page.on("pageerror", (error) => errors.push(error.message));
+    await page.goto("/");
+    const card = page.locator("#board-work .project-card").first();
+    await expect(card).toHaveAttribute("data-drag-ready", "true");
+    await card.hover({ position: { x: 80, y: 50 } });
+    const box = await card.boundingBox();
+    expect(box).not.toBeNull();
+    await page.mouse.move(box.x + box.width / 2, box.y + 50);
+    await page.mouse.down();
+    await page.mouse.move(box.x + box.width / 2 + 45, box.y + 75, { steps: 4 });
+    await page.mouse.up();
+    await expect(card).toHaveCSS("position", "relative");
+    expect(await card.evaluate((element) => element.parentElement.classList.contains("project-grid"))).toBe(true);
+    expect(await card.evaluate((element) => element.style.getPropertyValue("--drag-x"))).not.toBe("");
+
+    await page.getByRole("button", { name: /^Java / }).click();
+    await expect(page.locator("#board-work .project-card")).not.toHaveCount(0);
+    expect(errors).toEqual([]);
+  });
+
   test("project dialog traps focus, closes on Escape, and restores the trigger", async ({ page }) => {
     await page.goto("/");
     const trigger = page.locator("#board-work .project-card").first();

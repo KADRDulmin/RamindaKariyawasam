@@ -16,7 +16,7 @@ export default defineConfig({
     video: "off",
   },
   webServer: {
-    command: "npx serve . -l 4173 --no-clipboard",
+    command: "npx serve dist -l 4173 --no-clipboard",
     url: "http://127.0.0.1:4173",
     reuseExistingServer: true,
     timeout: 30_000,

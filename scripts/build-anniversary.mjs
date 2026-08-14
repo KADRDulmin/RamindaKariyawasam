@@ -6,10 +6,13 @@ import { ANNIVERSARY_EVENT as event } from "../srimantha_and_geethanjali_anniver
 
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDirectory, "..");
-const routeDirectory = path.join(
+const sourceDirectory = path.join(
   projectRoot,
   "srimantha_and_geethanjali_anniversary",
 );
+const routeDirectory = process.env.ANNIVERSARY_OUTPUT_DIR
+  ? path.resolve(process.env.ANNIVERSARY_OUTPUT_DIR)
+  : sourceDirectory;
 
 const fontDirectory = path.join(routeDirectory, "assets", "fonts");
 await mkdir(fontDirectory, { recursive: true });
@@ -115,7 +118,7 @@ const replacements = {
   STRUCTURED_DATA: JSON.stringify(structuredData, null, 2).replaceAll("<", "\\u003c"),
 };
 
-const templatePath = path.join(routeDirectory, "index.template.html");
+const templatePath = path.join(sourceDirectory, "index.template.html");
 const outputPath = path.join(routeDirectory, "index.html");
 let html = await readFile(templatePath, "utf8");
 
@@ -201,7 +204,7 @@ await writeFile(
 
 const bundlePath = path.join(routeDirectory, "anniversary.bundle.js");
 await build({
-  entryPoints: [path.join(routeDirectory, "anniversary.jsx")],
+  entryPoints: [path.join(sourceDirectory, "anniversary.jsx")],
   outfile: bundlePath,
   bundle: true,
   minify: true,

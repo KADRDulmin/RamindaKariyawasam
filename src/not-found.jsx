@@ -1,14 +1,36 @@
-function NotFound() {
+import React from "react";
+import { Icon } from "./icons.jsx";
+
+export default function NotFound() {
   const viewerRef = React.useRef(null);
 
   React.useEffect(() => {
-    // Set url attribute directly on the custom element after mount
-    if (viewerRef.current) {
-      viewerRef.current.setAttribute(
-        "url",
-        "https://prod.spline.design/3BUV9O7mq5NeiCvk/scene.splinecode"
-      );
+    if (!viewerRef.current || navigator.connection?.saveData || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return undefined;
+    const configureViewer = () => viewerRef.current?.setAttribute(
+      "url",
+      "https://prod.spline.design/3BUV9O7mq5NeiCvk/scene.splinecode",
+    );
+    const loadViewer = () => {
+      if (customElements.get("spline-viewer")) {
+        configureViewer();
+        return;
+      }
+      let script = document.querySelector('script[data-spline-viewer]');
+      if (!script) {
+        script = document.createElement("script");
+        script.type = "module";
+        script.src = "https://unpkg.com/@splinetool/viewer/build/spline-viewer.js";
+        script.dataset.splineViewer = "true";
+        document.head.appendChild(script);
+      }
+      customElements.whenDefined("spline-viewer").then(configureViewer);
+    };
+    if (window.requestIdleCallback) {
+      const id = window.requestIdleCallback(loadViewer, { timeout: 2000 });
+      return () => window.cancelIdleCallback(id);
     }
+    const id = window.setTimeout(loadViewer, 1000);
+    return () => window.clearTimeout(id);
   }, []);
 
   return (
