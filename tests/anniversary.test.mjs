@@ -19,14 +19,28 @@ const projectRoot = path.resolve(testDirectory, "..");
 const routeDirectory = path.join(projectRoot, "srimantha_and_geethanjali_anniversary");
 const sourcePhotoDirectory = path.join(projectRoot, "assets", "Anniversary_Photos");
 
-test("event configuration represents the supplied Colombo event exactly", () => {
+test("event configuration represents the supplied Athurugiriya event exactly", () => {
   assert.equal(event.couple.displayName, "Srimantha & Geethanjali");
   assert.equal(event.anniversaryYears, 25);
-  assert.equal(event.startIso, "2026-08-22T18:00:00+05:30");
-  assert.equal(new Date(event.startIso).toISOString(), "2026-08-22T12:30:00.000Z");
+  assert.equal(event.startIso, "2026-08-23T18:00:00+05:30");
+  assert.equal(new Date(event.startIso).toISOString(), "2026-08-23T12:30:00.000Z");
   assert.equal(event.timeZone, "Asia/Colombo");
-  assert.equal(event.venue.name, "Monarch Imperial");
-  assert.match(event.venue.address, /31A New Hospital Road/);
+  assert.equal(event.venue.name, "Yuki Grand Hotel");
+  assert.match(event.venue.address, /No\. 71\/2, Govinna Road/);
+  assert.equal(event.venue.website, "https://yukigrand.lk/");
+  assert.match(event.venue.directionsUrl, /Yuki%20Grand%20Hotel/);
+  assert.match(event.venue.mapEmbedUrl, /Athurugiriya%2010150/);
+  assert.deepEqual(event.venue.guestDetails, [
+    "Indoor & outdoor event spaces",
+    "Convenient guest parking",
+    "Dedicated event service",
+  ]);
+  assert.deepEqual(event.venue.structuredAddress, {
+    streetAddress: "No. 71/2, Govinna Road",
+    addressLocality: "Athurugiriya",
+    postalCode: "10150",
+    addressCountry: "LK",
+  });
   assert.equal(event.rsvp.enabled, true);
   assert.equal(event.rsvp.channel, "whatsapp");
   assert.equal(event.rsvp.whatsappNumber, "94778915586");
@@ -62,11 +76,11 @@ test("Google Calendar URL uses the exact UTC instant and Colombo timezone", () =
   assert.equal(calendarUrl.searchParams.get("action"), "TEMPLATE");
   assert.equal(
     calendarUrl.searchParams.get("dates"),
-    "20260822T123000Z/20260822T123000Z",
+    "20260823T123000Z/20260823T123000Z",
   );
   assert.equal(calendarUrl.searchParams.get("ctz"), "Asia/Colombo");
   assert.equal(calendarUrl.searchParams.get("text"), event.calendar.title);
-  assert.match(calendarUrl.searchParams.get("location"), /Monarch Imperial/);
+  assert.match(calendarUrl.searchParams.get("location"), /Yuki Grand Hotel/);
 });
 
 test("RSVP validation accepts complete responses and rejects unsafe or missing values", () => {
@@ -121,8 +135,8 @@ test("WhatsApp RSVP uses the configured international number and an organized me
   assert.match(whatsappUrl.searchParams.get("text"), /Name: A Guest/);
   assert.match(whatsappUrl.searchParams.get("text"), /Attendance: Joyfully accepts/);
   assert.match(whatsappUrl.searchParams.get("text"), /Number of guests: 2/);
-  assert.match(whatsappUrl.searchParams.get("text"), /Date: Saturday, 22 August 2026/);
-  assert.match(whatsappUrl.searchParams.get("text"), /Venue: Monarch Imperial/);
+  assert.match(whatsappUrl.searchParams.get("text"), /Date: Sunday, 23 August 2026/);
+  assert.match(whatsappUrl.searchParams.get("text"), /Venue: Yuki Grand Hotel/);
 
   const declineMessage = buildWhatsAppRsvpMessage({ ...values, attending: "no", guestCount: 0 });
   assert.match(declineMessage, /Attendance: Regretfully declines/);
@@ -136,7 +150,10 @@ test("generated invitation contains crawler-readable metadata and no template to
   assert.match(html, /<title>Srimantha &amp; Geethanjali \| 25th Anniversary Celebration<\/title>/);
   assert.match(html, /rel="canonical" href="https:\/\/www\.ramindak\.com\/srimantha_and_geethanjali_anniversary\/"/);
   assert.match(html, /property="og:image" content="https:\/\/www\.ramindak\.com\/srimantha_and_geethanjali_anniversary\/assets\/images\/anniversary-og-1200x630\.jpg"/);
-  assert.match(html, /"startDate": "2026-08-22T18:00:00\+05:30"/);
+  assert.match(html, /"startDate": "2026-08-23T18:00:00\+05:30"/);
+  assert.match(html, /"name": "Yuki Grand Hotel"/);
+  assert.match(html, /"streetAddress": "No\. 71\/2, Govinna Road"/);
+  assert.doesNotMatch(html, /Monarch Imperial|31A New Hospital Road|monarchimperial\.lk/i);
   assert.match(html, /id="anniversary-root"/);
   assert.match(html, /src="anniversary\.bundle\.js"/);
   assert.doesNotMatch(html, /assets\/Anniversary_Photos/);
@@ -149,10 +166,16 @@ test("ICS file is timezone-aware, folded correctly, and does not invent an end t
   const ics = await readFile(path.join(routeDirectory, event.calendar.fileName), "utf8");
   assert.match(ics, /BEGIN:VCALENDAR\r?\n/);
   assert.match(ics, /TZID:Asia\/Colombo/);
-  assert.match(ics, /DTSTART;TZID=Asia\/Colombo:20260822T180000/);
+  assert.match(ics, /DTSTART;TZID=Asia\/Colombo:20260823T180000/);
   assert.match(ics, /TZOFFSETTO:\+0530/);
-  assert.match(ics, /LOCATION:Monarch Imperial\\,/);
+  assert.match(ics, /LOCATION:Yuki Grand Hotel\\,/);
   assert.doesNotMatch(ics, /DTEND|DURATION/);
+  assert.doesNotMatch(ics, /[ \t]+\r?$/m);
+  const unfoldedIcs = ics.replace(/\r?\n[ \t]/g, "");
+  assert.match(
+    unfoldedIcs,
+    /LOCATION:Yuki Grand Hotel\\, No\. 71\/2\\, Govinna Road\\, Athurugiriya 10150\\, Sri Lanka/,
+  );
   for (const line of ics.split(/\r?\n/).filter(Boolean)) {
     assert.ok(Buffer.byteLength(line, "utf8") <= 75, `ICS line exceeds 75 octets: ${line}`);
   }

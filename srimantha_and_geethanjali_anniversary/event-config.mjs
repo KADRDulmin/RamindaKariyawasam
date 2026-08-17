@@ -12,20 +12,33 @@ export const ANNIVERSARY_EVENT = Object.freeze({
   invitationMessage:
     "With joyful hearts, Srimantha and Geethanjali invite you to celebrate 25 beautiful years of love, laughter, and togetherness.",
   closingMessage: "Your presence will make our celebration even more special.",
-  startIso: "2026-08-22T18:00:00+05:30",
-  startLocal: "2026-08-22T18:00:00",
+  startIso: "2026-08-23T18:00:00+05:30",
+  startLocal: "2026-08-23T18:00:00",
   timeZone: "Asia/Colombo",
-  dateLabel: "Saturday, 22 August 2026",
-  shortDateLabel: "22 August 2026",
+  dateLabel: "Sunday, 23 August 2026",
+  shortDateLabel: "23 August 2026",
   timeLabel: "6:00 PM onwards",
   venue: {
-    name: "Monarch Imperial",
-    address: "31A New Hospital Road, Sri Jayawardenepura Kotte 10100, Sri Lanka",
-    website: "https://monarchimperial.lk/",
+    name: "Yuki Grand Hotel",
+    address: "No. 71/2, Govinna Road, Athurugiriya 10150, Sri Lanka",
+    website: "https://yukigrand.lk/",
     directionsUrl:
-      "https://www.google.com/maps/dir/?api=1&destination=Monarch%20Imperial%2C%2031A%20New%20Hospital%20Road%2C%20Sri%20Jayawardenepura%20Kotte%2010100%2C%20Sri%20Lanka",
+      "https://www.google.com/maps/dir/?api=1&destination=Yuki%20Grand%20Hotel%2C%20No.%2071%2F2%2C%20Govinna%20Road%2C%20Athurugiriya%2010150%2C%20Sri%20Lanka",
     mapEmbedUrl:
-      "https://www.google.com/maps?q=Monarch%20Imperial%2C%2031A%20New%20Hospital%20Road%2C%20Sri%20Jayawardenepura%20Kotte%2010100%2C%20Sri%20Lanka&output=embed",
+      "https://www.google.com/maps?q=Yuki%20Grand%20Hotel%2C%20No.%2071%2F2%2C%20Govinna%20Road%2C%20Athurugiriya%2010150%2C%20Sri%20Lanka&output=embed",
+    description:
+      "A tranquil Athurugiriya setting with versatile indoor and outdoor event spaces, picturesque surroundings, and dedicated event service.",
+    guestDetails: [
+      "Indoor & outdoor event spaces",
+      "Convenient guest parking",
+      "Dedicated event service",
+    ],
+    structuredAddress: {
+      streetAddress: "No. 71/2, Govinna Road",
+      addressLocality: "Athurugiriya",
+      postalCode: "10150",
+      addressCountry: "LK",
+    },
   },
   publicUrl:
     "https://www.ramindak.com/srimantha_and_geethanjali_anniversary/",
@@ -33,7 +46,7 @@ export const ANNIVERSARY_EVENT = Object.freeze({
   metadata: {
     title: "Srimantha & Geethanjali | 25th Anniversary Celebration",
     description:
-      "Join us as we celebrate 25 beautiful years together on 22 August 2026 at Monarch Imperial.",
+      "Join us as we celebrate 25 beautiful years together on 23 August 2026 at Yuki Grand Hotel in Athurugiriya.",
     themeColor: "#102724",
     locale: "en_LK",
     ogImage: "assets/images/anniversary-og-1200x630.jpg",

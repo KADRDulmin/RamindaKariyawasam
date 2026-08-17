@@ -11,6 +11,10 @@ test("loads through the public route with correct metadata and working primary m
   await expect(page).toHaveTitle("Srimantha & Geethanjali | 25th Anniversary Celebration");
   await expect(page.locator("h1")).toContainText("Srimantha");
   await expect(page.locator("h1")).toContainText("Geethanjali");
+  await expect(page.locator("#venue-title")).toHaveText("Yuki Grand Hotel");
+  await expect(page.locator(".venue-address")).toContainText("No. 71/2, Govinna Road");
+  await expect(page.locator('.venue-actions a[href="https://yukigrand.lk/"]')).toHaveCount(1);
+  await expect(page.locator("body")).not.toContainText("Monarch Imperial");
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     "href",
     "https://www.ramindak.com/srimantha_and_geethanjali_anniversary/",
@@ -55,13 +59,13 @@ test("calendar links preserve the Colombo event instant", async ({ page }) => {
   const dialog = page.locator("[data-calendar-dialog]");
   await expect(dialog).toBeVisible();
   const googleUrl = new URL(await dialog.locator("[data-google-calendar]").getAttribute("href"));
-  expect(googleUrl.searchParams.get("dates")).toBe("20260822T123000Z/20260822T123000Z");
+  expect(googleUrl.searchParams.get("dates")).toBe("20260823T123000Z/20260823T123000Z");
   expect(googleUrl.searchParams.get("ctz")).toBe("Asia/Colombo");
 
   const calendarResponse = await page.request.get(`${route}srimantha-and-geethanjali-25th-anniversary.ics`);
   expect(calendarResponse.ok()).toBeTruthy();
   const calendarText = await calendarResponse.text();
-  expect(calendarText).toContain("DTSTART;TZID=Asia/Colombo:20260822T180000");
+  expect(calendarText).toContain("DTSTART;TZID=Asia/Colombo:20260823T180000");
   expect(calendarText).not.toContain("DTEND");
 });
 
@@ -116,8 +120,8 @@ test("RSVP validates inputs and opens an organized WhatsApp message without clai
   expect(message).toContain("Number of guests: 2");
   expect(message).toContain("Contact number: 0771234567");
   expect(message).toContain("MESSAGE FOR THE COUPLE\nWarm wishes");
-  expect(message).toContain("Date: Saturday, 22 August 2026");
-  expect(message).toContain("Venue: Monarch Imperial");
+  expect(message).toContain("Date: Sunday, 23 August 2026");
+  expect(message).toContain("Venue: Yuki Grand Hotel");
   expect(postRequests).toEqual([]);
 });
 
@@ -179,7 +183,7 @@ test("share fallback, WhatsApp link, and back-to-top control work", async ({ pag
 
   const whatsappHref = await page.locator("[data-whatsapp-share]").getAttribute("href");
   expect(whatsappHref).toMatch(/^https:\/\/wa\.me\/\?text=/);
-  expect(decodeURIComponent(whatsappHref)).toContain("22 August 2026");
+  expect(decodeURIComponent(whatsappHref)).toContain("23 August 2026");
 
   await page.locator("footer").scrollIntoViewIfNeeded();
   await expect(page.locator("[data-back-to-top]")).toHaveClass(/is-visible/);
@@ -246,7 +250,7 @@ test("reduced motion keeps the complete invitation immediately available", async
 
 test("countdown helper handles both sides of the event without negative values", async ({ page }) => {
   const states = await page.evaluate(() => {
-    const target = Date.parse("2026-08-22T18:00:00+05:30");
+    const target = Date.parse("2026-08-23T18:00:00+05:30");
     return {
       before: window.__ANNIVERSARY_TEST__.getCountdownState(target - 1000, target),
       after: window.__ANNIVERSARY_TEST__.getCountdownState(target + 1000, target),
@@ -259,7 +263,7 @@ test("countdown helper handles both sides of the event without negative values",
 test("countdown UI changes to a welcoming message after the event begins", async ({ browser }) => {
   const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
   const page = await context.newPage();
-  await page.clock.install({ time: new Date("2026-08-22T12:31:00.000Z") });
+  await page.clock.install({ time: new Date("2026-08-23T12:31:00.000Z") });
   await page.goto(route, { waitUntil: "domcontentloaded" });
   await expect(page.locator("[data-countdown]")).toHaveCount(0);
   await expect(page.locator("[data-countdown-complete]")).toContainText("celebration has begun");

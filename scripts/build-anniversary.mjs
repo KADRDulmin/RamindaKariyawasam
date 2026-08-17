@@ -72,10 +72,7 @@ const structuredData = {
     url: event.venue.website,
     address: {
       "@type": "PostalAddress",
-      streetAddress: "31A New Hospital Road",
-      addressLocality: "Sri Jayawardenepura Kotte",
-      postalCode: "10100",
-      addressCountry: "LK",
+      ...event.venue.structuredAddress,
     },
   },
   organizer: [
@@ -149,8 +146,13 @@ const foldIcsLine = (line) => {
     const candidate = current + character;
     const byteLimit = lines.length === 0 ? 75 : 74;
     if (Buffer.byteLength(candidate, "utf8") > byteLimit) {
+      let overflow = character;
+      if (current.endsWith(" ")) {
+        current = current.slice(0, -1);
+        overflow = ` ${overflow}`;
+      }
       lines.push(current);
-      current = ` ${character}`;
+      current = ` ${overflow}`;
     } else {
       current = candidate;
     }

@@ -554,12 +554,17 @@ function Venue({ showToast }) {
           <h2 id="venue-title">{event.venue.name}</h2>
           <p className="venue-address">{event.venue.address}</p>
           <div className="venue-rule" aria-hidden="true" />
-          <p>A setting for an evening filled with warm company and beautiful memories.</p>
+          <p>{event.venue.description}</p>
+          <ul className="venue-details" aria-label={`${event.venue.name} guest amenities`}>
+            {event.venue.guestDetails.map((detail) => (
+              <li key={detail}><Icon name="check" />{detail}</li>
+            ))}
+          </ul>
           <div className="venue-actions">
             <a className="button button-primary" href={event.venue.directionsUrl} target="_blank" rel="noopener noreferrer"><Icon name="location" />Get Directions</a>
             <a className="text-link text-link-dark" href={event.venue.website} target="_blank" rel="noopener noreferrer">Visit venue website <Icon name="external" /></a>
           </div>
-          <p className="venue-verified"><Icon name="check" /> Address verified from the official venue website</p>
+          <p className="venue-verified"><Icon name="check" /> Venue details verified from the official Yuki Grand website</p>
         </article>
 
         <div className="map-card reveal" data-map-card>
@@ -575,7 +580,7 @@ function Venue({ showToast }) {
             <div className="map-placeholder">
               <div className="map-orbit" aria-hidden="true"><span /><span /><span /></div>
               <Icon name="location" />
-              <h3>View Monarch Imperial on the map</h3>
+              <h3>View {event.venue.name} on the map</h3>
               <p>The map loads only when you choose to view it.</p>
               <button className="button button-outline-dark" type="button" data-map-load onClick={loadMap}>View Map</button>
             </div>

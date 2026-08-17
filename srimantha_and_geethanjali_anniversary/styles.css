@@ -1376,7 +1376,8 @@ textarea:focus-visible,
 
 .venue-card h2 {
   margin: 20px 0 24px;
-  font-size: clamp(3.3rem, 6vw, 6.5rem);
+  font-size: clamp(3rem, 5.4vw, 5.8rem);
+  line-height: 0.86;
 }
 
 .venue-address {
@@ -1401,12 +1402,35 @@ textarea:focus-visible,
   font-style: italic;
 }
 
+.venue-details {
+  display: grid;
+  gap: 10px;
+  max-width: 420px;
+  margin-top: 28px;
+}
+
+.venue-details li {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  color: var(--ink-soft);
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+}
+
+.venue-details svg {
+  flex: 0 0 auto;
+  width: 14px;
+  height: 14px;
+  color: #356554;
+}
+
 .venue-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 16px 22px;
   align-items: center;
-  margin-top: 36px;
+  margin-top: 32px;
 }
 
 .venue-actions .text-link svg {
@@ -1418,7 +1442,7 @@ textarea:focus-visible,
   display: flex;
   gap: 8px;
   align-items: center;
-  margin-top: 40px;
+  margin-top: 34px;
   color: var(--ink-soft);
   font-size: 0.64rem;
 }
